@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { userService, authenticationService } from '@/_services';
-import './HomePage.css'
+import './profile.css';
 
-function HomePage() {
+function Profile({updateHeader, updateButton}) {
     const [currentUser, setCurrentUser] = useState(authenticationService.currentUserValue);
     const [userFromApi, setUserFromApi] = useState(null);
+
+    useEffect(() => {
+        updateHeader('Profile');
+        updateButton('Profile');
+    }, [updateHeader, updateButton]);
 
     useEffect(() => {
         const fetchUserFromApi = async () => {
@@ -18,17 +23,12 @@ function HomePage() {
 
         fetchUserFromApi();
 
-        // Clean-up function
         return () => {
-            // Perform any clean-up here if needed
         };
-    }, [currentUser.id]); // Dependency array ensures useEffect runs when currentUser.id changes
+    }, [currentUser.id]);
 
     return (
-        <div>
-            <header className="header">
-                <h1>Home</h1>
-            </header>
+        <div className='mainprofile'>
             <div className="content">
                 <div className='access'>
                     <p>You're logged in with React & JWT!!</p>
@@ -48,4 +48,4 @@ function HomePage() {
     );
 }
 
-export { HomePage };
+export default Profile;

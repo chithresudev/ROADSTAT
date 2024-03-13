@@ -1,12 +1,13 @@
 import React from 'react';
 import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import { authenticationService } from '@/_services';
-import { HomePage } from '@/HomePage';
-import { AdminPage } from '@/AdminPage';
 import { LoginPage } from '@/LoginPage';
+import { AdminPage } from '@/AdminPage';
+import Profile from '../ProfilePage/profile';
+import HomePage from '../HomePage/Home';
 
 
-const PrivateRoute = ({ component: Component, roles, ...rest }) => {
+const PrivateRoute = ({ element: Element, roles, ...rest }) => {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -16,8 +17,6 @@ const PrivateRoute = ({ component: Component, roles, ...rest }) => {
         // Not logged in, redirect to login page with the return URL
         return (
             <Routes>
-                {/* <Route {...rest} element={<LoginPage />} /> */}
-                {/* <Route {...rest} element={LoginPage} /> */}
                 <Route {...rest} element={<LoginPage />} />
             </Routes>
         )
@@ -27,9 +26,7 @@ const PrivateRoute = ({ component: Component, roles, ...rest }) => {
         // Role not authorized, redirect to home page
         return (
             <Routes>
-                {/* <Route {...rest} element={<Navigate to="/" />} /> */}
-                <Route {...rest} element={<HomePage />} />
-                {/* <Route {...rest} element={HomePage} /> */}
+                {/* <Route {...rest} element={<HomePage />} /> */}
             </Routes>
         )
     }
@@ -37,35 +34,10 @@ const PrivateRoute = ({ component: Component, roles, ...rest }) => {
     return (
         <Routes>
             {/* <Route {...rest} element={AdminPage} /> */}
-            <Route {...rest} element={<HomePage />} />
+            {/* <Route {...rest} element={<HomePage />} /> */}
+            <Route {...rest} element={Element} />
         </Routes>
     );
-
-    // return (
-    //     // <Route {...rest} render={props => {
-    //     <Routes>
-    //     <Route {...rest} element={props => {
-    //         const currentUser = authenticationService.currentUserValue;
-    //         if (!currentUser) {
-    //             // not logged in so redirect to login page with the return url
-    //             // return <Navigate to={{ pathname: '/login', state: { from: location } }} />;
-    //             navigate('/login', { state: { from: location } });
-    //             return null;
-    //         }
-
-    //         // check if route is restricted by role
-    //         if (roles && roles.indexOf(currentUser.role) === -1) {
-    //             // role not authorised so redirect to home page
-    //             // return <Navigate to={{ pathname: '/' }} />;
-    //             navigate('/');
-    //             return null;
-    //         }
-
-    //         // authorised so return component
-    //         return <Component {...props} />;
-    //     }} />
-    //     </Routes>
-    // );
 };
 
 export { PrivateRoute };
