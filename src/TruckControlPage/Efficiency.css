@@ -1,0 +1,237 @@
+#root{
+    padding: 0px;
+    margin-top: 0px;
+}
+.mains{
+    padding-top: 95px;
+}
+.ef-card {
+    height: 200px;
+    padding: 0px 20px 20px 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    border: 1px solid rgba(139, 139, 139, 0.5);
+    overflow: auto; 
+    margin-bottom: 20px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 5px;
+}
+
+.table thead {
+    position: sticky;
+    background-color: white;
+    z-index: 0; 
+    top: 0;
+}
+
+
+.table th,
+.table td {
+    padding: 18px;
+    border-bottom: 1px solid #8B8B8B;
+    text-align: left;
+    text-align: center; 
+}
+
+.table td{
+    font-size: 15px;
+    font-weight: 100;
+}
+
+.table th {
+    font-weight:700;
+}
+.ef-card th{
+    padding: 18px 45px !important;
+}
+
+.click{
+    color: #4D33EF;
+    text-decoration: underline; 
+}
+.status-image{
+    width: 10px;
+    height: 10px;
+}
+
+.e-mainprofile{
+    width: calc(100% - 475px);
+}
+.e-content {
+    padding: 20px 20px 0px 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    border: 1px solid rgba(139, 139, 139, 0.5);
+}
+h1{
+    color: #B1B1B1;
+    font-size: 18px;
+    text-align: left;
+    font-weight: 400;
+}
+.e-access{
+    background-color: #F5F5F5;
+    border-radius: 10px;
+    padding:  5px 45px;
+    font-size: 14px;
+}
+.e-details{
+    text-align: left;
+}
+.r-details{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 30px 0px 30px;
+    padding-bottom: 10px;
+}
+
+.click{
+    text-align: center;
+    margin: 0 auto;
+}
+.maint{
+    padding-bottom: 5px;
+}
+.alerts{
+    background-color: #E84D4D;
+    width: 125px;
+    padding: 5px;
+    border-radius: 10px;
+}
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+}
+.align-right {
+    margin-left: auto;
+}
+.e-details span {
+    width: 50%;
+}
+.switch {
+    margin-left: 10px;
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 25px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #E7EAEB;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border: 1px solid #617275;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 2px;
+    bottom: 2px;
+    background-color: #9EACAE;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #617275;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #617275;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 10px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.e-below{
+    display: flex;    
+    justify-content: space-between;
+}
+
+.t-mainprofile{
+    width: calc(100% - 600px);
+}
+.t-content {
+    padding: 20px 20px 0px 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    border: 1px solid rgba(139, 139, 139, 0.5);
+}
+.t-access{
+    background-color: white;
+    border-radius: 10px;
+    padding:  5px 25px;
+    font-size: 14px;
+    margin-top: 5px;
+    overflow-y: auto;
+    max-height: 175px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.t-access::-webkit-scrollbar {
+    display: none;
+}
+.t-details{
+    text-align: left;
+}
+.tv{
+text-align: center;
+font-weight: 600;    
+font-size: 18px;
+}
+
+.t-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 5px;
+}
+
+.t-table th,
+.t-table td {
+    padding: 10px;
+    text-align: left;
+    text-align: center; 
+    border: 1px solid #B9B9B9;
+}
+
+.table td{
+    font-size: 15px;
+    font-weight: 100;
+}
+
+.table th {
+    font-weight:700;
+}
