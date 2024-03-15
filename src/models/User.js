@@ -8,4 +8,4 @@ const UserSchema = new Schema({
   role: { type: String },
 }, { timestamps: true });
 
-export const User = models?.User || model('User',UserSchema);
+export const User = models?.User || model('User', UserSchema);
