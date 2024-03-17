@@ -18,7 +18,7 @@ function UsagePage({updateHeader, updateButton}) {
             <div className={`u-scard ${activeButton === 'Truck Information' ? 'active' : ''}`}>
                 <button className='u-scard-button' onClick={() => handleButtonClick('Truck Information')}>
                     <Link className='u-scard-link'>
-                        <img src="/images/truckin.png" alt="Home" className="u-scard-icon" />
+                        <img src="/images/trin.png" alt="Home" className="u-scard-icon" />
                         <span className="u-scard-text">Truck Information</span>
                     </Link>
                 </button>
@@ -26,7 +26,7 @@ function UsagePage({updateHeader, updateButton}) {
             <div className={`u-scard ${activeButton === 'Collision History' ? 'active' : ''}`}>
                 <button className='u-scard-button' onClick={() => handleButtonClick('Collision History')}>
                     <Link className='u-scard-link'>
-                        <img src="/images/coll.png" alt="Home" className="u-scard-icon" />
+                        <img src="/images/col.png" alt="Home" className="u-scard-icon" />
                         <span className="u-scard-text">Collision History</span>
                     </Link>
                 </button>
@@ -94,15 +94,16 @@ function UsagePage({updateHeader, updateButton}) {
                     </div>
                 </div>
                
-                    <button className='raisealert'>Raise Alert !</button>
+                <button className='raisealert'>Raise Alert !</button>
                
             </div>
         </div>
     </div>
          )}
          {activeButton === 'Collision History' && (
-        <div className='u-card'>
-            <table className='u-table'>
+        <div>
+        <div className='usa-card'>
+            <table className='usa-table'>
                 <thead>
                     <tr>
                         <th>Truck No</th>
@@ -121,6 +122,7 @@ function UsagePage({updateHeader, updateButton}) {
 
                 </tbody>
             </table>
+        </div>
         </div>
          )}
     </div>
