@@ -18,4 +18,14 @@ export default defineConfig({
       CONFIG_API_URL: JSON.stringify('http://localhost:4000'),
     },
   },
+  server: {
+    proxy: {
+      // Proxy requests to your backend server
+      '/api': {
+        target: 'http://localhost:3000', // Change this to your backend server's URL
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''), // Remove '/api' prefix
+      },
+    },
+  },
 })
