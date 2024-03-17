@@ -9,6 +9,7 @@ export const userService = {
 function getAll() {
     const requestOptions = { method: 'GET', headers: authHeader() };
     return fetch(`${process.env.CONFIG_API_URL.apiUrl}/users`, requestOptions).then(handleResponse);
+    // return fetch('http://localhost:3000/api/users', requestOptions).then(handleResponse);
 }
 
 function getById(id) {

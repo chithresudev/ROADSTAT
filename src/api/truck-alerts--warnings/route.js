@@ -41,11 +41,13 @@ truckMetricsRouter.post('/metrics/:truckId', async (req, res) => {
       speed: { min: 55, max: 70, minWarningThreshold: 55, maxWarningThreshold: 80 },
       fuelLevel: { min: 40, max: 300, minWarningThreshold: 30, maxWarningThreshold: 300 },
       fuelPressure: { min: 30, max: 70, minWarningThreshold: 20, maxWarningThreshold: 80 },
-      engineTemp: { min: 0, max: 120, minWarningThreshold: 75, maxWarningThreshold: 75 },
+      engineTemp: { min: 180, max: 220, minWarningThreshold: 170, maxWarningThreshold: 230 },
       COLevel: { min: 1.9, max: 3.1, minWarningThreshold: 1.5, maxWarningThreshold: 3.5 },
       NOXLevel: { min: 0.12, max: 0.31, minWarningThreshold: 0.05, maxWarningThreshold: 0.4 },
       HCLevel: { min: 0.06, max: 0.19, minWarningThreshold: 0.03, maxWarningThreshold: 0.25 },
       tirePressure: { min: 80, max: 100, minWarningThreshold: 70, maxWarningThreshold: 110 },
+      brakeHealth: { min: 212, max: 302, minWarningThreshold: 200, maxWarningThreshold: 310 },
+      batteryHealth: { min: 11.8, max: 100, minWarningThreshold: 5, maxWarningThreshold: 100 },
     };
 
     // Track metrics against standard ranges and generate alerts or warnings if necessary
