@@ -7,11 +7,12 @@ export function configureFakeBackend() {
     ];
     let realFetch = window.fetch;
     window.fetch = function (url, opts) {
-        const authHeader = opts.headers['Authorization'];
-        const isLoggedIn = authHeader && authHeader.startsWith('Bearer fake-jwt-token');
-        const roleString = isLoggedIn && authHeader.split('.')[1];
-        const role = roleString ? Role[roleString] : null;
-
+        //const authHeader = opts.headers['Authorization'];
+        //const authHeader = opts.headers ? opts.headers['Authorization'] : null;
+        //const isLoggedIn = authHeader && authHeader.startsWith('Bearer fake-jwt-token');
+        //const roleString = isLoggedIn && authHeader.split('.')[1];
+        //const role = roleString ? Role[roleString] : null;
+ 
         return new Promise((resolve, reject) => {
             // wrap in timeout to simulate server api call
             setTimeout(() => {
