@@ -14,7 +14,7 @@ function MaintenancePage({updateHeader, updateButton}) {
         setActiveButton(buttonName);
     }
     return (
-    <div className='main'>
+    <div className='ma-main'>
         <div className='m-topcards'> 
             <div className={`m-scard ${activeButton === 'Engine Health' ? 'active' : ''}`}>
                 <button className='m-scard-button' onClick={() => handleButtonClick('Engine Health')}>
@@ -66,7 +66,7 @@ function MaintenancePage({updateHeader, updateButton}) {
             </div>
         </div>
         {activeButton === 'Engine Health' && (
-        <div className='card'>
+        <div className='ma-card'>
             <table className='table'>
                 <thead>
                     <tr>
@@ -85,7 +85,7 @@ function MaintenancePage({updateHeader, updateButton}) {
         </div>
          )}
          {activeButton === 'Brake System' && (
-        <div className='card'>
+        <div className='ma-card'>
             <table className='table'>
                 <thead>
                     <tr>
@@ -104,7 +104,7 @@ function MaintenancePage({updateHeader, updateButton}) {
         </div>
          )}
          {activeButton === 'Fuel System' && (
-        <div className='card'>
+        <div className='ma-card'>
             <table className='table'>
                 <thead>
                     <tr>
@@ -122,7 +122,7 @@ function MaintenancePage({updateHeader, updateButton}) {
         </div>
          )}
          {activeButton === 'Tire Health' && (
-        <div className='card'>
+        <div className='ma-card'>
             <table className='table'>
                 <thead>
                     <tr>
@@ -141,7 +141,7 @@ function MaintenancePage({updateHeader, updateButton}) {
         </div>
          )}
          {activeButton === 'Battery Status' && (
-        <div className='card'>
+        <div className='ma-card'>
             <table className='table'>
                 <thead>
                     <tr>
@@ -160,7 +160,7 @@ function MaintenancePage({updateHeader, updateButton}) {
         </div>
          )}
          {activeButton === 'Transmission' && (
-        <div className='card'>
+        <div className='ma-card'>
            <table className='table'>
                <thead>
                    <tr>
