@@ -64,6 +64,7 @@ function UsagePage({ updateHeader, updateButton }) {
                         </Link>
                     </button>
                 </div>
+
             </div>
             {activeButton === 'Truck Information' && (
                 <div>
@@ -139,15 +140,16 @@ function UsagePage({ updateHeader, updateButton }) {
                     </div>
                 </div>
                
-                    <button className='raisealert'>Raise Alert !</button>
+                <button className='raisealert'>Raise Alert !</button>
                
             </div>
         </div>
     </div>
          )}
          {activeButton === 'Collision History' && (
-        <div className='u-card'>
-            <table className='u-table'>
+        <div>
+        <div className='usa-card'>
+            <table className='usa-table'>
                 <thead>
                     <tr>
                         <th>Truck No</th>
@@ -179,6 +181,7 @@ function UsagePage({ updateHeader, updateButton }) {
                 ))}
                 </tbody>
             </table>
+        </div>
         </div>
          )}
     </div>

@@ -26,7 +26,6 @@ function HomePage({updateHeader,updateButton}) {
 
         const fetchTruckData = async () => {
             const response = await fetch('http://localhost:3000/api/trucks');
-            console.log(response);
             const data = await response.json();
             setTruckData(data);
         };

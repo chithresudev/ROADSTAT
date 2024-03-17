@@ -38,7 +38,7 @@ const Sidebar = ({ isAdmin, logout, activeButtonC  }) => {
     <nav className="navbar navbar-expand navbar-dark bg-dark">
         <div className="navbar-nav">
             <div className='logo'>
-                <p>Company</p>
+                <p>Roadstat</p>
             </div>
             <div>
                 <button className={`custom-button ${activeButtonC === 'Home' ? 'active' : ''}`} onClick={() => handleButtonClick('Home')}>
