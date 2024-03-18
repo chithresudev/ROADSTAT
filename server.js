@@ -16,7 +16,7 @@ import collisionHistoryRouter from './src/api/collision-history/route.js';
 import driverRouter from './src/api/driver-details/route.js';
 import driverHealthRouter from './src/api/driver-health-details/route.js';
 import trailerDetailsRouter from './src/api/trailer-details/route.js';
-import trailerLocationRouter from './src/api/trailer-location/route.js';
+import trackLocationRouter from './src/api/track-location/route.js';
 import truckControlRouter from './src/api/truck-control/route.js';
 import truckDetailsRouter from './src/api/truck-details/route.js';
 import truckInformationRouter from './src/api/truck-information/route.js';
@@ -49,12 +49,12 @@ app.use(cors());
 // Use API routes
 //app.use('/api', userRouter);
 
-app.use('/api', destinationRouter);
+app.use('/api', destinationRouter); 
 app.use('/api', collisionHistoryRouter);
 app.use('/api', driverRouter);
 app.use('/api', driverHealthRouter);  
 app.use('/api', trailerDetailsRouter);
-app.use('/api', trailerLocationRouter);
+app.use('/api', trackLocationRouter);
 app.use('/api', truckControlRouter);
 app.use('/api', truckDetailsRouter);
 app.use('/api', truckInformationRouter);

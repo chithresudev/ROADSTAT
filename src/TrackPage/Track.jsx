@@ -7,6 +7,7 @@ function TrackPage({updateHeader, updateButton}) {
 
     const [startPoint, setStartPoint] = useState(null);
     const [endPoint, setEndPoint] = useState(null);
+    const [trackData, setTrackData] = useState([]);
 
     const startCoordinates = { lat: 37.7749, lng: -122.4194 };
     const endCoordinates = { lat: 34.0522, lng: -118.2437 };
@@ -14,7 +15,22 @@ function TrackPage({updateHeader, updateButton}) {
     useEffect(() => {
         updateHeader('Track');
         updateButton('Track');
+
+        fetchData();
     }, [updateHeader, updateButton]);
+
+        const fetchData = async () => {
+            try {
+                const response = await fetch('http://localhost:3000/api/track-location');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data');
+                }
+                const data = await response.json();
+                setTrackData(data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
 
     const handleOpenMaps = () => {
         if (startCoordinates && endCoordinates) {
@@ -38,7 +54,17 @@ function TrackPage({updateHeader, updateButton}) {
                         </tr>
                     </thead>
                     <tbody>
-
+                    {trackData.map((trackLocation, index) => (
+                            <tr key={index}>
+                                <td>{index + 1}</td>
+                                <td>{trackLocation.truckNo}</td>
+                                <td>{trackLocation.trailerNo}</td>
+                                <td>{trackLocation.gps ? 'Enabled' : 'Disabled'}</td>
+                                <td>{trackLocation.strength}</td>
+                                <td>{trackLocation.locationStatus}</td>
+                                <td>{trackLocation.beacon ? 'Enabled' : 'Disabled'}</td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
