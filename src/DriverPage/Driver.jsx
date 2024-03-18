@@ -4,14 +4,30 @@ import { Line } from 'react-chartjs-2';
 import './Driver.css'
 
 function DriverPage({updateHeader, updateButton,driverId}) {
+    const [drivers, setDrivers] = useState([]);
     const [heartRates, setHeartRates] = useState([]);
     useEffect(() => {
         updateHeader('Driver');
         updateButton('Driver');
+        fetchDriversData();
     }, [updateHeader, updateButton]);
 
     driverId=1;
 
+    const fetchDriversData = async () => {
+        try {
+            const response = await fetch('http://localhost:3000/api/drivers');
+            if (!response.ok) {
+                throw new Error('Failed to fetch drivers data');
+            }
+            const driversData = await response.json();
+            setDrivers(driversData);
+        } catch (error) {
+            console.error('Error fetching drivers data:', error);
+        }
+    };
+
+    
     useEffect(() => {
         const fetchDriverHealth = async () => {
             try {
@@ -85,7 +101,16 @@ function DriverPage({updateHeader, updateButton,driverId}) {
                         </tr>
                     </thead>
                     <tbody>
-
+                    {drivers.map((driver, index) => (
+                            <tr key={index}>
+                                <td>{index + 1}</td>
+                                <td>{driver.driverNo}</td>
+                                <td>{driver.driverName}</td>
+                                <td>{driver.knownHealthIssues}</td>
+                                <td>{driver.experience}</td>
+                                <td>{driver.status}</td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
