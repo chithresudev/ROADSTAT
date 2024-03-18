@@ -26,7 +26,7 @@ function EfficiencyPage({updateHeader, updateButton}) {
     return (
         <div className='mains'>
             <div className='ef-card'>
-                <table className='table'>
+                <table className='ef-table'>
                     <thead>
                         <tr>
                             <th>S No</th>

@@ -44,14 +44,30 @@ function UsagePage({ updateHeader, updateButton }) {
     const handleButtonClick = (buttonName) => {
         setActiveButton(buttonName);
     }
+    const [showPopup, setShowPopup] = useState(false);
+    const [popupContent, setPopupContent] = useState('');
+    const [popupPosition, setPopupPosition] = useState({ x: 0, y: 0 });
 
+    const handleIconClick = (description, event) => {
+        const iconRect = event.target.getBoundingClientRect();
+        const popupX = iconRect.left + window.pageXOffset+15;
+        const popupY = iconRect.top + window.pageYOffset ; // Adjust as needed
+        setShowPopup(true);
+        setPopupContent(description);
+        setPopupPosition({ x: popupX, y: popupY });
+    };
+
+    const handleClosePopup = () => {
+        setShowPopup(false);
+        setPopupContent('');
+    };
     return (
         <div className='u-main'>
             <div className='u-topcards'>
                 <div className={`u-scard ${activeButton === 'Truck Information' ? 'active' : ''}`}>
                     <button className='u-scard-button' onClick={() => handleButtonClick('Truck Information')}>
                         <Link className='u-scard-link'>
-                            <img src="/images/truckin.png" alt="Home" className="u-scard-icon" />
+                            <img src="/images/trin.png" alt="Home" className="u-scard-icon" />
                             <span className="u-scard-text">Truck Information</span>
                         </Link>
                     </button>
@@ -59,7 +75,7 @@ function UsagePage({ updateHeader, updateButton }) {
                 <div className={`u-scard ${activeButton === 'Collision History' ? 'active' : ''}`}>
                     <button className='u-scard-button' onClick={() => handleButtonClick('Collision History')}>
                         <Link className='u-scard-link'>
-                            <img src="/images/coll.png" alt="Home" className="u-scard-icon" />
+                            <img src="/images/col.png" alt="Home" className="u-scard-icon" />
                             <span className="u-scard-text">Collision History</span>
                         </Link>
                     </button>
@@ -174,13 +190,23 @@ function UsagePage({ updateHeader, updateButton }) {
                         <td>{collision.location}</td>
                         <td>{collision.speedMPH}</td>
                         <td>{collision.brakingMS2}</td>
-                        <td>{collision.collision}</td>
+                        <td style={{fontSize:"12px"}}>{collision.collision}</td>
                         <td>{collision.severity}</td>
-                        <td>{collision.description}</td>
+                        <td>
+                            <img src="/images/note.png" className='note-ic' onClick={(event) => handleIconClick(collision.description, event)} />
+                        </td>
                     </tr>
                 ))}
                 </tbody>
             </table>
+            {showPopup && (
+                <div className="popup" style={{ position: 'absolute', top: popupPosition.y, left: popupPosition.x }}>
+                    <div className="popup-content">
+                        <span className="close" onClick={handleClosePopup}>&times;</span>
+                        <p className='pp'>{popupContent}</p>
+                    </div>
+                </div>
+            )}
         </div>
         </div>
          )}

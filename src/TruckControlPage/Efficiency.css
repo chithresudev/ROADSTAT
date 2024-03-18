@@ -7,7 +7,7 @@
 }
 .ef-card {
     height: 200px;
-    padding: 0px 20px 20px 20px;
+    padding: 0px 10px 20px 10px;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
@@ -16,13 +16,13 @@
     margin-bottom: 20px;
 }
 
-.table {
+.ef-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 5px;
 }
 
-.table thead {
+.ef-table thead {
     position: sticky;
     background-color: white;
     z-index: 0; 
@@ -30,24 +30,24 @@
 }
 
 
-.table th,
-.table td {
-    padding: 18px;
+.ef-table th,
+.ef-table td {
+    padding: 18px 0px 18px 0px;
     border-bottom: 1px solid #8B8B8B;
     text-align: left;
     text-align: center; 
 }
 
-.table td{
+.ef-table td{
     font-size: 15px;
     font-weight: 100;
 }
 
-.table th {
+.ef-table th {
     font-weight:700;
 }
 .ef-card th{
-    padding: 18px 45px !important;
+    padding: 18px 43px !important;
 }
 
 .click{
