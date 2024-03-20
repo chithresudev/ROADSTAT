@@ -2,10 +2,9 @@ import mongoose from 'mongoose';
 const { models, model, Schema } = mongoose;
 
 const TrackLocationSchema = new Schema({
-  sNo: { type: Number },
-  truckNo: { type: String },
-  trailerNo: { type: String },
-  gps: { type: Boolean, default: false },
+  truckId: { type: Schema.Types.ObjectId, ref: 'Truck' },
+  trailerId: { type: Schema.Types.ObjectId, ref: 'Trailer' },
+  gps: { type: Boolean, default: true },
   strength: { type: String },
   locationStatus: { type: String },
   beacon: { type: Boolean }

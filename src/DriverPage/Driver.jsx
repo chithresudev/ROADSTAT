@@ -292,7 +292,7 @@ function DriverPage({updateHeader, updateButton,driverId}) {
                     {drivers.map((driver, index) => (
                             <tr key={index}>
                                 <td>{index + 1}</td>
-                                <td><Link onClick={() => setSelectedDriverId(driver.driverNo)}>{driver.driverNo}</Link></td>
+                                <td><Link onClick={() => setSelectedDriverId(driver.driverId)}>{driver.driverId}</Link></td>
                                 <td>{driver.driverName}</td>
                                 <td>{driver.knownHealthIssues}</td>
                                 <td>{driver.experience}</td>
