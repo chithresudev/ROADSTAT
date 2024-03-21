@@ -166,6 +166,209 @@
     border-radius: 10px;
 }
 
+/* Media Queries for Tablet */
+@media only screen and (max-width: 1024px) {
+    .u-main {
+        padding-top: 80px; /* Adjusted padding */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .u-mainprofile {
+        width: 100%; /* Adjusted width */
+        margin-top: 20px;
+    }
+
+    .u-topcards {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px; /* Added gap between cards */
+    }
+
+    .u-scard {
+        width: 200px; /* Adjusted card width */
+        padding: 20px; /* Increased padding */
+        border-radius: 10px; /* Added border-radius */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+        border: 1px solid rgba(44, 43, 43, 0.5);
+    }
+
+    .u-scard.active {
+        background-color: #242F40;
+    }
+
+    .u-scard.active .u-scard-text {
+        color: white;
+    }
+
+    .u-scard.active .u-scard-icon {
+        filter: none;
+    }
+
+    .u-scard-button {
+        background: none;
+        padding: 12px;
+        width: 150px;
+    }
+
+    .u-scard-link {
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .u-scard-icon {
+        width: 25px;
+        height: 20px;
+        margin-right: 10px;
+        filter: grayscale(100%) invert(100%);
+    }
+
+    .u-scard-text {
+        font-size: 16px;
+        font-weight: 500;
+        color: black;
+    }
+
+    .u-card {
+        height: auto; 
+        padding: 20px; 
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+        border: 1px solid rgba(139, 139, 139, 0.5);
+        overflow: auto; 
+    }
+
+    .u-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 5px;
+    }
+
+    .u-table th,
+    .u-table td {
+        padding: 8px;
+        border-bottom: 1px solid #8B8B8B;
+        text-align: center; 
+    }
+
+    .u-table td {
+        font-size: 15px;
+        font-weight: 100;
+    }
+
+    .u-table th {
+        font-weight: 700;
+    }
+}
+
+/* Media Queries for Mobile */
+@media only screen and (max-width: 480px) {
+    .u-main {
+        padding-top: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .u-mainprofile {
+        width: 90%; /* Adjusted width */
+        margin-top: 20px;
+    }
+
+    .u-topcards {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px; /* Added gap between cards */
+    }
+
+    .u-scard {
+        width: calc(50% - 20px); /* Adjusted card width */
+        padding: 20px; /* Increased padding */
+        border-radius: 10px; /* Added border-radius */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+        border: 1px solid rgba(44, 43, 43, 0.5);
+    }
+
+    .u-scard.active {
+        background-color: #242F40;
+    }
+
+    .u-scard.active .u-scard-text {
+        color: white;
+    }
+
+    .u-scard.active .u-scard-icon {
+        filter: none;
+    }
+
+    .u-scard-button {
+        background: none;
+        padding: 12px;
+        width: 150px;
+    }
+
+    .u-scard-link {
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .u-scard-icon {
+        width: 25px;
+        height: 20px;
+        margin-right: 10px;
+        filter: grayscale(100%) invert(100%);
+    }
+
+    .u-scard-text {
+        font-size: 16px;
+        font-weight: 500;
+        color: black;
+    }
+
+    .u-card {
+        width: calc(100% - 40px); /* Adjusted card width */
+        margin: 20px; /* Added margin around the card */
+        padding: 20px; 
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+        border: 1px solid rgba(139, 139, 139, 0.5);
+        overflow: auto; 
+    }
+
+    .u-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 5px;
+    }
+
+    .u-table th,
+    .u-table td {
+        padding: 8px;
+        border-bottom: 1px solid #8B8B8B;
+        text-align: center; 
+    }
+
+    .u-table td {
+        font-size: 15px;
+        font-weight: 100;
+    }
+
+    .u-table th {
+        font-weight: 700;
+    }
+}
+
 .usa-card {
     height: 350px;
     padding: 0px 20px 20px 20px;
@@ -215,3 +418,4 @@
 .pp{
     font-weight: 500;
 }
+
