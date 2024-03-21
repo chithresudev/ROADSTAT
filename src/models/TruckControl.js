@@ -12,8 +12,8 @@ const TruckControlSchema = new Schema({
   NOXLevel: { type: Number },
   HCLevel: { type: Number },
   tirePressure: { type: Number },
-  brakeHealth: { type: String },
-  batteryHealth: { type: String },
+  brakeHealth: { type: Number },
+  batteryHealth: { type: Number },
 }, { timestamps: true });
 
 export const TruckControl = models?.TruckControl || model('TruckControl',TruckControlSchema);

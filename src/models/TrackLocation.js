@@ -7,7 +7,8 @@ const TrackLocationSchema = new Schema({
   gps: { type: Boolean, default: true },
   strength: { type: String },
   locationStatus: { type: String },
-  beacon: { type: Boolean }
+  beacon: { type: Boolean },
+  destination: { type: Schema.Types.ObjectId, ref: 'Destination' }
 }, { timestamps: true });
 
-export const TrackLocation = models?.TrailerLocation || model('TrackLocation', TrackLocationSchema);
+export const TrackLocation = models?.TrackLocation || model('TrackLocation', TrackLocationSchema);

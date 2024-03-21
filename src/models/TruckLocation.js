@@ -9,6 +9,7 @@ const TruckLocationSchema = new Schema({
   longitude: { type: Number },
   status: { type: String },
   gps: { type: Boolean, default: false },
+  destination: { type: Schema.Types.ObjectId, ref: 'Destination' }
 }, { timestamps: true });
 
 export const TruckLocation = models?.TruckLocation || model('TruckLocation', TruckLocationSchema);

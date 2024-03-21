@@ -2,8 +2,7 @@ import mongoose from 'mongoose';
 const { models, model, Schema } = mongoose;
 
 const TruckEfficiencySchema = new Schema({
-  sNo: { type: Number },
-  truckNo: { type: String },
+  truckNo: { type: Schema.Types.ObjectId, ref: 'Truck' },
   serviceHistory: { type: String },
   level: { type: Number },
   status: { type: String },
