@@ -1,14 +1,14 @@
 import { Role } from '.'
-import { User } from '../models/User.js'
 
 export async function configureFakeBackend() {
-    let users = [
-        { id: 1, username: 'admin', password: 'admin', firstName: 'Admin', lastName: 'User', role: Role.Admin },
-        { id: 2, username: 'user', password: 'user', firstName: 'Normal', lastName: 'User', role: Role.User }
-    ];
-
+    // let users = [
+    //     { id: 1, username: 'admin', password: 'admin', firstName: 'Admin', lastName: 'User', role: Role.Admin },
+    //     { id: 2, username: 'user', password: 'user', firstName: 'Normal', lastName: 'User', role: Role.User }
+    // ];
+    let response = await fetch('http://localhost:3000/api/users');
+    let users = await response.json();
     // let users = await User.find();
-    // console.log(users);
+    console.log(users);
     let realFetch = window.fetch;
 
     window.fetch = function (url, opts) {

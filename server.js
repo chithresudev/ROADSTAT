@@ -45,7 +45,6 @@ mongoose.connect(process.env.MONGO_URL)
 app.use(express.json());
 app.use(cors());
 
-
 // Use API routes
 //app.use('/api', userRouter);
 
