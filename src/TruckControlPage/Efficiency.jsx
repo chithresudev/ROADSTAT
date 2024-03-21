@@ -11,7 +11,7 @@ function EfficiencyPage({updateHeader, updateButton}) {
         updateButton('Efficiency');
     }, [updateHeader, updateButton]);
     const fetchTruckData = async () => {
-        const response = await fetch('apiUrl');
+        const response = await fetch('http://localhost:3000/api/truck-efficiency');
         const data = await response.json();
         setTruckData(data);
     };
@@ -26,7 +26,7 @@ function EfficiencyPage({updateHeader, updateButton}) {
     return (
         <div className='mains'>
             <div className='ef-card'>
-                <table className='table'>
+                <table className='ef-table'>
                     <thead>
                         <tr>
                             <th>S No</th>

@@ -17,16 +17,17 @@
 
 // truckLocationAPI.js
 
+
 import express from 'express';
-import {Truck} from '../../models/Truck.js'; // Import Truck model
+import { Truck } from '../../models/Truck.js'; // Import Truck model
 
 const truckDetailsRouter = express.Router();
 
 // GET route handler
 truckDetailsRouter.get('/trucks', async (req, res) => {
     try {
-        const truck = await Truck.find();
-        res.json(truck);
+        const trucks = await Truck.find();
+        res.json(trucks);
     } catch (error) {
       console.error('Error fetching truck details:', error);
       res.status(500).json({ message: 'Internal server error' });
@@ -50,35 +51,22 @@ truckDetailsRouter.get('/trucks/:id', async (req, res) => {
 // POST route handler
 truckDetailsRouter.post('/trucks', async (req, res) => {
   try {
-    // const categoryDoc = await Category.create({ name });
-    // return NextResponse.json(categoryDoc);
-    const { 
-        length,
-        width,
-        height,
-        weight,
-        capacity,
-        engineType,
-        horsePower,
-        transmission,
-        condition,
-        manufacturer,
-        model,
-        manufacturedYear
+    const {
+        truckNo,
+        driverId,
+        location,
+        incidents,
+        status,
+        note
       } = req.body;
-    const truck = await Truck.create({length,
-        width,
-        height,
-        weight,
-        capacity,
-        engineType,
-        horsePower,
-        transmission,
-        condition,
-        manufacturer,
-        model,
-        manufacturedYear});
-    // await truckLocation.save();
+    const truck = await Truck.create({
+        truckNo,
+        driverId,
+        location,
+        incidents,
+        status,
+        note
+    });
     res.json(truck);
   } catch (error) {
     console.error('Error adding truck details:', error);
@@ -91,33 +79,21 @@ truckDetailsRouter.put('/trucks/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const {
-      length,
-      width,
-      height,
-      weight,
-      capacity,
-      engineType,
-      horsePower,
-      transmission,
-      condition,
-      manufacturer,
-      model,
-      manufacturedYear
+      truckNo,
+      driverId,
+      location,
+      incidents,
+      status,
+      note
     } = req.body;
 
     const updatedTruck = await Truck.findByIdAndUpdate(id, {
-      length,
-      width,
-      height,
-      weight,
-      capacity,
-      engineType,
-      horsePower,
-      transmission,
-      condition,
-      manufacturer,
-      model,
-      manufacturedYear
+      truckNo,
+      driverId,
+      location,
+      incidents,
+      status,
+      note
     }, { new: true });
 
     if (!updatedTruck) {
@@ -150,4 +126,3 @@ truckDetailsRouter.delete('/trucks/:id', async (req, res) => {
 });
 
 export default truckDetailsRouter;
-

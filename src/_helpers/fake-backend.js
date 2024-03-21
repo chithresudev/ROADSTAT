@@ -1,23 +1,30 @@
 import { Role } from '.'
+import { User } from '../models/User.js'
 
-export function configureFakeBackend() {
+export async function configureFakeBackend() {
     let users = [
         { id: 1, username: 'admin', password: 'admin', firstName: 'Admin', lastName: 'User', role: Role.Admin },
         { id: 2, username: 'user', password: 'user', firstName: 'Normal', lastName: 'User', role: Role.User }
     ];
+
+    // let users = await User.find();
+    // console.log(users);
     let realFetch = window.fetch;
+
     window.fetch = function (url, opts) {
-        const authHeader = opts.headers['Authorization'];
-        const isLoggedIn = authHeader && authHeader.startsWith('Bearer fake-jwt-token');
-        const roleString = isLoggedIn && authHeader.split('.')[1];
-        const role = roleString ? Role[roleString] : null;
+        //const authHeader = opts.headers['Authorization'];
+        //const authHeader = opts.headers ? opts.headers['Authorization'] : null;
+        //const isLoggedIn = authHeader && authHeader.startsWith('Bearer fake-jwt-token');
+        //const roleString = isLoggedIn && authHeader.split('.')[1];
+        //const role = roleString ? Role[roleString] : null;
 
         return new Promise((resolve, reject) => {
             // wrap in timeout to simulate server api call
-            setTimeout(() => {
+            setTimeout( () => {
                 // authenticate - public
                 if (url.endsWith('/users/authenticate') && opts.method === 'POST') {
                     const params = JSON.parse(opts.body);
+                    console.log(params.username)
                     const user = users.find(x => x.username === params.username && x.password === params.password);
                     if (!user) return error('Username or password is incorrect');
                     return ok({

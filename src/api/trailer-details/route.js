@@ -1,5 +1,5 @@
 import express from 'express';
-import {Trailer} from '../../models/Trailer.js'; // Import Truck model
+import {Trailer} from '../../models/Trailer.js'; // Import Trailer model
 
 const trailerDetailsRouter = express.Router();
 
