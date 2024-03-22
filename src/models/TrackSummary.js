@@ -2,10 +2,11 @@ import mongoose from 'mongoose';
 const { models, model, Schema } = mongoose;
 
 const TrackSummarySchema = new Schema({
-    source: { type: Schema.Types.ObjectId, ref: 'TrackLocation' },
-    truckId: { type: Schema.Types.ObjectId, ref: 'Truck' },
-    driverId: { type: Schema.Types.ObjectId, ref: 'Driver' },
-    destinationId: { type: Schema.Types.ObjectId, ref: 'Destination' },
+    _id: { type: String },
+    truckId: { type: String, ref: 'Truck' },
+    driverId: { type: String, ref: 'Driver' },
+    destinationId: { type: String, ref: 'Destination' },
+    source: { type: String },
     status: { type: String },
   }, { timestamps: true });
   

@@ -32,8 +32,8 @@ collisionHistoryRouter.get('/collision-history/:id', async (req, res) => {
 // POST route handler for adding new collision history
 collisionHistoryRouter.post('/collision-history', async (req, res) => {
     try {
-        const { truckNumber, date, name, time, location, speedMPH, brakingMS2, collision, severity, description } = req.body;
-        const newCollision = await CollisionHistory.create({ truckNumber, date, name, time, location, speedMPH, brakingMS2, collision, severity, description });
+        const { _id, truckId, date, driverName, time, location, speedMPH, brakingMS2, collisionType, severity, description } = req.body;
+        const newCollision = await CollisionHistory.create({ _id, truckId, date, driverName, time, location, speedMPH, brakingMS2, collisionType, severity, description });
         res.json(newCollision);
     } catch (error) {
         console.error('Error adding collision history:', error);
@@ -45,9 +45,9 @@ collisionHistoryRouter.post('/collision-history', async (req, res) => {
 collisionHistoryRouter.put('/collision-history/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const { truckNumber, date, name, time, location, speedMPH, brakingMS2, collision, severity, description } = req.body;
+        const { truckId, date, driverName, time, location, speedMPH, brakingMS2, collisionType, severity, description } = req.body;
         const updatedCollision = await CollisionHistory.findByIdAndUpdate(id, {
-            truckNumber, date, name, time, location, speedMPH, brakingMS2, collision, severity, description
+            truckId, date, driverName, time, location, speedMPH, brakingMS2, collisionType, severity, description
         }, { new: true });
         if (!updatedCollision) {
             return res.status(404).json({ message: "Collision history not found" });

@@ -24,8 +24,8 @@ truckLocationRouter.post('/truck-location', async (req, res) => {
   try {
     // const categoryDoc = await Category.create({ name });
     // return NextResponse.json(categoryDoc);
-    const { truckId, trailerId, latitude, longitude, status, gps } = req.body;
-    const truckLocation = await TruckLocation.create({truckId, trailerId, latitude, longitude, status, gps});
+    const { _id, truckId, trailerId, latitude, longitude, status, gps, destinationId } = req.body;
+    const truckLocation = await TruckLocation.create({ _id, truckId, trailerId, latitude, longitude, status, gps, destinationId });
     // await truckLocation.save();
     res.json(truckLocation);
   } catch (error) {
@@ -44,7 +44,7 @@ truckLocationRouter.put('/truck-location/:truckId', async (req, res) => {
     // Find and update the truck location by truckId
     const updatedTruckLocation = await TruckLocation.findOneAndUpdate(
       { truckId },
-      { trailerId, latitude, longitude, status, gps },
+      { truckId, trailerId, latitude, longitude, status, gps, destinationId },
       { new: true }
     );
 

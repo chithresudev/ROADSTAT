@@ -22,13 +22,13 @@ import truckDetailsRouter from './src/api/truck-details/route.js';
 import truckInformationRouter from './src/api/truck-information/route.js';
 import truckLocationRouter from './src/api/truck-location/route.js';
 import userRouter from './src/api/user-details/route.js';
-import truckEfficiencyRouter from './src/api/Truck-efficiency/route.js'
+import truckEfficiencyRouter from './src/api/truck-efficiency/route.js'
 import EngineHealthRouter from './src/api/maintenance/Engine-health.js';
 import brakeSystemRouter from './src/api/maintenance/Brake-system.js';
 import fuelSystemRouter from './src/api/maintenance/Fuel-system.js';
 import tireHealthRouter from './src/api/maintenance/Tire-health.js';
 import batteryStatusRouter from './src/api/maintenance/Battery-status.js';
-import transmissionRouter from  './src/api/maintenance/Transmission-status.js';
+// import transmissionRouter from  './src/api/maintenance/Transmission-status.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -65,7 +65,7 @@ app.use('/api', brakeSystemRouter);
 app.use('/api', fuelSystemRouter);
 app.use('/api', tireHealthRouter);
 app.use('/api', batteryStatusRouter);
-app.use('/api', transmissionRouter);
+// app.use('/api', transmissionRouter);
 
 // Use other API routes as needed
 

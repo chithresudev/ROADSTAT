@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 const { models, model, Schema } = mongoose;
 
 const DriverSchema = new Schema({
+  _id: { type: String },
   driverName: { type: String },
   knownHealthIssues: { type: String },
   experience: { type: Number },

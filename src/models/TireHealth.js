@@ -2,10 +2,10 @@ import mongoose from 'mongoose';
 const { models, model, Schema } = mongoose;
 
 const TireHealthSchema = new Schema({
-    truckNo: { type: String },
-    truckName: { type: String },
+    _id: { type: String },
+    truckId: { type: String, ref: 'Truck' },
     tirePressure: { type: Number },
-    temperature: { type: Number },
+    tireTemperature: { type: Number },
     tireDepth: { type: Number },
     tireAge: { type: Number },
 }, { timestamps: true });

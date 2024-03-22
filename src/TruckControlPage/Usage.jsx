@@ -176,7 +176,7 @@ function UsagePage({ updateHeader, updateButton }) {
                         <th>Speed<br/> mph</th>
                         <th> Braking<br/> m/s^2</th>
                         <th>Collision</th>
-                        <th>Severaity</th>
+                        <th>Severity</th>
                         <th>Description</th>
                     </tr>
                 </thead>

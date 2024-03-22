@@ -33,8 +33,8 @@ truckInformationRouter.get('/truck-information/:truckId', async (req, res) => {
 // POST route handler for adding new truck information
 truckInformationRouter.post('/truck-information', async (req, res) => {
     try {
-        const { truckNo, model, distanceTravelled, location, idleStartDt, idleStartTime, idleEndDate, idleEndTime, duration } = req.body;
-        const truckInformationDetail = await TruckInformation.create({ truckNo, model, distanceTravelled, location, idleStartDt, idleStartTime, idleEndDate, idleEndTime, duration });
+        const { _id, truckId, model, distanceTravelled, location, idleStartDate, idleStartTime, idleEndDate, idleEndTime, duration } = req.body;
+        const truckInformationDetail = await TruckInformation.create({ _id, truckId, model, distanceTravelled, location, idleStartDate, idleStartTime, idleEndDate, idleEndTime, duration });
         res.json(truckInformationDetail);
     } catch (error) {
         console.error('Error adding truck information details:', error);
@@ -43,12 +43,12 @@ truckInformationRouter.post('/truck-information', async (req, res) => {
 });
 
 // PUT route handler for updating truck information by ID
-truckInformationRouter.put('/truck-information/:truckId', async (req, res) => {
+truckInformationRouter.put('/truck-information/:truckNo', async (req, res) => {
     try {
-        const { truckId } = req.params;
-        const { model, distanceTravelled, location, idleStartDt, idleStartTime, idleEndDate, idleEndTime, duration } = req.body;
-        const updatedTruckInformationDetail = await TruckInformation.findOneAndUpdate({ truckId }, {
-            model, distanceTravelled, location, idleStartDt, idleStartTime, idleEndDate, idleEndTime, duration
+        const { truckNo } = req.params;
+        const { truckId, model, distanceTravelled, location, idleStartDate, idleStartTime, idleEndDate, idleEndTime, duration } = req.body;
+        const updatedTruckInformationDetail = await TruckInformation.findOneAndUpdate({ truckNo }, {
+            truckId, model, distanceTravelled, location, idleStartDate, idleStartTime, idleEndDate, idleEndTime, duration
         }, { new: true });
         if (!updatedTruckInformationDetail) {
             return res.status(404).json({ message: "Truck information details not found" });

@@ -32,15 +32,15 @@ fuelSystemRouter.get('/fuel-system/:id', async (req, res) => {
 fuelSystemRouter.post('/fuel-system', async (req, res) => {
     try {
         const {
-            truckNo,
-            truckName,
+            _id,
+            truckId,
             fuelLevel,
             fuelConsumptionRate,
             fuelEfficiency
         } = req.body;
         const fuelSystem = await FuelSystem.create({
-            truckNo,
-            truckName,
+            _id,
+            truckId,
             fuelLevel,
             fuelConsumptionRate,
             fuelEfficiency
@@ -57,16 +57,14 @@ fuelSystemRouter.put('/fuel-system/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const {
-            truckNo,
-            truckName,
+            truckId,
             fuelLevel,
             fuelConsumptionRate,
             fuelEfficiency
         } = req.body;
 
         const updatedFuelSystem = await FuelSystem.findByIdAndUpdate(id, {
-            truckNo,
-            truckName,
+            truckId,
             fuelLevel,
             fuelConsumptionRate,
             fuelEfficiency

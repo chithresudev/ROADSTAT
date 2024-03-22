@@ -2,11 +2,12 @@ import mongoose from 'mongoose';
 const { models, model, Schema } = mongoose;
 
 const TruckInformationSchema = new Schema({
-  truckNo: { type: String },
+  _id: { type: String },
+  truckId: { type: String, ref: 'Truck' },
   model: { type: String },
   distanceTravelled: { type: Number },
   location: { type: String },
-  idleStartDt: { type: Date },
+  idleStartDate: { type: Date },
   idleStartTime: { type: String },
   idleEndDate: { type: Date },
   idleEndTime: { type: String },

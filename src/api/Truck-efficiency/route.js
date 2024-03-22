@@ -32,15 +32,15 @@ truckEfficiencyRouter.get('/truck-efficiency/:id', async (req, res) => {
 truckEfficiencyRouter.post('/truck-efficiency', async (req, res) => {
   try {
     const {
-        sNo,
-        truckNo,
+        _id,
+        truckId,
         serviceHistory,
         level,
         status
     } = req.body;
     const truck = await TruckEfficiency.create({ // Corrected usage of TruckEfficiency model
-        sNo,
-        truckNo,
+        _id,
+        truckId,
         serviceHistory,
         level,
         status
@@ -57,19 +57,17 @@ truckEfficiencyRouter.put('/truck-efficiency/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const {
-        sNo,
-        truckNo,
-        serviceHistory,
-        level,
-        status
+      truckId,
+      serviceHistory,
+      level,
+      status
     } = req.body;
 
     const updatedTruck = await TruckEfficiency.findByIdAndUpdate(id, {
-        sNo,
-        truckNo,
-        serviceHistory,
-        level,
-        status
+      truckId,
+      serviceHistory,
+      level,
+      status
     }, { new: true });
 
     if (!updatedTruck) {

@@ -32,16 +32,16 @@ brakeSystemRouter.get('/brake-system/:id', async (req, res) => {
 brakeSystemRouter.post('/brake-system', async (req, res) => {
     try {
         const {
-            truckNo,
-            truckName,
+            _id,
+            truckId,
             padWear,
             fluidLevel,
             pressure,
             absStatus
         } = req.body;
         const brake = await BrakeSystem.create({ // Corrected usage of BrakeSystem model
-            truckNo,
-            truckName,
+            _id,
+            truckId,
             padWear,
             fluidLevel,
             pressure,
@@ -59,8 +59,7 @@ brakeSystemRouter.put('/brake-system/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const {
-            truckNo,
-            truckName,
+            truckId,
             padWear,
             fluidLevel,
             pressure,
@@ -68,8 +67,7 @@ brakeSystemRouter.put('/brake-system/:id', async (req, res) => {
         } = req.body;
 
         const updatedBrake = await BrakeSystem.findByIdAndUpdate(id, {
-            truckNo,
-            truckName,
+            truckId,
             padWear,
             fluidLevel,
             pressure,

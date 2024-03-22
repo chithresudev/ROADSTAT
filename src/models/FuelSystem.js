@@ -2,8 +2,8 @@ import mongoose from 'mongoose';
 const { models, model, Schema } = mongoose;
 
 const FuelSystemSchema = new Schema({
-    truckNo: { type: String },
-    truckName: { type: String },
+    _id: { type: String },
+    truckId: { type: String, ref: 'Truck' },
     fuelLevel: { type: Number },
     fuelConsumptionRate: { type: Number },
     fuelEfficiency: { type: Number },

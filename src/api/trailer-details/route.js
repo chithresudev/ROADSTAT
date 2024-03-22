@@ -34,9 +34,11 @@ trailerDetailsRouter.post('/trailers', async (req, res) => {
     // const categoryDoc = await Category.create({ name });
     // return NextResponse.json(categoryDoc);
     const { 
+        _id,
         length,
         width,
         height,
+        weight,
         capacity,
         condition,
         manufacturer,
@@ -44,13 +46,16 @@ trailerDetailsRouter.post('/trailers', async (req, res) => {
         manufacturedYear
       } = req.body;
     const trailer = await Trailer.create({length,
-      width,
-      height,
-      capacity,
-      condition,
-      manufacturer,
-      model,
-      manufacturedYear});
+        _id,
+        length,
+        width,
+        height,
+        weight,
+        capacity,
+        condition,
+        manufacturer,
+        model,
+        manufacturedYear});
     // await truckLocation.save();
     res.json(trailer);
   } catch (error) {
@@ -69,9 +74,6 @@ trailerDetailsRouter.put('/trailers/:id', async (req, res) => {
       height,
       weight,
       capacity,
-      engineType,
-      horsePower,
-      transmission,
       condition,
       manufacturer,
       model,
@@ -84,9 +86,6 @@ trailerDetailsRouter.put('/trailers/:id', async (req, res) => {
       height,
       weight,
       capacity,
-      engineType,
-      horsePower,
-      transmission,
       condition,
       manufacturer,
       model,

@@ -21,8 +21,8 @@ truckControlRouter.get('/truck-control/:truckId', async (req, res) => {
 // POST route handler for adding new truck control details
 truckControlRouter.post('/truck-control', async (req, res) => {
     try {
-        const { truckId, status, speed, fuelLevel, fuelPressure, engineTemp, COLevel, NOXLevel, HCLevel, tirePressure, brakeHealth, batteryHealth } = req.body;
-        const truckControlDetail = await TruckControl.create({ truckId, status, speed, fuelLevel, fuelPressure, engineTemp, COLevel, NOXLevel, HCLevel, tirePressure, brakeHealth, batteryHealth });
+        const { _id, truckId, status, speed, fuelLevel, fuelPressure, engineTemp, COLevel, NOXLevel, HCLevel, tirePressure, brakeHealth, batteryHealth } = req.body;
+        const truckControlDetail = await TruckControl.create({ _id, truckId, status, speed, fuelLevel, fuelPressure, engineTemp, COLevel, NOXLevel, HCLevel, tirePressure, brakeHealth, batteryHealth });
         res.json(truckControlDetail);
     } catch (error) {
         console.error('Error adding truck control details:', error);
@@ -31,11 +31,11 @@ truckControlRouter.post('/truck-control', async (req, res) => {
 });
 
 // PUT route handler for updating truck control details by ID
-truckControlRouter.put('/truck-control/:truckId', async (req, res) => {
+truckControlRouter.put('/truck-control/:truckNo', async (req, res) => {
     try {
-        const { truckId } = req.params;
-        const { status, speed, fuelLevel, fuelPressure, engineTemp, COLevel, NOXLevel, HCLevel, tirePressure, brakeHealth, batteryHealth } = req.body;
-        const updatedTruckControlDetail = await TruckControl.findOneAndUpdate({ truckId }, {
+        const { truckNo } = req.params;
+        const { truckId, status, speed, fuelLevel, fuelPressure, engineTemp, COLevel, NOXLevel, HCLevel, tirePressure, brakeHealth, batteryHealth } = req.body;
+        const updatedTruckControlDetail = await TruckControl.findOneAndUpdate({ truckNo }, {
             truckId, status, speed, fuelLevel, fuelPressure, engineTemp, COLevel, NOXLevel, HCLevel, tirePressure, brakeHealth, batteryHealth
         }, { new: true });
         if (!updatedTruckControlDetail) {

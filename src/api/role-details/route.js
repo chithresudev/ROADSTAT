@@ -32,8 +32,8 @@ roleRouter.get('/roles/:id', async (req, res) => {
 // POST route handler for creating a new role
 roleRouter.post('/roles', async (req, res) => {
     try {
-        const { name } = req.body;
-        const role = await Role.create({ name });
+        const { _id, roleName } = req.body;
+        const role = await Role.create({ _id, roleName });
         res.json(role);
     } catch (error) {
         console.error('Error creating role:', error);
@@ -45,9 +45,9 @@ roleRouter.post('/roles', async (req, res) => {
 roleRouter.put('/roles/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const { name } = req.body;
+        const { roleName } = req.body;
         const updatedRole = await Role.findByIdAndUpdate(id, {
-            name
+            roleName
         }, { new: true });
         if (!updatedRole) {
             return res.status(404).json({ message: "Role not found" });

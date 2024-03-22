@@ -32,16 +32,16 @@ batteryStatusRouter.get('/battery-status/:id', async (req, res) => {
 batteryStatusRouter.post('/battery-status', async (req, res) => {
     try {
         const {
-            truckNo,
-            truckName,
+            _id,
+            truckId,
             batteryVoltage,
             chargeStatus,
             healthPercentage,
             lastReplace
         } = req.body;
         const batteryStatus = await BatteryStatus.create({
-            truckNo,
-            truckName,
+            _id,
+            truckId,
             batteryVoltage,
             chargeStatus,
             healthPercentage,
@@ -59,8 +59,7 @@ batteryStatusRouter.put('/battery-status/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const {
-            truckNo,
-            truckName,
+            truckId,
             batteryVoltage,
             chargeStatus,
             healthPercentage,
@@ -68,8 +67,7 @@ batteryStatusRouter.put('/battery-status/:id', async (req, res) => {
         } = req.body;
 
         const updatedBatteryStatus = await BatteryStatus.findByIdAndUpdate(id, {
-            truckNo,
-            truckName,
+            truckId,
             batteryVoltage,
             chargeStatus,
             healthPercentage,

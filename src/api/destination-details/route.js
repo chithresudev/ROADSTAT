@@ -32,8 +32,8 @@ destinationRouter.get('/destinations/:id', async (req, res) => {
 // POST route handler for adding new destination details
 destinationRouter.post('/destinations', async (req, res) => {
     try {
-        const { latitude, longitude } = req.body;
-        const destination = await Destination.create({ latitude, longitude });
+        const { _id, destinationName, latitude, longitude } = req.body;
+        const destination = await Destination.create({ _id, destinationName, latitude, longitude });
         res.json(destination);
     } catch (error) {
         console.error('Error adding destination details:', error);
@@ -45,9 +45,9 @@ destinationRouter.post('/destinations', async (req, res) => {
 destinationRouter.put('/destinations/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const { latitude, longitude } = req.body;
+        const { destinationName, latitude, longitude } = req.body;
         const updatedDestination = await Destination.findByIdAndUpdate(id, {
-            latitude, longitude
+            destinationName, latitude, longitude
         }, { new: true });
         if (!updatedDestination) {
             return res.status(404).json({ message: "Destination not found" });

@@ -32,8 +32,8 @@ userRouter.get('/users/:id', async (req, res) => {
 // POST route handler for creating a new user
 userRouter.post('/users', async (req, res) => {
     try {
-        const { username, email, password, role } = req.body;
-        const user = await User.create({ username, email, password, role });
+        const { _id, username, email, password, role } = req.body;
+        const user = await User.create({ _id, username, email, password, role });
         res.json(user);
     } catch (error) {
         console.error('Error creating user:', error);
