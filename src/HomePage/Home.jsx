@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { GoogleMap, Marker, LoadScript } from '@react-google-maps/api';
 import './Home.css';
 import MapComponent from './MapComponent';
-
+import dotenv from 'dotenv';
 
 function HomePage({updateHeader,updateButton}) {
     const [currentTime, setCurrentTime] = useState('');
@@ -15,6 +15,7 @@ function HomePage({updateHeader,updateButton}) {
     const [filteredTruckData, setFilteredTruckData] = useState([]);
     const [mapKey, setMapKey] = useState(0);
     const [selectedTruckNo, setSelectedTruckNo] = useState(null);
+    const open_weather_api = process.env.OPEN_WEATHER_API;
 
     useEffect(() => {
         updateHeader('Home');
@@ -27,7 +28,7 @@ function HomePage({updateHeader,updateButton}) {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(async (position) => {
                     const { latitude, longitude } = position.coords;
-                    const apiKey = '7f96cca8ee2ccf330a7e4a5a7f70d017';
+                    const apiKey = process.env.OPEN_WEATHER_API;
                     const apiURL = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
                     try {
                         const response = await fetch(apiURL);
@@ -156,7 +157,7 @@ function HomePage({updateHeader,updateButton}) {
                         <th>Incidents</th>
                         <th>
                             Status
-                            <img src="/images/sort.png" onClick={() => handleStatusFilter('yes')} className='filter-button'/>
+                            <img src="/images/sort.png" onClick={() => handleStatusFilter('Yes')} className='filter-button'/>
                         </th>
                         <th>Note</th>
                     </tr>
@@ -165,11 +166,11 @@ function HomePage({updateHeader,updateButton}) {
                     {filteredTruckData.map((truck, index) => (
                         <tr key={index}>
                             <td>{index + 1}</td>
-                            <td>{truck.truckNo}</td>
+                            <td>{truck.truckId}</td>
                             <td>{truck.driverId}</td>
-                            <td><Link to="#" onClick={() => handleMapButtonClick(truck.truckNo)} className='click'>Click Here</Link></td>
+                            <td><Link to="#" onClick={() => handleMapButtonClick(truck.truckId)} className='click'>Click Here</Link></td>
                             <td>{truck.incidents}</td>
-                            <td>{truck.status === 'yes' ? <img src="/images/yes.png" alt="Yes" className="status-image" /> : <img src="/images/no.png" alt="No" className="status-image"/>}</td>
+                            <td>{truck.status === 'Yes' ? <img src="/images/yes.png" alt="Yes" className="status-image" /> : <img src="/images/no.png" alt="No" className="status-image"/>}</td>
                             <td>{truck.note}</td>
                         </tr>
                     ))}

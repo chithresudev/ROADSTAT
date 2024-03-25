@@ -32,18 +32,20 @@ tireHealthRouter.get('/tire-health/:id', async (req, res) => {
 tireHealthRouter.post('/tire-health', async (req, res) => {
     try {
         const {
-            truckNo,
+            _id,
+            truckId,
             truckName,
             tirePressure,
-            temperature,
+            tireTemperature,
             tireDepth,
             tireAge
         } = req.body;
         const tireHealth = await TireHealth.create({
-            truckNo,
+            _id,
+            truckId,
             truckName,
             tirePressure,
-            temperature,
+            tireTemperature,
             tireDepth,
             tireAge
         });
@@ -59,19 +61,19 @@ tireHealthRouter.put('/tire-health/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const {
-            truckNo,
+            truckId,
             truckName,
             tirePressure,
-            temperature,
+            tireTemperature,
             tireDepth,
             tireAge
         } = req.body;
 
         const updatedTireHealth = await TireHealth.findByIdAndUpdate(id, {
-            truckNo,
+            truckId,
             truckName,
             tirePressure,
-            temperature,
+            tireTemperature,
             tireDepth,
             tireAge
         }, { new: true });

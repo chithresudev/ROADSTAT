@@ -2,7 +2,8 @@ import mongoose from 'mongoose';
 const { models, model, Schema } = mongoose;
 
 const TruckControlSchema = new Schema({
-  truckId: { type: Schema.Types.ObjectId, ref: 'Truck' },
+  _id: { type: String },
+  truckId: { type: String, ref: 'Truck' },
   status: { type: String },
   speed: { type: Number },
   fuelLevel: { type: Number },
@@ -12,8 +13,8 @@ const TruckControlSchema = new Schema({
   NOXLevel: { type: Number },
   HCLevel: { type: Number },
   tirePressure: { type: Number },
-  brakeHealth: { type: String },
-  batteryHealth: { type: String },
+  brakeHealth: { type: Number },
+  batteryHealth: { type: Number },
 }, { timestamps: true });
 
 export const TruckControl = models?.TruckControl || model('TruckControl',TruckControlSchema);

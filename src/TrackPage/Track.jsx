@@ -8,8 +8,8 @@ function TrackPage({updateHeader, updateButton}) {
     const [startPoint, setStartPoint] = useState(null);
     const [endPoint, setEndPoint] = useState(null);
     const [trackData, setTrackData] = useState([]);
-    const [selectedRowIndex, setSelectedRowIndex] = useState(0); // Initialize with 0 for first row
-    const [selectedTruckNo, setSelectedTruckNo] = useState(null); // Initialize with null
+    const [selectedRowIndex, setSelectedRowIndex] = useState(0); 
+    const [selectedTruckNo, setSelectedTruckNo] = useState(null);
     const [truckLocations, setTruckLocations] = useState([]);
     const [truckDestinations, setTruckDestinations] = useState([]);
     const [showRunningOnly, setShowRunningOnly] = useState(false);
@@ -23,7 +23,7 @@ function TrackPage({updateHeader, updateButton}) {
 
     useEffect(() => {
         if (trackData.length > 0) {
-            const firstTruckNo = trackData[0].truckNo;
+            const firstTruckNo = trackData[0].truckId;
             setSelectedTruckNo(firstTruckNo);
             fetchTruckLocationsAndDestinations(firstTruckNo);
         }
@@ -43,17 +43,16 @@ function TrackPage({updateHeader, updateButton}) {
     };
 
     const handleOpenMaps = () => {
-        if (truckLocations && truckDestinations.length>0) {
-            const url = `https://www.google.com/maps/dir/?api=1&origin=${truckLocations.latitude},${truckLocations.longitude}&destination=${truckDestinations[0].latitude},${truckDestinations[0].longitude}&travelmode=driving`;
+        if (truckLocations && truckDestinations) {
+            const url = `https://www.google.com/maps/dir/?api=1&origin=${truckLocations.latitude},${truckLocations.longitude}&destination=${truckDestinations.latitude},${truckDestinations.longitude}&travelmode=driving`;
             window.open(url, '_blank');
         }
     };
 
-    const fetchTruckLocationsAndDestinations = async (truckNo) => {
+    const fetchTruckLocationsAndDestinations = async (truckId) => {
         try {
-            const locationsResponse = await fetch(`http://localhost:3000/api/truck-location/${truckNo}`);
-            const destinationsResponse = await fetch(`http://localhost:3000/api/destinations/${truckNo}`);
-
+            const locationsResponse = await fetch(`http://localhost:3000/api/truck-location/${truckId}`);
+            const destinationsResponse = await fetch(`http://localhost:3000/api/destinations/${truckId}`);
             if (!locationsResponse.ok || !destinationsResponse.ok) {
                 throw new Error('Failed to fetch truck locations or destinations');
             }
@@ -70,9 +69,9 @@ function TrackPage({updateHeader, updateButton}) {
         }
     };
 
-    const handleRowClick = (index, truckNo) => {
+    const handleRowClick = (index, truckId) => {
         setSelectedRowIndex(index);
-        setSelectedTruckNo(truckNo);
+        setSelectedTruckNo(truckId);
     };
 
     useEffect(() => {
@@ -107,11 +106,11 @@ function TrackPage({updateHeader, updateButton}) {
                             <tr 
                                 key={index}
                                 className={selectedRowIndex === index ? 'selected' : ''}
-                                onClick={() => handleRowClick(index, trackLocation.truckNo)}
+                                onClick={() => handleRowClick(index, trackLocation.truckId)}
                             >
                                 <td>{index + 1}</td>
-                                <td>{trackLocation.truckNo}</td>
-                                <td>{trackLocation.trailerNo}</td>
+                                <td>{trackLocation.truckId}</td>
+                                <td>{trackLocation.trailerId}</td>
                                 <td>{trackLocation.gps ? 'Enabled' : 'Disabled'}</td>
                                 <td>{trackLocation.strength}</td>
                                 <td>{trackLocation.locationStatus}</td>
@@ -126,7 +125,7 @@ function TrackPage({updateHeader, updateButton}) {
                     <div className="tr-content">
                         <div className='tr-access'>
                             <div className='e-details' id="map" style={{paddingLeft:"0px",paddingRight:"0px",overflow: "hidden"}}>
-                                {(truckLocations && truckDestinations.length>0) && (
+                                {(truckLocations && truckDestinations) && (
                                     <DMapComponent truckLocations={truckLocations} truckDestinations={truckDestinations} />
                                 )}
                             </div>
@@ -141,46 +140,43 @@ function TrackPage({updateHeader, updateButton}) {
                         <div className='tra-access'>
                             <div className='tra-details'>
                             <table className='tra-table'>
-                                <tbody>
-                                    {truckDestinations.map((destination, index) => (
-                                        <React.Fragment key={index}>
-                                            <tr>
-                                                <td><strong>Source</strong></td>
-                                                <td><strong>:</strong></td>
-                                                <td>{destination.source}</td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>Driver Id</strong></td>
-                                                <td><strong>:</strong></td>
-                                                <td>
-                                                    <Link to={`/driver?driverId=${destination.driverId}`} className={destination.driverId ? 'click' : 'clickempty'}>
-                                                        {destination.driverId ? destination.driverId : '-'}
-                                                    </Link>
-                                                </td> 
-                                            </tr>
-                                            <tr>
-                                                <td><strong>Destination Id</strong></td>
-                                                <td><strong>:</strong></td>
-                                                <td>{destination.destinationId ? destination.destinationId : '-'}</td> 
-                                            </tr>
-                                            <tr>
-                                                <td><strong>Truck Condition</strong></td>
-                                                <td><strong>:</strong></td>
-                                                <td><Link to={`/maintenance?truckNo=${destination.truckId}`} className='click'>Click Here</Link></td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>Status</strong></td>
-                                                <td><strong>:</strong></td>
-                                                <td>{destination.status}</td>
-                                            </tr>
-                                            <tr>
-                                                <td><Link className='click'>Trailer Location</Link></td>
-                                                <td></td>
-                                                <td><button className='tra-al-button'>Alert ?</button></td>
-                                            </tr>
-                                        </React.Fragment>
-                                    ))}
+                            <tbody>
+                                    <tr>
+                                        <td><strong>Source</strong></td>
+                                        <td><strong>:</strong></td>
+                                        <td>{truckDestinations.source}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Driver Id</strong></td>
+                                        <td><strong>:</strong></td>
+                                        <td>
+                                            <Link to={`/driver?driverId=${truckDestinations.driverId}`} className={truckDestinations.driverId ? 'click' : 'clickempty'}>
+                                                {truckDestinations.driverId ? truckDestinations.driverId : '-'}
+                                            </Link>
+                                        </td> 
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Destination Id</strong></td>
+                                        <td><strong>:</strong></td>
+                                        <td>{truckDestinations.destinationId ? truckDestinations.destinationId : '-'}</td> 
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Truck Condition</strong></td>
+                                        <td><strong>:</strong></td>
+                                        <td><Link to={`/maintenance?truckNo=${truckDestinations.truckId}`} className='click'>Click Here</Link></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Status</strong></td>
+                                        <td><strong>:</strong></td>
+                                        <td>{truckDestinations.status}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><Link className='click'>Trailer Location</Link></td>
+                                        <td></td>
+                                        <td><button className='tra-al-button'>Alert ?</button></td>
+                                    </tr>
                                 </tbody>
+
                             </table>
 
                             </div>

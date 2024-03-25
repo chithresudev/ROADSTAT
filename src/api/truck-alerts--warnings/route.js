@@ -74,19 +74,21 @@ truckMetricsRouter.post('/metrics/:truckId', async (req, res) => {
           // Save the alert or warning
           if (type === 'alert') {
             const alert = await Alert.create({
+              _id,
               truckId,
               metric: key,
               value,
-              message,
+              message
             });
             res.json(alert)
             alerts.push(alert);
           } else {
             const warning = new Warning({
+              _id,
               truckId,
               metric: key,
               value,
-              message,
+              message
             });
             res.json(warning)
             warnings.push(warning);

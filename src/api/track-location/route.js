@@ -30,8 +30,8 @@ trackLocationRouter.get('/track-location/:trailerNo', async (req, res) => {
 // POST route handler
 trackLocationRouter.post('/track-location', async (req, res) => {
   try {
-    const { truckNo, trailerNo, gps, strength, locationStatus, beacon } = req.body;
-    const trackLocation = await TrackLocation.create({ truckNo, trailerNo, gps, strength, locationStatus, beacon });
+    const { _id, truckId, trailerId, gps, strength, locationStatus, beacon, destination } = req.body;
+    const trackLocation = await TrackLocation.create({ _id, truckId, trailerId, gps, strength, locationStatus, beacon, destination });
     res.json(trackLocation);
   } catch (error) {
     console.error('Error adding track location:', error);
@@ -43,12 +43,12 @@ trackLocationRouter.post('/track-location', async (req, res) => {
 trackLocationRouter.put('/track-location/:trailerNo', async (req, res) => {
   try {
     const { trailerNo } = req.params;
-    const { truckNo, gps, strength, locationStatus, beacon } = req.body;
+    const { truckId, trailerId, gps, strength, locationStatus, beacon, destination } = req.body;
 
     // Find and update the track location by trailerNo
     const updatedTrackLocation = await TrackLocation.findOneAndUpdate(
       { trailerNo },
-      { truckNo, gps, strength, locationStatus, beacon },
+      { truckId, trailerId, gps, strength, locationStatus, beacon, destination },
       { new: true }
     );
 

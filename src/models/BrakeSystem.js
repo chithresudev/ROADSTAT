@@ -1,13 +1,14 @@
-    import mongoose from 'mongoose';
-    const { models, model, Schema } = mongoose;
+import mongoose from 'mongoose';
+const { models, model, Schema } = mongoose;
 
-    const BrakeSystemSchema = new Schema({
-    truckNo: { type: String },
-    truckName: { type: String },
+const BrakeSystemSchema = new Schema({
+    _id: { type: String },
+    truckId: { type: String, ref: 'Truck' },
+    truckName: {type:String},
     padWear: { type: Number },
     fluidLevel: { type: Number },
     pressure: { type: Number },
     absStatus: { type: String },
-    }, { timestamps: true });
+}, { timestamps: true });
 
-    export const BrakeSystem = models?.BrakeHealth || model('BrakeSystem', BrakeSystemSchema);
+export const BrakeSystem = models?.BrakeHealth || model('BrakeSystem', BrakeSystemSchema);

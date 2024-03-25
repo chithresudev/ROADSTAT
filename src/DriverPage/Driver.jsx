@@ -108,9 +108,9 @@ function DriverPage({updateHeader, updateButton,driverId}) {
                     </thead>
                     <tbody>
                     {drivers.map((driver, index) => (
-                            <tr key={index} className={driver.driverNo === selectedDriverNo ? 'selected-row' : ''}>
+                            <tr key={index} className={driver.driverId === selectedDriverNo ? 'selected-row' : ''}>
                                 <td>{index + 1}</td>
-                                <td>{driver.driverNo}</td>
+                                <td>{driver.driverId}</td>
                                 <td>{driver.driverName}</td>
                                 <td>{driver.knownHealthIssues}</td>
                                 <td>{driver.experience}</td>

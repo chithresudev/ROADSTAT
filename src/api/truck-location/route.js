@@ -19,18 +19,16 @@ truckLocationRouter.get('/truck-location/:truckId', async (req, res) => {
   }
 });
 
+
+// GET route handler
 truckLocationRouter.get('/truck-location', async (req, res) => {
   try {
-    // Retrieve all truck locations from the database
-    const allTruckLocations = await TruckLocation.find({});
-   
-    // Check if there are no truck locations found
-    if (allTruckLocations.length === 0) {
-      return res.status(404).json({ message: "No truck location details found" });
+    // Fetch all data from the collection
+    const truckLocations = await TruckLocation.find();
+    if (!truckLocations || truckLocations.length === 0) {
+      return res.status(404).json({ message: "Truck location details not found" });
     }
- 
-    // Return the array of all truck locations
-    res.json(allTruckLocations);
+    res.json(truckLocations);
   } catch (error) {
     console.error('Error fetching truck locations:', error);
     res.status(500).json({ message: 'Internal server error' });
@@ -42,8 +40,8 @@ truckLocationRouter.post('/truck-location', async (req, res) => {
   try {
     // const categoryDoc = await Category.create({ name });
     // return NextResponse.json(categoryDoc);
-    const { truckId, trailerId, latitude, longitude, status, gps } = req.body;
-    const truckLocation = await TruckLocation.create({truckId, trailerId, latitude, longitude, status, gps});
+    const { _id, truckId, trailerId, latitude, longitude, status, gps} = req.body;
+    const truckLocation = await TruckLocation.create({ _id, truckId, trailerId, latitude, longitude, status, gps });
     // await truckLocation.save();
     res.json(truckLocation);
   } catch (error) {
@@ -62,7 +60,7 @@ truckLocationRouter.put('/truck-location/:truckId', async (req, res) => {
     // Find and update the truck location by truckId
     const updatedTruckLocation = await TruckLocation.findOneAndUpdate(
       { truckId },
-      { trailerId, latitude, longitude, status, gps },
+      { truckId, trailerId, latitude, longitude, status, gps },
       { new: true }
     );
 

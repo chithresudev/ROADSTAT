@@ -3,6 +3,17 @@ import { DriverHealth } from '../../models/DriverHealth.js';
 
 const driverHealthRouter = express.Router();
 
+// GET route handler for fetching all driver health details
+driverHealthRouter.get('/driver-health', async (req, res) => {
+    try {
+        const allDriverHealthDetails = await DriverHealth.find({});
+        res.json(allDriverHealthDetails);   
+    } catch (error) {
+        console.error('Error fetching all driver health details:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
 // GET route handler for fetching driver health details by ID
 driverHealthRouter.get('/driver-health/:driverId', async (req, res) => {
     try {
@@ -21,8 +32,8 @@ driverHealthRouter.get('/driver-health/:driverId', async (req, res) => {
 // POST route handler for adding new driver health details
 driverHealthRouter.post('/driver-health', async (req, res) => {
     try {
-        const { driverId, heartRate, fatigueLevel, bodyTemp, hydrationLevel, stressLevel, healthStatus } = req.body;
-        const driverHealthDetail = await DriverHealth.create({ driverId, heartRate, fatigueLevel, bodyTemp, hydrationLevel, stressLevel, healthStatus });
+        const { _id, driverId, heartRate, fatigueLevel, bodyTemp, hydrationLevel, stressLevel, healthStatus } = req.body;
+        const driverHealthDetail = await DriverHealth.create({ _id, driverId, heartRate, fatigueLevel, bodyTemp, hydrationLevel, stressLevel, healthStatus });
         res.json(driverHealthDetail);
     } catch (error) {
         console.error('Error adding driver health details:', error);
@@ -31,11 +42,11 @@ driverHealthRouter.post('/driver-health', async (req, res) => {
 });
 
 // PUT route handler for updating driver health details by ID
-driverHealthRouter.put('/driver-health/:driverId', async (req, res) => {
+driverHealthRouter.put('/driver-health/:driverNo', async (req, res) => {
     try {
-        const { driverId } = req.params;
-        const { heartRate, fatigueLevel, bodyTemp, hydrationLevel, stressLevel, healthStatus } = req.body;
-        const updatedDriverHealthDetail = await DriverHealth.findOneAndUpdate({ driverId }, {
+        const { driverNo } = req.params;
+        const { driverId, heartRate, fatigueLevel, bodyTemp, hydrationLevel, stressLevel, healthStatus } = req.body;
+        const updatedDriverHealthDetail = await DriverHealth.findOneAndUpdate({ driverNo }, {
             driverId, heartRate, fatigueLevel, bodyTemp, hydrationLevel, stressLevel, healthStatus
         }, { new: true });
         if (!updatedDriverHealthDetail) {

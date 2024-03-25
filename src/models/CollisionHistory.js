@@ -2,14 +2,15 @@ import mongoose from 'mongoose';
 const { models, model, Schema } = mongoose;
 
 const CollisionHistorySchema = new Schema({
-  truckNumber: { type: String },
+  _id: { type: String },
+  truckId: { type: String, ref: 'Truck' },
   date: { type: Date },
-  name: { type: String },
+  driverName: { type: String },
   time: { type: String },
   location: { type: String },
   speedMPH: { type: Number },
   brakingMS2: { type: Number },
-  collision: { type: String },
+  collisionType: { type: String },
   severity: { type: String },
   description: { type: String },
 }, { timestamps: true });

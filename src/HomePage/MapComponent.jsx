@@ -2,6 +2,7 @@ import React from 'react';
 import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 import truckIcon from '/images/truckloc.png';
 import truckIcon2 from '/images/truckloc2.png';
+import dotenv from 'dotenv';
 
 const containerStyle = {
   width: '100%',
@@ -13,11 +14,14 @@ const center = {
   lng: -79.6248
 };
 
+const google_map_api = process.env.GOOGLE_MAP_API;
+
+
 function MapComponent({ truckLocations, selectedTruckNo }) {
     
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: "AIzaSyAiCj4d2M6PAX7OZ1c0cSSQCdT7RXmhwA0"
+    googleMapsApiKey: google_map_api
   });
 
   const [map, setMap] = React.useState(null);

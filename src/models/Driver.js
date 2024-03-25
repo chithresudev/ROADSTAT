@@ -2,8 +2,8 @@ import mongoose from 'mongoose';
 const { models, model, Schema } = mongoose;
 
 const DriverSchema = new Schema({
-  sNo: { type: Number },
-  driverNo: { type: String },
+  _id: { type: String },
+  driverId: {type:String},
   driverName: { type: String },
   knownHealthIssues: { type: String },
   experience: { type: Number },

@@ -2,13 +2,14 @@ import mongoose from 'mongoose';
 const { models, model, Schema } = mongoose;
 
 const TrackLocationSchema = new Schema({
-  sNo: { type: Number },
-  truckNo: { type: String },
-  trailerNo: { type: String },
-  gps: { type: Boolean, default: false },
+  _id: { type: String },
+  truckId: { type: String, ref: 'Truck' },
+  trailerId: { type: String, ref: 'Trailer' },
+  gps: { type: Boolean, default: true },
   strength: { type: String },
   locationStatus: { type: String },
-  beacon: { type: Boolean }
+  beacon: { type: Boolean },
+  // destination: { type: String, ref: 'Destination' }
 }, { timestamps: true });
 
-export const TrackLocation = models?.TrailerLocation || model('TrackLocation', TrackLocationSchema);
+export const TrackLocation = models?.TrackLocation || model('TrackLocation', TrackLocationSchema);

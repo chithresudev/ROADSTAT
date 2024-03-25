@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 const { models, model, Schema } = mongoose;
 
 const TrailerSchema = new Schema({
+  _id: { type: String },
   length: { type: Number },
   width: { type: Number },
   height: { type: Number },

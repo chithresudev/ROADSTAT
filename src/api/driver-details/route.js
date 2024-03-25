@@ -29,8 +29,8 @@ driverRouter.get('/drivers/:driverId', async (req, res) => {
 
 driverRouter.post('/drivers', async (req, res) => {
     try {
-        const { sNo, driverNo, driverName, knownHealthIssues, experience, status } = req.body;
-        const driverDetail = await Driver.create({ sNo, driverNo, driverName, knownHealthIssues, experience, status });
+        const { _id, driverId, driverName, knownHealthIssues, experience, status } = req.body;
+        const driverDetail = await Driver.create({ _id, driverId, driverName, knownHealthIssues, experience, status });
         res.json(driverDetail);
     } catch (error) {
         console.error('Error adding driver:', error);
@@ -41,8 +41,8 @@ driverRouter.post('/drivers', async (req, res) => {
 driverRouter.put('/drivers/:driverId', async (req, res) => {
     try {
         const { driverId } = req.params;
-        const { sNo, driverNo, driverName, knownHealthIssues, experience, status } = req.body;
-        const updatedDriver = await Driver.findByIdAndUpdate(driverId, { sNo, driverNo, driverName, knownHealthIssues, experience, status }, { new: true });
+        const { driverName, knownHealthIssues, experience, status } = req.body;
+        const updatedDriver = await Driver.findByIdAndUpdate(driverId, { driverName, knownHealthIssues, experience, status }, { new: true });
         if (!updatedDriver) {
             return res.status(404).json({ message: "Driver not found" });
         }

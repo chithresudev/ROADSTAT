@@ -14,7 +14,7 @@ transmissionRouter.get('/transmission', async (req, res) => {
     }
 });
 
-transmissionRouter.get('/transmission/:id', async (req, res) => {
+transmissionRouter.get('/transmission/:truckId', async (req, res) => {
     try {
         const { id } = req.params;
         const transmission = await Transmission.findById(id);
@@ -32,7 +32,8 @@ transmissionRouter.get('/transmission/:id', async (req, res) => {
 transmissionRouter.post('/transmission', async (req, res) => {
     try {
         const {
-            truckNo,
+            _id,
+            truckId,
             RPM,
             engineTemperature,
             oilPressure,
@@ -40,7 +41,8 @@ transmissionRouter.post('/transmission', async (req, res) => {
             status
         } = req.body;
         const transmission = await Transmission.create({
-            truckNo,
+            _id,
+            truckId,
             RPM,
             engineTemperature,
             oilPressure,
@@ -59,7 +61,7 @@ transmissionRouter.put('/transmission/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const {
-            truckNo,
+            truckId,
             RPM,
             engineTemperature,
             oilPressure,
@@ -68,7 +70,7 @@ transmissionRouter.put('/transmission/:id', async (req, res) => {
         } = req.body;
 
         const updatedTransmission = await Transmission.findByIdAndUpdate(id, {
-            truckNo,
+            truckId,
             RPM,
             engineTemperature,
             oilPressure,

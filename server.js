@@ -22,12 +22,13 @@ import truckDetailsRouter from './src/api/truck-details/route.js';
 import truckInformationRouter from './src/api/truck-information/route.js';
 import truckLocationRouter from './src/api/truck-location/route.js';
 import userRouter from './src/api/user-details/route.js';
-import truckEfficiencyRouter from './src/api/Truck-efficiency/route.js'
+import truckEfficiencyRouter from './src/api/truck-efficiency/route.js'
 import EngineHealthRouter from './src/api/maintenance/Engine-health.js';
 import brakeSystemRouter from './src/api/maintenance/Brake-system.js';
 import fuelSystemRouter from './src/api/maintenance/Fuel-system.js';
 import tireHealthRouter from './src/api/maintenance/Tire-health.js';
 import batteryStatusRouter from './src/api/maintenance/Battery-status.js';
+import trailerLocationRouter from './src/api/trailer-location/route.js';
 import transmissionRouter from  './src/api/maintenance/Transmission-status.js';
 
 const app = express();
@@ -44,7 +45,6 @@ mongoose.connect(process.env.MONGO_URL)
 
 app.use(express.json());
 app.use(cors());
-
 
 // Use API routes
 //app.use('/api', userRouter);
@@ -66,6 +66,7 @@ app.use('/api', brakeSystemRouter);
 app.use('/api', fuelSystemRouter);
 app.use('/api', tireHealthRouter);
 app.use('/api', batteryStatusRouter);
+app.use('/api', trailerLocationRouter);
 app.use('/api', transmissionRouter);
 
 // Use other API routes as needed

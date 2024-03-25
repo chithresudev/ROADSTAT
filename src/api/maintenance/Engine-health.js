@@ -32,7 +32,8 @@ engineHealthRouter.get('/engine-health/:id', async (req, res) => {
 engineHealthRouter.post('/engine-health', async (req, res) => {
     try {
         const {
-            truckNo,
+            _id,
+            truckId,
             RPM,
             engineTemperature,
             oilPressure,
@@ -40,7 +41,8 @@ engineHealthRouter.post('/engine-health', async (req, res) => {
             status
         } = req.body;
         const engine = await EngineHealth.create({ // Corrected usage of EngineHealth model
-            truckNo,
+            _id,
+            truckId,
             RPM,
             engineTemperature,
             oilPressure,
@@ -59,7 +61,7 @@ engineHealthRouter.put('/engine-health/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const {
-            truckNo,
+            truckId,
             RPM,
             engineTemperature,
             oilPressure,
@@ -68,7 +70,7 @@ engineHealthRouter.put('/engine-health/:id', async (req, res) => {
         } = req.body;
 
         const updatedEngine = await EngineHealth.findByIdAndUpdate(id, {
-            truckNo,
+            truckId,
             RPM,
             engineTemperature,
             oilPressure,

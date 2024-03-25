@@ -2,11 +2,14 @@ import React from 'react';
 import { GoogleMap, useJsApiLoader, Marker, DirectionsService, DirectionsRenderer } from '@react-google-maps/api';
 import truckIcon from '/images/truck.png';
 import truckDest from '/images/truckloc.png';
+import dotenv from 'dotenv';
 
 const containerStyle = {
   width: '100%',
   height: '175px'
 };
+
+const google_map_api = process.env.GOOGLE_MAP_API;
 
 function DMapComponent({ truckLocations, truckDestinations }) {
 
@@ -16,7 +19,7 @@ function DMapComponent({ truckLocations, truckDestinations }) {
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: "AIzaSyAiCj4d2M6PAX7OZ1c0cSSQCdT7RXmhwA0"
+    googleMapsApiKey: google_map_api
   });
 
   const center = {
@@ -63,7 +66,7 @@ function DMapComponent({ truckLocations, truckDestinations }) {
             }}
           />
           <Marker
-            position={{ lat: truckDestinations[0].latitude, lng: truckDestinations[0].longitude }}
+            position={{ lat: truckDestinations.latitude, lng: truckDestinations.longitude }}
             icon={{
               url: truckDest,
               scaledSize: new window.google.maps.Size(30, 30),
@@ -73,7 +76,7 @@ function DMapComponent({ truckLocations, truckDestinations }) {
           <DirectionsService
             options={{
               origin: { lat: truckLocations.latitude, lng: truckLocations.longitude },
-              destination: { lat: truckDestinations[0].latitude, lng: truckDestinations[0].longitude },
+              destination: { lat: truckDestinations.latitude, lng: truckDestinations.longitude },
               travelMode: 'DRIVING',
             }}
             callback={directionsCallback}

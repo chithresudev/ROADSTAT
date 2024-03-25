@@ -96,6 +96,7 @@
 .u-table td{
     font-size: 15px;
     font-weight: 100;
+    padding: 18px 0px 18px 0px;
 }
 
 .u-table th {
@@ -202,6 +203,7 @@
 .usa-table td{
     font-size: 15px;
     font-weight: 100;
+    padding: 18px 0px 18px 0px;
 }
 
 .usa-table th {

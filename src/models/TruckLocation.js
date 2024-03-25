@@ -3,12 +3,14 @@ const { models, model, Schema } = mongoose;
 
 
 const TruckLocationSchema = new Schema({
-  truckId: { type: String },
-  trailerId: { type: String },
+  _id: { type: String },
+  truckId: { type: String, ref: 'Truck' },
+  trailerId: { type: String, ref: 'Trailer' },
   latitude: { type: Number },
   longitude: { type: Number },
   status: { type: String },
-  gps: { type: Boolean, default: false },
+  gps: { type: Boolean, default: true },
+  destinationId: { type: String, ref: 'Destination' }
 }, { timestamps: true });
 
 export const TruckLocation = models?.TruckLocation || model('TruckLocation', TruckLocationSchema);
