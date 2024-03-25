@@ -19,6 +19,24 @@ truckLocationRouter.get('/truck-location/:truckId', async (req, res) => {
   }
 });
 
+truckLocationRouter.get('/truck-location', async (req, res) => {
+  try {
+    // Retrieve all truck locations from the database
+    const allTruckLocations = await TruckLocation.find({});
+   
+    // Check if there are no truck locations found
+    if (allTruckLocations.length === 0) {
+      return res.status(404).json({ message: "No truck location details found" });
+    }
+ 
+    // Return the array of all truck locations
+    res.json(allTruckLocations);
+  } catch (error) {
+    console.error('Error fetching truck locations:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 // POST route handler
 truckLocationRouter.post('/truck-location', async (req, res) => {
   try {

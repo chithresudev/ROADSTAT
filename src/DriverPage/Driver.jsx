@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Line } from 'react-chartjs-2';
 import './Driver.css'
 
 function DriverPage({updateHeader, updateButton,driverId}) {
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const driverNo = queryParams.get('driverId');
+    const [selectedDriverNo, setSelecteDriverNo] = useState(driverNo || '');
+
     const [drivers, setDrivers] = useState([]);
     const [heartRates, setHeartRates] = useState([]);
     useEffect(() => {
@@ -102,7 +108,7 @@ function DriverPage({updateHeader, updateButton,driverId}) {
                     </thead>
                     <tbody>
                     {drivers.map((driver, index) => (
-                            <tr key={index}>
+                            <tr key={index} className={driver.driverNo === selectedDriverNo ? 'selected-row' : ''}>
                                 <td>{index + 1}</td>
                                 <td>{driver.driverNo}</td>
                                 <td>{driver.driverName}</td>

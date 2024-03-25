@@ -14,21 +14,20 @@ destinationRouter.get('/destinations', async (req, res) => {
     }
 });
 
-// GET route handler for fetching destination details by ID
-destinationRouter.get('/destinations/:id', async (req, res) => {
+
+destinationRouter.get('/destinations/:truckId', async (req, res) => {
     try {
-        const { id } = req.params;
-        const destination = await Destination.findById(id);
-        if (!destination) {
-            return res.status(404).json({ message: "Destination details not found" });
+        const { truckId } = req.params;
+        const destinations = await Destination.find({ truckId: truckId });
+        if (!destinations || destinations.length === 0) {
+            return res.status(404).json({ message: "Destination details not found for the provided truckId" });
         }
-        res.json(destination);
+        res.json(destinations);
     } catch (error) {
         console.error('Error fetching destination details:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
 });
-
 // POST route handler for adding new destination details
 destinationRouter.post('/destinations', async (req, res) => {
     try {

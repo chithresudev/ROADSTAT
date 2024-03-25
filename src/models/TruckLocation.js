@@ -3,8 +3,8 @@ const { models, model, Schema } = mongoose;
 
 
 const TruckLocationSchema = new Schema({
-  truckId: { type: Schema.Types.ObjectId, ref: 'Truck' },
-  trailerId: { type: Schema.Types.ObjectId, ref: 'Trailer' },
+  truckId: { type: String },
+  trailerId: { type: String },
   latitude: { type: Number },
   longitude: { type: Number },
   status: { type: String },

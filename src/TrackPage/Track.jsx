@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { GoogleMap, DirectionsService, DirectionsRenderer } from '@react-google-maps/api';
-import './Track.css'
-
+import './Track.css';
+import DMapComponent from './DMapComponent';
 function TrackPage({updateHeader, updateButton}) {
 
     const [startPoint, setStartPoint] = useState(null);
     const [endPoint, setEndPoint] = useState(null);
     const [trackData, setTrackData] = useState([]);
-
-    const startCoordinates = { lat: 37.7749, lng: -122.4194 };
-    const endCoordinates = { lat: 34.0522, lng: -118.2437 };
+    const [selectedRowIndex, setSelectedRowIndex] = useState(0); // Initialize with 0 for first row
+    const [selectedTruckNo, setSelectedTruckNo] = useState(null); // Initialize with null
+    const [truckLocations, setTruckLocations] = useState([]);
+    const [truckDestinations, setTruckDestinations] = useState([]);
+    const [showRunningOnly, setShowRunningOnly] = useState(false);
 
     useEffect(() => {
         updateHeader('Track');
@@ -19,25 +21,68 @@ function TrackPage({updateHeader, updateButton}) {
         fetchData();
     }, [updateHeader, updateButton]);
 
-        const fetchData = async () => {
-            try {
-                const response = await fetch('http://localhost:3000/api/track-location');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data');
-                }
-                const data = await response.json();
-                setTrackData(data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
+    useEffect(() => {
+        if (trackData.length > 0) {
+            const firstTruckNo = trackData[0].truckNo;
+            setSelectedTruckNo(firstTruckNo);
+            fetchTruckLocationsAndDestinations(firstTruckNo);
+        }
+    }, [trackData]);
+
+    const fetchData = async () => {
+        try {
+            const response = await fetch('http://localhost:3000/api/track-location');
+            if (!response.ok) {
+                throw new Error('Failed to fetch data');
             }
-        };
+            const data = await response.json();
+            setTrackData(data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
 
     const handleOpenMaps = () => {
-        if (startCoordinates && endCoordinates) {
-          const url = `https://www.google.com/maps/dir/?api=1&origin=${startCoordinates.lat},${startCoordinates.lng}&destination=${endCoordinates.lat},${endCoordinates.lng}&travelmode=driving`;
-          window.open(url, '_blank');
+        if (truckLocations && truckDestinations.length>0) {
+            const url = `https://www.google.com/maps/dir/?api=1&origin=${truckLocations.latitude},${truckLocations.longitude}&destination=${truckDestinations[0].latitude},${truckDestinations[0].longitude}&travelmode=driving`;
+            window.open(url, '_blank');
         }
-      };
+    };
+
+    const fetchTruckLocationsAndDestinations = async (truckNo) => {
+        try {
+            const locationsResponse = await fetch(`http://localhost:3000/api/truck-location/${truckNo}`);
+            const destinationsResponse = await fetch(`http://localhost:3000/api/destinations/${truckNo}`);
+
+            if (!locationsResponse.ok || !destinationsResponse.ok) {
+                throw new Error('Failed to fetch truck locations or destinations');
+            }
+
+            const locationsData = await locationsResponse.json();
+            const destinationsData = await destinationsResponse.json();
+
+            setTruckLocations(locationsData);
+            setTruckDestinations(destinationsData);
+        } catch (error) {
+            console.error('Error fetching truck locations or destinations:', error);
+            setTruckLocations([]);
+            setTruckDestinations([]);
+        }
+    };
+
+    const handleRowClick = (index, truckNo) => {
+        setSelectedRowIndex(index);
+        setSelectedTruckNo(truckNo);
+    };
+
+    useEffect(() => {
+        if (selectedTruckNo) {
+            fetchTruckLocationsAndDestinations(selectedTruckNo);
+        }
+    }, [selectedTruckNo]);
+
+    const filteredTrackData = showRunningOnly ? trackData.filter(item => item.locationStatus === 'Running') : trackData;
+
     return (
         <div className='tr-main'>
             <div className='tr-card'>
@@ -49,13 +94,21 @@ function TrackPage({updateHeader, updateButton}) {
                             <th>Trailer No</th>
                             <th>GPS</th>
                             <th>Strength</th>
-                            <th>Location Status</th>
+                            <th>Location Status
+                                <input type="checkbox" className='ckbox'
+                                    checked={showRunningOnly}
+                                    onChange={(e) => setShowRunningOnly(e.target.checked)}/>
+                            </th>
                             <th> Beacon</th>
                         </tr>
                     </thead>
                     <tbody>
-                    {trackData.map((trackLocation, index) => (
-                            <tr key={index}>
+                            {filteredTrackData.map((trackLocation, index) => (
+                            <tr 
+                                key={index}
+                                className={selectedRowIndex === index ? 'selected' : ''}
+                                onClick={() => handleRowClick(index, trackLocation.truckNo)}
+                            >
                                 <td>{index + 1}</td>
                                 <td>{trackLocation.truckNo}</td>
                                 <td>{trackLocation.trailerNo}</td>
@@ -72,8 +125,10 @@ function TrackPage({updateHeader, updateButton}) {
                 <div className='tr-mainprofile'>
                     <div className="tr-content">
                         <div className='tr-access'>
-                            <div className='e-details' id="map">
-                                {/* Map */}
+                            <div className='e-details' id="map" style={{paddingLeft:"0px",paddingRight:"0px",overflow: "hidden"}}>
+                                {(truckLocations && truckDestinations.length>0) && (
+                                    <DMapComponent truckLocations={truckLocations} truckDestinations={truckDestinations} />
+                                )}
                             </div>
                         </div>
                     </div>
@@ -85,47 +140,54 @@ function TrackPage({updateHeader, updateButton}) {
                     <div className="tra-content">
                         <div className='tra-access'>
                             <div className='tra-details'>
-                            <div className='tra-table-container'>
-                                <table className='tra-table'>
-                                    <tbody>
-                                    <tr>
-                                            <td><strong>Source</strong></td>
-                                            <td><strong>:</strong></td>
-                                            <td>GPS</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Driver Id</strong></td>
-                                            <td><strong>:</strong></td>
-                                            <td><Link className='click'>6534262738</Link></td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Destination Id</strong></td>
-                                            <td><strong>:</strong></td>  
-                                            <td>4262222738</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Truck Condition</strong></td>
-                                            <td><strong>:</strong></td>
-                                            <td><Link className='click'>click here</Link></td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Status</strong></td>
-                                            <td><strong>:</strong></td>
-                                            <td>on time</td>
-                                        </tr>
-                                        <tr>
-                                            <td><Link className='click'>Trailer Location</Link></td>
-                                            <td></td>
-                                            <td><button className='tra-al-button'>Alert ?</button></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                            <table className='tra-table'>
+                                <tbody>
+                                    {truckDestinations.map((destination, index) => (
+                                        <React.Fragment key={index}>
+                                            <tr>
+                                                <td><strong>Source</strong></td>
+                                                <td><strong>:</strong></td>
+                                                <td>{destination.source}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Driver Id</strong></td>
+                                                <td><strong>:</strong></td>
+                                                <td>
+                                                    <Link to={`/driver?driverId=${destination.driverId}`} className={destination.driverId ? 'click' : 'clickempty'}>
+                                                        {destination.driverId ? destination.driverId : '-'}
+                                                    </Link>
+                                                </td> 
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Destination Id</strong></td>
+                                                <td><strong>:</strong></td>
+                                                <td>{destination.destinationId ? destination.destinationId : '-'}</td> 
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Truck Condition</strong></td>
+                                                <td><strong>:</strong></td>
+                                                <td><Link to={`/maintenance?truckNo=${destination.truckId}`} className='click'>Click Here</Link></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Status</strong></td>
+                                                <td><strong>:</strong></td>
+                                                <td>{destination.status}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><Link className='click'>Trailer Location</Link></td>
+                                                <td></td>
+                                                <td><button className='tra-al-button'>Alert ?</button></td>
+                                            </tr>
+                                        </React.Fragment>
+                                    ))}
+                                </tbody>
+                            </table>
+
                             </div>
                         </div>
                     </div>
                 </div>
-                </div>
+            </div>
         </div>
     );
 }
