@@ -121,3 +121,126 @@
 .selected-row{
     background-color: #CFCFCF;
 }
+
+/* Media Queries for Tablet */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    .main {
+        padding-top: 65px;
+    }
+
+    .m-topcards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        margin-bottom: 55px;
+        border-radius: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .m-scard {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0px;
+        background-color: white;
+        border-radius: 0px;
+        text-align: center;
+        border: 1px solid rgba(44, 43, 43, 0.5);
+    }
+
+    .m-scard.active {
+        background-color: #242F40;
+    }
+
+    .m-scard.active .m-scard-text {
+        color: white;
+    }
+
+    .m-scard.active .m-scard-icon {
+        filter: none;
+    }
+
+    .table tr.selected {
+        background-color: #CFCFCF; 
+    }
+
+    .m-scard-button {
+        background: none;
+        padding: 10px;
+    }
+
+    .m-scard-button:hover {
+        background: none;
+    }
+
+    .m-scard-link {
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .m-scard-icon {
+        width: 25px;
+        height: 20px;
+        margin-right: 10px;
+        filter: grayscale(100%) invert(100%);
+    }
+
+    .m-scard-text {
+        font-size: 16px;
+        font-weight: 500;
+        color: black;
+    }
+
+    .card {
+        height: 240px;
+        padding: 0px 20px 20px 20px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+        border: 1px solid rgba(139, 139, 139, 0.5);
+        overflow: auto; 
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 5px;
+    }
+
+    .table thead {
+        position: sticky;
+        background-color: white;
+        z-index: 0; 
+        top: 0;
+    }
+
+    .table th,
+    .table td {
+        padding: 18px;
+        border-bottom: 1px solid #8B8B8B;
+        text-align: left;
+        text-align: center; 
+    }
+
+    .table td {
+        font-size: 15px;
+        font-weight: 100;
+    }
+
+    .table th {
+        font-weight:700;
+    }
+
+    .click {
+        color: #4D33EF;
+        text-decoration: underline; 
+    }
+
+    .status-image {
+        width: 10px;
+        height: 10px;
+    }
+}

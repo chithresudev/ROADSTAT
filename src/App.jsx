@@ -58,6 +58,7 @@ function App() {
                         <div className="row">
                             <div className="col-md-6 offset-md-3">
                                 <PrivateRoute path="/" element={<HomePage updateHeader={updateHeader} updateButton={updateButton}/>} />
+                                <PrivateRoute path="/admin" roles={[Role.Admin]}  element={<AdminPage updateHeader={updateHeader} updateButton={updateButton}/>} />
                                 <PrivateRoute path="/profile" element={<Profile updateHeader={updateHeader} updateButton={updateButton}/>} />
                                 <PrivateRoute path="/home" element={<HomePage updateHeader={updateHeader} updateButton={updateButton}/>} />
                                 <PrivateRoute path="/track" element={<TrackPage updateHeader={updateHeader} updateButton={updateButton}/>} />

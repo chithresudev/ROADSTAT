@@ -97,4 +97,3 @@ truckLocationRouter.delete('/truck-location/:truckId', async (req, res) => {
 });
 
 export default truckLocationRouter;
-
