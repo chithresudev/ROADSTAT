@@ -9,7 +9,7 @@ const TrackLocationSchema = new Schema({
   strength: { type: String },
   locationStatus: { type: String },
   beacon: { type: Boolean },
-  destination: { type: String, ref: 'Destination' }
+  // destination: { type: String, ref: 'Destination' }
 }, { timestamps: true });
 
 export const TrackLocation = models?.TrackLocation || model('TrackLocation', TrackLocationSchema);

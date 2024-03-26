@@ -34,6 +34,7 @@ fuelSystemRouter.post('/fuel-system', async (req, res) => {
         const {
             _id,
             truckId,
+            truckName,
             fuelLevel,
             fuelConsumptionRate,
             fuelEfficiency
@@ -41,6 +42,7 @@ fuelSystemRouter.post('/fuel-system', async (req, res) => {
         const fuelSystem = await FuelSystem.create({
             _id,
             truckId,
+            truckName,
             fuelLevel,
             fuelConsumptionRate,
             fuelEfficiency
@@ -58,6 +60,7 @@ fuelSystemRouter.put('/fuel-system/:id', async (req, res) => {
         const { id } = req.params;
         const {
             truckId,
+            truckName,
             fuelLevel,
             fuelConsumptionRate,
             fuelEfficiency
@@ -65,6 +68,7 @@ fuelSystemRouter.put('/fuel-system/:id', async (req, res) => {
 
         const updatedFuelSystem = await FuelSystem.findByIdAndUpdate(id, {
             truckId,
+            truckName,
             fuelLevel,
             fuelConsumptionRate,
             fuelEfficiency

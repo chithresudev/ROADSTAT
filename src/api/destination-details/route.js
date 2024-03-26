@@ -14,26 +14,26 @@ destinationRouter.get('/destinations', async (req, res) => {
     }
 });
 
-// GET route handler for fetching destination details by ID
-destinationRouter.get('/destinations/:id', async (req, res) => {
+destinationRouter.get('/destinations/:truckId', async (req, res) => {
     try {
-        const { id } = req.params;
-        const destination = await Destination.findById(id);
-        if (!destination) {
-            return res.status(404).json({ message: "Destination details not found" });
-        }
-        res.json(destination);
+      const { truckId } = req.params;
+      // Find the destination by truckId
+      const destination = await Destination.findOne({ truckId: truckId });
+      if (!destination) {
+        return res.status(404).json({ message: "Destination details not found for the specified truckId" });
+      }
+      res.json(destination);
     } catch (error) {
-        console.error('Error fetching destination details:', error);
-        res.status(500).json({ message: 'Internal server error' });
+      console.error('Error fetching destination details:', error);
+      res.status(500).json({ message: 'Internal server error' });
     }
-});
+  });
 
 // POST route handler for adding new destination details
 destinationRouter.post('/destinations', async (req, res) => {
     try {
-        const { _id, destinationName, latitude, longitude } = req.body;
-        const destination = await Destination.create({ _id, destinationName, latitude, longitude });
+        const { _id, destinationId, truckId, driverId, latitude, longitude, source, status } = req.body;
+        const destination = await Destination.create({ _id, destinationId, truckId, driverId, latitude, longitude, source, status });
         res.json(destination);
     } catch (error) {
         console.error('Error adding destination details:', error);
@@ -45,9 +45,9 @@ destinationRouter.post('/destinations', async (req, res) => {
 destinationRouter.put('/destinations/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const { destinationName, latitude, longitude } = req.body;
+        const { destinationId, truckId, driverId, latitude, longitude, source, status } = req.body;
         const updatedDestination = await Destination.findByIdAndUpdate(id, {
-            destinationName, latitude, longitude
+            destinationId, truckId, driverId, latitude, longitude, source, status
         }, { new: true });
         if (!updatedDestination) {
             return res.status(404).json({ message: "Destination not found" });

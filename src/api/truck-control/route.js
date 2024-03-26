@@ -3,6 +3,18 @@ import { TruckControl } from '../../models/TruckControl.js';
 
 const truckControlRouter = express.Router();
 
+// GET route handler to fetch all truck control details
+truckControlRouter.get('/truck-control', async (req, res) => {
+    try {
+      const allTruckControlDetails = await TruckControl.find();
+      res.json(allTruckControlDetails);
+    } catch (error) {
+      console.error('Error fetching truck control details:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  });
+  
+
 // GET route handler for fetching truck control details by ID
 truckControlRouter.get('/truck-control/:truckId', async (req, res) => {
     try {

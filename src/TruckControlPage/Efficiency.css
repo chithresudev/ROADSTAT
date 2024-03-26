@@ -235,6 +235,9 @@ font-size: 18px;
 .table th {
     font-weight:700;
 }
+.ef-td-col{
+    font-weight: 500;
+}
 
 /* Media Queries for Tablet */
 @media only screen and (max-width: 1024px) {

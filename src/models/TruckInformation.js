@@ -4,7 +4,7 @@ const { models, model, Schema } = mongoose;
 const TruckInformationSchema = new Schema({
   _id: { type: String },
   truckId: { type: String, ref: 'Truck' },
-  model: { type: String },
+  truckName: { type: String },
   distanceTravelled: { type: Number },
   location: { type: String },
   idleStartDate: { type: Date },
@@ -16,8 +16,8 @@ const TruckInformationSchema = new Schema({
 
 TruckInformationSchema.set('toJSON', {
   transform: function (doc, ret) {
-    if (ret.idleStartDt instanceof Date) {
-      ret.idleStartDt = ret.idleStartDt.toISOString().split('T')[0];
+    if (ret.idleStartDate instanceof Date) {
+      ret.idleStartDate = ret.idleStartDate.toISOString().split('T')[0];
     }
     if (ret.idleEndDate instanceof Date) {
       ret.idleEndDate = ret.idleEndDate.toISOString().split('T')[0];

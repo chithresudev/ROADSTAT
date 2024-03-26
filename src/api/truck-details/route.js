@@ -53,14 +53,18 @@ truckDetailsRouter.post('/trucks', async (req, res) => {
   try {
     const {
         _id,
+        truckId,
         driverId,
+        location,
         incidents,
         status,
         note
       } = req.body;
     const truck = await Truck.create({
         _id,
+        truckId,
         driverId,
+        location,
         incidents,
         status,
         note
@@ -77,14 +81,18 @@ truckDetailsRouter.put('/trucks/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const {
+      truckId,
       driverId,
+      location,
       incidents,
       status,
       note
     } = req.body;
 
     const updatedTruck = await Truck.findByIdAndUpdate(id, {
+      truckId,
       driverId,
+      location,
       incidents,
       status,
       note
