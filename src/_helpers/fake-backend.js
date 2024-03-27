@@ -8,7 +8,7 @@ export async function configureFakeBackend() {
     let response = await fetch('http://localhost:3000/api/users');
     let users = await response.json();
     // let users = await User.find();
-    console.log(users);
+    // console.log(users);
     let realFetch = window.fetch;
 
     window.fetch = function (url, opts) {

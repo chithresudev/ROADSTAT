@@ -1,8 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Line } from 'react-chartjs-2';
 import './Driver.css'
+
+import Chart from "chart.js/auto";
+import { LinearScale, TimeScale } from "chart.js";
+
+Chart.register(LinearScale, TimeScale);
+
 
 function DriverPage({updateHeader, updateButton,driverId}) {
     const location = useLocation();
@@ -10,8 +16,23 @@ function DriverPage({updateHeader, updateButton,driverId}) {
     const driverNo = queryParams.get('driverId');
     const [selectedDriverNo, setSelecteDriverNo] = useState(driverNo || '');
 
-    const [drivers, setDrivers] = useState([]);
+    // const [healthData, setHealthData] = useState([]);
+    const [dHealthData, setDHealthData] = useState([]);
     const [heartRates, setHeartRates] = useState([]);
+    const [fatigueLevels, setFatigueLevels] = useState([]);
+    const [bodyTemps, setBodyTemps] = useState([]);
+    const [hydrationLevels, setHydrationLevels] = useState([]);
+    const [stressLevels, setStressLevels] = useState([]);
+    const [selectedDriverId, setSelectedDriverId] = useState('1');
+    const [graphData, setGraphData] = useState(heartRates);
+    const [min, setMin] = useState(50);
+    const [max, setMax] = useState(150);
+    const [stepSize, setStepSize] = useState(10);
+    const [yLabel, setYLabel] = useState('');
+    const chartRef = useRef(null);
+
+    const [drivers, setDrivers] = useState([]);
+
     useEffect(() => {
         updateHeader('Driver');
         updateButton('Driver');
@@ -200,13 +221,47 @@ function DriverPage({updateHeader, updateButton,driverId}) {
         labels: Array.from({ length: heartRates.length }, (_, i) => i + 1),
         datasets: [
             {
-                label: 'Heart Rate',
-                data: heartRates,
+                label: yLabel,
+                data: graphData,
                 fill: false,
                 borderColor: 'rgb(75, 192, 192)',
                 tension: 0.1
             }
         ]
+    };
+
+    const options = {
+        scales: {
+            x: {
+                type: 'linear', // Use 'linear' scale type for numeric data
+                title: {
+                    display: true,
+                    text: 'Time' // Label for the x-axis
+                },
+                min: 0, // Set the minimum value of the y-axis
+                max: 100, // Set the maximum value of the y-axis
+                ticks: {
+                    stepSize: 10 // Set the interval between each tick on the x-axis
+                }
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: yLabel // Label for the y-axis
+                },
+                min: min, // Set the minimum value of the y-axis
+                max: max, // Set the maximum value of the y-axis
+                ticks: {
+                    stepSize: stepSize // Set the interval between each tick on the y-axis
+                }
+            }
+        },
+        plugins: {
+            title: {
+                display: true,
+                text: 'Health Parameters Graph'
+            }
+        }
     };
 
     // const options = {
@@ -245,7 +300,9 @@ function DriverPage({updateHeader, updateButton,driverId}) {
                     {drivers.map((driver, index) => (
                             <tr key={index} className={driver.driverId === selectedDriverNo ? 'selected-row' : ''}>
                                 <td>{index + 1}</td>
-                                <td>{driver.driverId}</td>
+                                <td><Link onClick={() => setSelectedDriverId(driver.driverId)}>
+                    {driver.driverId}
+                </Link></td>
                                 <td>{driver.driverName}</td>
                                 <td>{driver.knownHealthIssues}</td>
                                 <td>{driver.experience}</td>
@@ -300,7 +357,7 @@ function DriverPage({updateHeader, updateButton,driverId}) {
                         <div className='dr2-access'>
                             <div className='dr2-details'>
                             <div className='dr2-table-container'>
-                               
+                                <Line ref={chartRef} data={data} options={options} />
                             </div>
                             </div>
                         </div>
