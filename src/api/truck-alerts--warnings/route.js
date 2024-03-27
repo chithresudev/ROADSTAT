@@ -31,23 +31,27 @@ truckMetricsRouter.get('/warnings', async (req, res) => {
 truckMetricsRouter.post('/metrics/:truckId', async (req, res) => {
   try {
     const { truckId } = req.params;
-    const fetchMetrics = async () => {
-      try {
-        const response = await fetch(`http://localhost:3000/api/truck-control/${truckId}`);
-        if (!response.ok) {
-            throw new Error('Failed to fetch truck control details');
-        }
-        const metrics = await response.json();
-        return metrics; // Return the fetched metrics
-      } catch (error) {
-          console.error('Error fetching truck control details', error);
-          throw error; // Rethrow or handle as needed
-      }
-    };
+    console.log(truckId);
+    const metrics  = req.body;
+    // console.log("inside", req.body);
+    // console.log(req.body);
+    // const fetchMetrics = async () => {
+    //   try {
+    //     const response = await fetch(`http://localhost:3000/api/truck-control/${truckId}`);
+    //     if (!response.ok) {
+    //         throw new Error('Failed to fetch truck control details');
+    //     }
+    //     const metrics = await response.json();
+    //     return metrics; // Return the fetched metrics
+    //   } catch (error) {
+    //       console.error('Error fetching truck control details', error);
+    //       throw error; // Rethrow or handle as needed
+    //   }
+    // };
 
-    const metrics = await fetchMetrics();
-    console.log(metrics);
-    
+    // const metrics = await fetchMetrics();
+    // console.log(metrics);
+
     let trackedMetrics = {};
     let alerts = [];
     let warnings = [];
@@ -97,8 +101,9 @@ truckMetricsRouter.post('/metrics/:truckId', async (req, res) => {
             });
             // res.json(alert)
             alerts.push(alert);
-          } else {
-            let warning = new Warning({
+          } 
+          if (type === 'warning')  {
+            let warning = await Warning.create({
               truckId,
               metric: key,
               value,

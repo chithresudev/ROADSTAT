@@ -54,7 +54,7 @@ truckControlRouter.post('/truck-control', async (req, res) => {
 
         const metricsData = await metricsResponse.json();
         
-        res.json(truckControlDetail);
+        res.json({truckControlDetail, metricsData});
     } catch (error) {
         console.error('Error adding truck control details:', error);
         res.status(500).json({ message: 'Internal server error' });
