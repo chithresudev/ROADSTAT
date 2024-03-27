@@ -118,6 +118,9 @@
     width: 10px;
     height: 10px;
 }
+.selected-row{
+    background-color: #CFCFCF;
+}
 
 /* Media Queries for Tablet */
 @media only screen and (min-width: 768px) and (max-width: 1024px) {

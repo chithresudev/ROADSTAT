@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import './Maintenance.css'
 
 function MaintenancePage({updateHeader, updateButton}) {
+
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const truckNo = queryParams.get('truckNo');
+    const [selectedTruckNo, setSelectedTruckNo] = useState(truckNo || '');
+
     const [engineHealthData, setEngineHealthData] = useState([]);
     const [brakeSystemData, setBrakeSystemData] = useState([]);
     const [fuelSystemData, setFuelSystemData] = useState([]); // State to store fuel system data
@@ -181,8 +188,8 @@ function MaintenancePage({updateHeader, updateButton}) {
                 </thead>
                 <tbody>
                 {engineHealthData.map((engine, index) => (
-                                <tr key={index}>
-                                    <td>{engine.truckNo}</td>
+                                 <tr key={index} className={engine.truckId === selectedTruckNo ? 'selected-row' : ''}>
+                                    <td>{engine.truckId}</td>
                                     <td>{engine.RPM}</td>
                                     <td>{engine.engineTemperature}</td>
                                     <td>{engine.oilPressure}</td>
@@ -200,7 +207,7 @@ function MaintenancePage({updateHeader, updateButton}) {
                 <thead>
                     <tr>
                         <th>Truck No</th>
-                        <th>Truck Name</th>
+                        <th>Truck Model</th>
                         <th>Pad Wear</th>
                         <th>Fluid Level</th>
                         <th>Pressure</th>
@@ -209,8 +216,8 @@ function MaintenancePage({updateHeader, updateButton}) {
                 </thead>
                 <tbody>
                 {brakeSystemData.map((brake, index) => (
-                                <tr key={index}>
-                                    <td>{brake.truckNo}</td>
+                                <tr key={index} className={brake.truckId === selectedTruckNo ? 'selected-row' : ''}>
+                                    <td>{brake.truckId}</td>
                                     <td>{brake.truckName}</td>
                                     <td>{brake.padWear}</td>
                                     <td>{brake.fluidLevel}</td>
@@ -228,7 +235,7 @@ function MaintenancePage({updateHeader, updateButton}) {
                 <thead>
                     <tr>
                         <th>Truck No</th>
-                        <th>Truck Name</th>
+                        <th>Truck Model</th>
                         <th>Fuel Level</th>
                         <th>Fuel Consumption Rate</th>
                         <th>Fuel Efficiency</th>
@@ -236,8 +243,8 @@ function MaintenancePage({updateHeader, updateButton}) {
                 </thead>
                 <tbody>
                 {fuelSystemData.map((fuel, index) => (
-                    <tr key={index}>
-                        <td>{fuel.truckNo}</td>
+                    <tr key={index} className={fuel.truckId === selectedTruckNo ? 'selected-row' : ''}>
+                        <td>{fuel.truckId}</td>
                         <td>{fuel.truckName}</td>
                         <td>{fuel.fuelLevel}</td>
                         <td>{fuel.fuelConsumptionRate}</td>
@@ -254,7 +261,7 @@ function MaintenancePage({updateHeader, updateButton}) {
                 <thead>
                     <tr>
                         <th>Truck No</th>
-                        <th>Truck Name</th>
+                        <th>Truck Model</th>
                         <th>Tire Pressure</th>
                         <th>Temperature</th>
                         <th>Tire Depth</th>
@@ -263,11 +270,11 @@ function MaintenancePage({updateHeader, updateButton}) {
                 </thead>
                 <tbody>
                 {tireHealthData.map((tire, index) => (
-                            <tr key={index}>
-                                <td>{tire.truckNo}</td>
+                            <tr key={index} className={tire.truckId === selectedTruckNo ? 'selected-row' : ''}>
+                                <td>{tire.truckId}</td>
                                 <td>{tire.truckName}</td>
                                 <td>{tire.tirePressure}</td>
-                                <td>{tire.temperature}</td>
+                                <td>{tire.tireTemperature}</td>
                                 <td>{tire.tireDepth}</td>
                                 <td>{tire.tireAge}</td>
                             </tr>
@@ -282,7 +289,7 @@ function MaintenancePage({updateHeader, updateButton}) {
                 <thead>
                     <tr>
                         <th>Truck No</th>
-                        <th>Truck Name</th>
+                        <th>Truck Model</th>
                         <th>Battery (V)</th>
                         <th>Charge Status</th>
                         <th>Health %</th>
@@ -291,8 +298,8 @@ function MaintenancePage({updateHeader, updateButton}) {
                 </thead>
                 <tbody>
                 {batteryStatusData.map((battery, index) => (
-                                <tr key={index}>
-                                    <td>{battery.truckNo}</td>
+                                <tr key={index} className={battery.truckId === selectedTruckNo ? 'selected-row' : ''}>
+                                    <td>{battery.truckId}</td>
                                     <td>{battery.truckName}</td>
                                     <td>{battery.batteryVoltage}</td>
                                     <td>{battery.chargeStatus}</td>
@@ -319,8 +326,8 @@ function MaintenancePage({updateHeader, updateButton}) {
                </thead>
                <tbody>
                {transmissionData.map((transmission, index) => (
-                                <tr key={index}>
-                                    <td>{transmission.truckNo}</td>
+                                <tr key={index} className={transmission.truckId === selectedTruckNo ? 'selected-row' : ''}>
+                                    <td>{transmission.truckId}</td>
                                     <td>{transmission.RPM}</td>
                                     <td>{transmission.engineTemperature}</td>
                                     <td>{transmission.oilPressure}</td>

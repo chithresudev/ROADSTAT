@@ -29,8 +29,8 @@ driverRouter.get('/drivers/:driverId', async (req, res) => {
 
 driverRouter.post('/drivers', async (req, res) => {
     try {
-        const { _id, driverName, knownHealthIssues, experience, status } = req.body;
-        const driverDetail = await Driver.create({ _id, driverName, knownHealthIssues, experience, status });
+        const { _id, driverId, driverName, knownHealthIssues, experience, status } = req.body;
+        const driverDetail = await Driver.create({ _id, driverId, driverName, knownHealthIssues, experience, status });
         res.json(driverDetail);
     } catch (error) {
         console.error('Error adding driver:', error);

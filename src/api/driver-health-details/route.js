@@ -3,6 +3,17 @@ import { DriverHealth } from '../../models/DriverHealth.js';
 
 const driverHealthRouter = express.Router();
 
+// GET route handler for fetching all driver health details
+driverHealthRouter.get('/driver-health', async (req, res) => {
+    try {
+        const allDriverHealthDetails = await DriverHealth.find({});
+        res.json(allDriverHealthDetails);   
+    } catch (error) {
+        console.error('Error fetching all driver health details:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
 // GET route handler for fetching driver health details by ID
 driverHealthRouter.get('/driver-health/:driverId', async (req, res) => {
     try {

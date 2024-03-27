@@ -3,7 +3,9 @@ const { models, model, Schema } = mongoose;
 
 const TruckSchema = new Schema({
   _id: { type: String },
+  truckId: { type: String },
   driverId: { type: String, ref: 'Driver' },
+  location: { type: String },
   incidents: { type: Number },
   status: { type: String },
   note: { type: String }
