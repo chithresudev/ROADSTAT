@@ -23,6 +23,25 @@ truckControlRouter.post('/truck-control', async (req, res) => {
     try {
         const { _id, truckId, status, speed, fuelLevel, fuelPressure, engineTemp, COLevel, NOXLevel, HCLevel, tirePressure, brakeHealth, batteryHealth } = req.body;
         const truckControlDetail = await TruckControl.create({ _id, truckId, status, speed, fuelLevel, fuelPressure, engineTemp, COLevel, NOXLevel, HCLevel, tirePressure, brakeHealth, batteryHealth });
+        
+        // Now, call /metrics/:truckId endpoint
+        const metricsResponse = await fetch(`http://localhost:3000/api/metrics/${truckId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                // Assuming you want to send some metrics data, adjust accordingly
+                speed, fuelLevel, fuelPressure, engineTemp, COLevel, NOXLevel, HCLevel, tirePressure, brakeHealth, batteryHealth
+            }),
+        });
+
+        if (!metricsResponse.ok) {
+            throw new Error('Failed to post to /metrics/:truckId');
+        }
+
+        const metricsData = await metricsResponse.json();
+        
         res.json(truckControlDetail);
     } catch (error) {
         console.error('Error adding truck control details:', error);

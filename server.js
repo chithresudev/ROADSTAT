@@ -28,6 +28,7 @@ import brakeSystemRouter from './src/api/maintenance/Brake-system.js';
 import fuelSystemRouter from './src/api/maintenance/Fuel-system.js';
 import tireHealthRouter from './src/api/maintenance/Tire-health.js';
 import batteryStatusRouter from './src/api/maintenance/Battery-status.js';
+import trucksMetricRouter from './src/api/truck-alerts--warnings/route.js'
 // import transmissionRouter from  './src/api/maintenance/Transmission-status.js';
 
 const app = express();
@@ -65,6 +66,7 @@ app.use('/api', brakeSystemRouter);
 app.use('/api', fuelSystemRouter);
 app.use('/api', tireHealthRouter);
 app.use('/api', batteryStatusRouter);
+app.use('/api', trucksMetricRouter);
 // app.use('/api', transmissionRouter);
 
 // Use other API routes as needed

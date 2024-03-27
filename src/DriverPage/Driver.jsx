@@ -54,7 +54,7 @@ function DriverPage({updateHeader, updateButton,driverId}) {
                     throw new Error('Failed to fetch driver health');
                 }
                 const data = await response.json();
-                setHealthData(data);
+                setDHealthData(data);
             } catch (error) {
                 console.error('Error fetching driver health:', error);
             }
@@ -62,7 +62,7 @@ function DriverPage({updateHeader, updateButton,driverId}) {
 
         fetchDriverHealth();
 
-    }, []);
+    }, [selectedDriverId]);
 
     useEffect(() => {
         handleHeartRateClick(selectedDriverId);
@@ -93,7 +93,7 @@ function DriverPage({updateHeader, updateButton,driverId}) {
             } catch (error) {
                 console.error('Error fetching driver health:', error);
             }
-        }, 2* 60 * 1000); // 5 minutes in milliseconds
+        }, 1* 60 * 1000); // 5 minutes in milliseconds
     
         // Cleanup function to clear the interval
         return () => clearInterval(interval);
@@ -101,7 +101,6 @@ function DriverPage({updateHeader, updateButton,driverId}) {
 
     const handleHeartRateClick = async (driverId) => {
         // setSelectedDriverId(driverId);
-        console.log(driverId)
         try {
             const response = await fetch(`http://localhost:3000/api/driver-health/${driverId}`);
             if (!response.ok) {
@@ -109,12 +108,10 @@ function DriverPage({updateHeader, updateButton,driverId}) {
             }
             const driverHealthData = await response.json();
             setDHealthData(driverHealthData);
-            console.log(driverHealthData)
             setHeartRates(prevHeartRates => [...prevHeartRates, driverHealthData.heartRate]);
             // const heartRatesData = [driverHealthData.heartRate, driverHealthData.heartRate, driverHealthData.heartRate ];
             // heartRates.push(driverHealthData.heartRate);
             // heartRates = heartRates.slice(-10);
-            console.log(heartRates)
             // setHeartRates(heartRates.slice(-100));
         } catch (error) {
             console.error('Error fetching driver health:', error);
@@ -129,7 +126,6 @@ function DriverPage({updateHeader, updateButton,driverId}) {
 
     const handleFatigueLevelClick = async (driverId) => {
         // setSelectedDriverId(driverId);
-        console.log(driverId)
         try {
             const response = await fetch(`http://localhost:3000/api/driver-health/${driverId}`);
             if (!response.ok) {
@@ -137,10 +133,7 @@ function DriverPage({updateHeader, updateButton,driverId}) {
             }
             const driverHealthData = await response.json();
             setDHealthData(driverHealthData);
-            console.log(driverHealthData)
-            const fatigueLevelData = [driverHealthData.fatigueLevel, driverHealthData.fatigueLevel, driverHealthData.fatigueLevel ];
-            console.log(fatigueLevelData)
-            setFatigueLevels(fatigueLevelData);
+            setFatigueLevels(prevFatigueLevels => [...prevFatigueLevels, driverHealthData.fatigueLevel]);
         } catch (error) {
             console.error('Error fetching driver health:', error);
         }
@@ -154,7 +147,6 @@ function DriverPage({updateHeader, updateButton,driverId}) {
 
     const handleBodyTempClick = async (driverId) => {
         // setSelectedDriverId(driverId);
-        console.log(driverId)
         try {
             const response = await fetch(`http://localhost:3000/api/driver-health/${driverId}`);
             if (!response.ok) {
@@ -162,10 +154,7 @@ function DriverPage({updateHeader, updateButton,driverId}) {
             }
             const driverHealthData = await response.json();
             setDHealthData(driverHealthData);
-            console.log(driverHealthData)
-            const bodyTempsData = [driverHealthData.bodyTemp, driverHealthData.bodyTemp, driverHealthData.bodyTemp ];
-            console.log(bodyTempsData)
-            setBodyTemps(bodyTempsData);
+            setBodyTemps(prevBodyTemps => [...prevBodyTemps, driverHealthData.bodyTemp]);
         } catch (error) {
             console.error('Error fetching driver health:', error);
         }
@@ -179,7 +168,6 @@ function DriverPage({updateHeader, updateButton,driverId}) {
 
     const handleHydrationLevelClick = async (driverId) => {
         // setSelectedDriverId(driverId);
-        console.log(driverId)
         try {
             const response = await fetch(`http://localhost:3000/api/driver-health/${driverId}`);
             if (!response.ok) {
@@ -187,10 +175,7 @@ function DriverPage({updateHeader, updateButton,driverId}) {
             }
             const driverHealthData = await response.json();
             setDHealthData(driverHealthData);
-            console.log(driverHealthData)
-            const hydrationLevelData = [driverHealthData.hydrationLevel, driverHealthData.hydrationLevel, driverHealthData.hydrationLevel ];
-            console.log(hydrationLevelData)
-            setHydrationLevels(hydrationLevelData);
+            setHydrationLevels(prevHydrationLevels => [...prevHydrationLevels, driverHealthData.hydrationLevel]);
         } catch (error) {
             console.error('Error fetching driver health:', error);
         }
@@ -204,7 +189,6 @@ function DriverPage({updateHeader, updateButton,driverId}) {
 
     const handleStressLevelClick = async (driverId) => {
         // setSelectedDriverId(driverId);
-        console.log(driverId)
         try {
             const response = await fetch(`http://localhost:3000/api/driver-health/${driverId}`);
             if (!response.ok) {
@@ -212,10 +196,7 @@ function DriverPage({updateHeader, updateButton,driverId}) {
             }
             const driverHealthData = await response.json();
             setDHealthData(driverHealthData);
-            console.log(driverHealthData)
-            const stressLevelData = [driverHealthData.stressLevel, driverHealthData.stressLevel, driverHealthData.stressLevel ];
-            console.log(stressLevelData)
-            setStressLevels(stressLevelData);
+            setStressLevels(prevStressLevels => [...prevStressLevels, driverHealthData.stressLevel]);
         } catch (error) {
             console.error('Error fetching driver health:', error);
         }
@@ -312,23 +293,23 @@ function DriverPage({updateHeader, updateButton,driverId}) {
                                     <table className='dr-table'>
                                         <tbody>
                                             <tr>
-                                                <td className='hp-head'><span className='test'><img src="/images/hr.png" className="dh-icon" /><Link className='dclick'>HEART RATE</Link></span></td>
+                                                <td className='hp-head'><span className='test'><img src="/images/hr.png" className="dh-icon" /><Link onClick={() => handleHeartRateClick(selectedDriverId)} className='dclick'>HEART RATE</Link></span></td>
                                                 <td className='hp-text'>80/100 BPM</td>
                                             </tr>
                                             <tr>
-                                                <td className='hp-head'><span className='test'><img src="/images/fl.png" className="dh-icon" /><Link className='dclick'>FATIGUE LEVEL</Link></span></td>
+                                                <td className='hp-head'><span className='test'><img src="/images/fl.png" className="dh-icon" /><Link onClick={() => handleFatigueLevelClick(selectedDriverId)}className='dclick'>FATIGUE LEVEL</Link></span></td>
                                                 <td className='hp-text'>Well Rested</td>
                                             </tr>
                                             <tr>
-                                                <td className='hp-head'><span className='test'><img src="/images/bt.png" className="dh-icon" /><Link className='dclick'>BODY TEMP</Link></span></td>
+                                                <td className='hp-head'><span className='test'><img src="/images/bt.png" className="dh-icon" /><Link onClick={() => handleBodyTempClick(selectedDriverId)} className='dclick'>BODY TEMP</Link></span></td>
                                                 <td className='hp-text'>/ 37 C</td>
                                             </tr>
                                             <tr>
-                                                <td className='hp-head'><span className='test'><img src="/images/hl.png" className="dh-icon" /><Link className='dclick'>HYDRATION LEVEL</Link></span></td>
+                                                <td className='hp-head'><span className='test'><img src="/images/hl.png" className="dh-icon" /><Link onClick={() => handleHydrationLevelClick(selectedDriverId)}className='dclick'>HYDRATION LEVEL</Link></span></td>
                                                 <td className='hp-text'>Well Hydrated</td>
                                             </tr>
                                             <tr>
-                                                <td className='hp-head'><span className='test'><img src="/images/sl.png" className="dh-icon" /><Link className='dclick'>STRESS LEVEL</Link></span></td>
+                                                <td className='hp-head'><span className='test'><img src="/images/sl.png" className="dh-icon" /><Link onClick={() => handleStressLevelClick(selectedDriverId)} className='dclick'>STRESS LEVEL</Link></span></td>
                                                 <td className='hp-text'>Low Stress Level</td>
                                             </tr>
                                         </tbody>
