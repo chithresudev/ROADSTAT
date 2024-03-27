@@ -31,7 +31,6 @@ truckMetricsRouter.get('/warnings', async (req, res) => {
 truckMetricsRouter.post('/metrics/:truckId', async (req, res) => {
   try {
     const { truckId } = req.params;
-    console.log(truckId);
     const metrics  = req.body;
     // console.log("inside", req.body);
     // console.log(req.body);
