@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Efficiency.css';
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 function EfficiencyPage({ updateHeader, updateButton }) {
     const [popupVisible, setPopupVisible] = useState(false);
     const [selectedTruckNo, setSelectedTruckNo] = useState(null);
@@ -29,7 +31,8 @@ function EfficiencyPage({ updateHeader, updateButton }) {
     }, [updateHeader, updateButton]);
 
     const fetchTruckData = async () => {
-        const response = await fetch('http://localhost:3000/api/truck-efficiency');
+        // const response = await fetch('http://localhost:3000/api/truck-efficiency');
+        const response = await fetch(`${apiUrl}/truck-efficiency`);
         const data = await response.json();
         setTruckData(data);
     };
@@ -40,7 +43,8 @@ function EfficiencyPage({ updateHeader, updateButton }) {
 
     const fetchTruckControlData = async (truckId) => {
         try {
-            const response = await fetch(`http://localhost:3000/api/truck-control/${truckId}`);
+            // const response = await fetch(`http://localhost:3000/api/truck-control/${truckId}`);
+            const response = await fetch(`${apiUrl}/truck-control/${truckId}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch truck control data');
             }

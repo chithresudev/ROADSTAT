@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Usage.css';
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 function UsagePage({ updateHeader, updateButton }) {
     useEffect(() => {
         updateHeader('Truck Control / Usage');
@@ -31,7 +33,8 @@ function UsagePage({ updateHeader, updateButton }) {
 
     const fetchTruckData = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/truck-information');
+            // const response = await fetch('http://localhost:3000/api/truck-information');
+            const response = await fetch(`${apiUrl}/truck-information`);
             if (!response.ok) {
                 throw new Error('Failed to fetch data');
             }
@@ -44,7 +47,8 @@ function UsagePage({ updateHeader, updateButton }) {
 
     const fetchCollisionHistory = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/collision-history');
+            // const response = await fetch('http://localhost:3000/api/collision-history');
+            const response = await fetch(`${apiUrl}/collision-history`);
             if (!response.ok) {
                 throw new Error('Failed to fetch collision history data');
             }
@@ -57,7 +61,8 @@ function UsagePage({ updateHeader, updateButton }) {
 
     const fetchTruckControlData = async (truckId) => {
         try {
-            const response = await fetch(`http://localhost:3000/api/truck-control/${truckId}`);
+            // const response = await fetch(`http://localhost:3000/api/truck-control/${truckId}`);
+            const response = await fetch(`${apiUrl}/truck-control/${truckId}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch truck control data');
             }
