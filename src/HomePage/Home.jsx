@@ -28,7 +28,7 @@ function HomePage({updateHeader,updateButton}) {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(async (position) => {
                     const { latitude, longitude } = position.coords;
-                    const apiKey = process.env.OPEN_WEATHER_API;
+                    const apiKey = "7f96cca8ee2ccf330a7e4a5a7f70d017";
                     const apiURL = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
                     try {
                         const response = await fetch(apiURL);

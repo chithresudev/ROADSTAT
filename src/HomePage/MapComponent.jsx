@@ -21,7 +21,7 @@ function MapComponent({ truckLocations, selectedTruckNo }) {
     
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: google_map_api
+    googleMapsApiKey: "AIzaSyAiCj4d2M6PAX7OZ1c0cSSQCdT7RXmhwA0"
   });
 
   const [map, setMap] = React.useState(null);
