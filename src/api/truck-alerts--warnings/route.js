@@ -1,5 +1,6 @@
 import { TruckControl } from '../../models/TruckControl.js';
-import { Warning, Alert } from '../../models/Alert.js'; // Assuming Alert model is defined in a separate file
+import { Alert } from '../../models/Alert.js';
+import { Warning } from '../../models/Warning.js'; 
 import express from 'express';
 
 const truckMetricsRouter = express.Router();
@@ -30,11 +31,29 @@ truckMetricsRouter.get('/warnings', async (req, res) => {
 truckMetricsRouter.post('/metrics/:truckId', async (req, res) => {
   try {
     const { truckId } = req.params;
-    const metrics = req.body;
+    const metrics  = req.body;
+    // console.log("inside", req.body);
+    // console.log(req.body);
+    // const fetchMetrics = async () => {
+    //   try {
+    //     const response = await fetch(`http://localhost:3000/api/truck-control/${truckId}`);
+    //     if (!response.ok) {
+    //         throw new Error('Failed to fetch truck control details');
+    //     }
+    //     const metrics = await response.json();
+    //     return metrics; // Return the fetched metrics
+    //   } catch (error) {
+    //       console.error('Error fetching truck control details', error);
+    //       throw error; // Rethrow or handle as needed
+    //   }
+    // };
 
-    const trackedMetrics = {};
-    const alerts = [];
-    const warnings = [];
+    // const metrics = await fetchMetrics();
+    // console.log(metrics);
+
+    let trackedMetrics = {};
+    let alerts = [];
+    let warnings = [];
 
     // Define standard ranges and alert thresholds for each metric
     const metricRanges = {
@@ -51,8 +70,8 @@ truckMetricsRouter.post('/metrics/:truckId', async (req, res) => {
     };
 
     // Track metrics against standard ranges and generate alerts or warnings if necessary
-    for (const [key, value] of Object.entries(metrics)) {
-      const range = metricRanges[key];
+    for (let [key, value] of Object.entries(metrics)) {
+      let range = metricRanges[key];
       if (range) {
         trackedMetrics[key] = {
           value,
@@ -61,36 +80,35 @@ truckMetricsRouter.post('/metrics/:truckId', async (req, res) => {
           max: range.max,
         };
 
-        const flag1 = 0;
-        const flag2 = 0;
+        let flag1 = 0;
+        let flag2 = 0;
         // Check if the value is out of the standard range
         if (value < range.min || value > range.max) {
-          const type = value < range.minWarningThreshold || value > range.maxWarningThreshold ? 'alert' : 'warning';
+          let type = value < range.minWarningThreshold || value > range.maxWarningThreshold ? 'alert' : 'warning';
           if (type === 'alert') { if (value < range.minWarningThreshold) flag1 = 1}
           if (type === 'warning') { if (value < range.min) flag2 = 1}
           // const message = `${key} value (${value}) is ${type === 'alert' ? 'below' : 'above'} the ${type === 'alert' ? 'minimum' : 'maximum'} threshold (${range.min} to ${type === 'alert' ? range.min : range.warningThreshold}).`;
-          const message = `${key} value (${value}) is ${flag1 == 1 || flag2 == 1 ? 'below' : 'above'} the ${flag1 == 1 || flag2 == 1  ? 'minimum' : 'maximum'} threshold (${range.min} to ${range.max}).`;
+          let message = `${key} value (${value}) is ${flag1 == 1 || flag2 == 1 ? 'below' : 'above'} the ${flag1 == 1 || flag2 == 1  ? 'minimum' : 'maximum'} threshold (${range.min} to ${range.max}).`;
 
           // Save the alert or warning
           if (type === 'alert') {
-            const alert = await Alert.create({
-              _id,
+            let alert = await Alert.create({
               truckId,
               metric: key,
               value,
               message
             });
-            res.json(alert)
+            // res.json(alert)
             alerts.push(alert);
-          } else {
-            const warning = new Warning({
-              _id,
+          } 
+          if (type === 'warning')  {
+            let warning = await Warning.create({
               truckId,
               metric: key,
               value,
               message
             });
-            res.json(warning)
+            // res.json(warning)
             warnings.push(warning);
           }
         }

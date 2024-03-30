@@ -28,11 +28,14 @@ import brakeSystemRouter from './src/api/maintenance/Brake-system.js';
 import fuelSystemRouter from './src/api/maintenance/Fuel-system.js';
 import tireHealthRouter from './src/api/maintenance/Tire-health.js';
 import batteryStatusRouter from './src/api/maintenance/Battery-status.js';
-import trailerLocationRouter from './src/api/trailer-location/route.js';
-import transmissionRouter from  './src/api/maintenance/Transmission-status.js';
+import trucksMetricRouter from './src/api/truck-alerts--warnings/route.js';
+// import transmissionRouter from  './src/api/maintenance/Transmission-status.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Set the environment variable
+process.env.API_URL = `http://localhost:${PORT}/api`; // Example URL
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URL)
@@ -66,8 +69,8 @@ app.use('/api', brakeSystemRouter);
 app.use('/api', fuelSystemRouter);
 app.use('/api', tireHealthRouter);
 app.use('/api', batteryStatusRouter);
-app.use('/api', trailerLocationRouter);
-app.use('/api', transmissionRouter);
+app.use('/api', trucksMetricRouter);
+// app.use('/api', transmissionRouter);
 
 // Use other API routes as needed
 

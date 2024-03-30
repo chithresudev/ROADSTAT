@@ -4,6 +4,7 @@ const { models, model, Schema } = mongoose;
 const DestinationSchema = new Schema({
   _id: { type: String },
   destinationId: {type:Number},
+  destinationName: {type: String},
   truckId: { type: String, ref: 'Truck' },
   driverId: { type: String },
   latitude: { type: Number},
