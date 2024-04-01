@@ -47,27 +47,27 @@ function DriverPage({updateHeader, updateButton,driverId}) {
         // Setting up polling to fetch heart rate data every 10 seconds
         // (10000 milliseconds). Adjust the interval as needed.
         const intervalId = setInterval(() => {
-            if (selectedDriverId && flag == 1) {
-                handleHeartRateClick(); // Assume this function fetches the latest heart rate data
-            }
-            else if (selectedDriverId && flag == 2) {
+            if (flag == 1) {
                 handleHeartRateClick();
             }
-            else if (selectedDriverId && flag == 3) {
-                handleHeartRateClick();
+            if (flag == 2) {
+                handleFatigueLevelClick();
             }
-            else if (selectedDriverId && flag == 4) {
-                handleHeartRateClick();
+            if (flag == 3) {
+                handleBodyTempClick();
             }
-            else if (selectedDriverId && flag == 5) {
-                handleHeartRateClick();
+            if (flag == 4) {
+                handleHydrationLevelClick();
+            }
+            if (flag == 5) {
+                handleStressLevelClick();
             }
         }, 10000);
 
         // Cleanup: Clearing the interval when the component unmounts
         return () => clearInterval(intervalId);
 
-    }, [updateHeader, updateButton, selectedDriverId, flag]);
+    }, [updateHeader, updateButton, flag]);
 
     // driverId=1;
 
@@ -137,8 +137,7 @@ function DriverPage({updateHeader, updateButton,driverId}) {
                             position: 'right'
                         }
                     }
-                ])     
-                setFlag(1);       
+                ])            
                 return updatedHeartRates;                
             });
         } catch (error) {
@@ -199,7 +198,6 @@ function DriverPage({updateHeader, updateButton,driverId}) {
                         }
                     }
                 ])
-                setFlag(2);  
                 return updatedFatigueLevels;                
             });
             
@@ -272,7 +270,6 @@ function DriverPage({updateHeader, updateButton,driverId}) {
                         }
                     }
                 ])
-                setFlag(3);  
                 return updatedBodyTemps;                
             });
         } catch (error) {
@@ -331,8 +328,7 @@ function DriverPage({updateHeader, updateButton,driverId}) {
                             position: 'right'
                         }
                     }
-                ])
-                setFlag(4);  
+                ]) 
                 return updatedHydrationLevels;                
             });
             
@@ -393,7 +389,6 @@ function DriverPage({updateHeader, updateButton,driverId}) {
                         }
                     }
                 ])
-                setFlag(5);  
                 return updatedStressLevels;                
             });
         } catch (error) {
@@ -491,23 +486,23 @@ function DriverPage({updateHeader, updateButton,driverId}) {
                                     <table className='dr-table'>
                                         <tbody>
                                             <tr>
-                                                <td className='hp-head'><span className='test'><img src="/images/hr.png" className="dh-icon" /><Link onClick={() => handleHeartRateClick()} className='dclick'>HEART RATE</Link></span></td>
+                                                <td className='hp-head'><span className='test'><img src="/images/hr.png" className="dh-icon" /><Link onClick={() => {handleHeartRateClick(); setFlag(1);}} className='dclick'>HEART RATE</Link></span></td>
                                                 <td className='hp-text'>60-100 BPM</td>
                                             </tr>
                                             <tr>
-                                                <td className='hp-head'><span className='test'><img src="/images/fl.png" className="dh-icon" /><Link onClick={() => handleFatigueLevelClick()}className='dclick'>FATIGUE LEVEL</Link></span></td>
+                                                <td className='hp-head'><span className='test'><img src="/images/fl.png" className="dh-icon" /><Link onClick={() => {handleFatigueLevelClick(); setFlag(2);}}className='dclick'>FATIGUE LEVEL</Link></span></td>
                                                 <td className='hp-text'>Well Rested (Level 1)</td>
                                             </tr>
                                             <tr>
-                                                <td className='hp-head'><span className='test'><img src="/images/bt.png" className="dh-icon" /><Link onClick={() => handleBodyTempClick()} className='dclick'>BODY TEMP</Link></span></td>
+                                                <td className='hp-head'><span className='test'><img src="/images/bt.png" className="dh-icon" /><Link onClick={() => {handleBodyTempClick(); setFlag(3);}} className='dclick'>BODY TEMP</Link></span></td>
                                                 <td className='hp-text'> 98.6 F</td>
                                             </tr>
                                             <tr>
-                                                <td className='hp-head'><span className='test'><img src="/images/hl.png" className="dh-icon" /><Link onClick={() => handleHydrationLevelClick()}className='dclick'>HYDRATION LEVEL</Link></span></td>
+                                                <td className='hp-head'><span className='test'><img src="/images/hl.png" className="dh-icon" /><Link onClick={() => {handleHydrationLevelClick(); setFlag(4);}}className='dclick'>HYDRATION LEVEL</Link></span></td>
                                                 <td className='hp-text'>Well Hydrated (50% and above)</td>
                                             </tr>
                                             <tr>
-                                                <td className='hp-head'><span className='test'><img src="/images/sl.png" className="dh-icon" /><Link onClick={() => handleStressLevelClick()} className='dclick'>STRESS LEVEL</Link></span></td>
+                                                <td className='hp-head'><span className='test'><img src="/images/sl.png" className="dh-icon" /><Link onClick={() => {handleStressLevelClick(); setFlag(5);}} className='dclick'>STRESS LEVEL</Link></span></td>
                                                 <td className='hp-text'>Low Stress Level (Level 1)</td>
                                             </tr>
                                         </tbody>
