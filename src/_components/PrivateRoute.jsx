@@ -22,11 +22,20 @@ const PrivateRoute = ({ element: Element, roles, ...rest }) => {
         )
     }
 
-    if (roles && roles.indexOf(currentUser.role) === -1) {
-        // Role not authorized, redirect to home page
+    // if (roles && roles.indexOf(currentUser?.role) === -1) {
+    //     // Role not authorized, redirect to home page
+    //     return (
+    //         <Routes>
+    //             {/* <Route {...rest} element={<HomePage />} /> */}
+    //         </Routes>
+    //     )
+    // }
+
+    if (roles && roles.includes(currentUser?.role)) {
+        
         return (
             <Routes>
-                {/* <Route {...rest} element={<HomePage />} /> */}
+                <Route {...rest} element={Element} />
             </Routes>
         )
     }
