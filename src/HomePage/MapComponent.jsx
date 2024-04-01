@@ -14,8 +14,8 @@ const center = {
   lng: -79.6248
 };
 
-const google_map_api = process.env.GOOGLE_MAP_API;
-
+// const google_map_api = process.env.GOOGLE_MAP_API;
+const google_map_api = import.meta.env.VITE_GOOGLE_MAP_API;
 
 function MapComponent({ truckLocations, selectedTruckNo }) {
     

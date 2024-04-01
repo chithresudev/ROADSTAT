@@ -1,22 +1,23 @@
 import { Role } from '.'
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export async function configureFakeBackend() {
     // let users = [
     //     { id: 1, username: 'admin', password: 'admin', firstName: 'Admin', lastName: 'User', role: Role.Admin },
     //     { id: 2, username: 'user', password: 'user', firstName: 'Normal', lastName: 'User', role: Role.User }
     // ];
-    let response = await fetch('http://localhost:3000/api/users');
+    let response = await fetch(`${apiUrl}/users`);
     let users = await response.json();
     // let users = await User.find();
     // console.log(users);
     let realFetch = window.fetch;
 
     window.fetch = function (url, opts) {
-        //const authHeader = opts.headers['Authorization'];
-        //const authHeader = opts.headers ? opts.headers['Authorization'] : null;
-        //const isLoggedIn = authHeader && authHeader.startsWith('Bearer fake-jwt-token');
-        //const roleString = isLoggedIn && authHeader.split('.')[1];
-        //const role = roleString ? Role[roleString] : null;
+        // const authHeader = opts.headers['Authorization'];
+        // const authHeader = opts.headers ? opts.headers['Authorization'] : null;
+        // const isLoggedIn = authHeader && authHeader.startsWith('Bearer fake-jwt-token');
+        // const roleString = isLoggedIn && authHeader.split('.')[1];
+        // const role = roleString ? Role[roleString] : null;
 
         return new Promise((resolve, reject) => {
             // wrap in timeout to simulate server api call
@@ -28,10 +29,9 @@ export async function configureFakeBackend() {
                     const user = users.find(x => x.username === params.username && x.password === params.password);
                     if (!user) return error('Username or password is incorrect');
                     return ok({
-                        id: user.id,
+                        id: user._id,
                         username: user.username,
-                        firstName: user.firstName,
-                        lastName: user.lastName,
+                        email: user.email,
                         role: user.role,
                         token: `fake-jwt-token.${user.role}`
                     });
@@ -49,7 +49,7 @@ export async function configureFakeBackend() {
                     const currentUser = users.find(x => x.role === role);
                     if (id !== currentUser.id && role !== Role.Admin) return unauthorised();
 
-                    const user = users.find(x => x.id === id);
+                    const user = users.find(x => x._id === id);
                     return ok(user);
                 }
 

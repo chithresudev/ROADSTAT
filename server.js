@@ -35,10 +35,10 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Set the environment variable
-process.env.API_URL = `http://localhost:${PORT}/api`; // Example URL
+process.env.VITE_API_URL = `http://localhost:${PORT}/api`; // Example URL
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URL)
+mongoose.connect(process.env.VITE_MONGO_URL)
 .then(() => {
   console.log('Connected to MongoDB');
 })

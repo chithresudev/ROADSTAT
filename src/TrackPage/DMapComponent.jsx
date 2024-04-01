@@ -9,7 +9,9 @@ const containerStyle = {
   height: '175px'
 };
 
-const google_map_api = process.env.GOOGLE_MAP_API;
+
+// const google_map_api = process.env.GOOGLE_MAP_API;
+const google_map_api = import.meta.env.VITE_GOOGLE_MAP_API;
 
 function DMapComponent({ truckLocations, truckDestinations }) {
 
