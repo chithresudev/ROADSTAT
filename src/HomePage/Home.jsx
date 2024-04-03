@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { GoogleMap, Marker, LoadScript } from '@react-google-maps/api';
 import './Home.css';
 import MapComponent from './MapComponent';
-import dotenv from 'dotenv';
+
+const apiUrl = import.meta.env.VITE_API_URL;
 
 function HomePage({updateHeader,updateButton}) {
     const [currentTime, setCurrentTime] = useState('');
@@ -29,7 +30,8 @@ function HomePage({updateHeader,updateButton}) {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(async (position) => {
                     const { latitude, longitude } = position.coords;
-                    const apiKey = process.env.OPEN_WEATHER_API;
+                    // const apiKey = process.env.OPEN_WEATHER_API;
+                    const apiKey = import.meta.env.VITE_OPEN_WEATHER_API;
                     const apiURL = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
                     try {
                         const response = await fetch(apiURL);
@@ -56,7 +58,8 @@ function HomePage({updateHeader,updateButton}) {
         };
 
         const fetchTruckData = async () => {
-            const response = await fetch('http://localhost:3000/api/trucks');
+            // const response = await fetch('http://localhost:3000/api/trucks');
+            const response = await fetch(`${apiUrl}/trucks`);
             const data = await response.json();
             setTruckData(data);
         };
@@ -105,7 +108,8 @@ function HomePage({updateHeader,updateButton}) {
 
     const fetchTruckLocations = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/truck-location');
+            // const response = await fetch('http://localhost:3000/api/truck-location');
+            const response = await fetch(`${apiUrl}/truck-location`);
             const data = await response.json();
             setTruckLocations(data);
         } catch (error) {

@@ -27,6 +27,9 @@ function Profile({updateHeader, updateButton}) {
         };
     }, [currentUser.id]);
 
+    console.log(currentUser);
+    console.log(userFromApi);
+
     return (
         <div className='mainprofile'>
             <div className="content">
@@ -38,7 +41,7 @@ function Profile({updateHeader, updateButton}) {
                         Current user from secure API endpoint:
                         {userFromApi &&
                             <ul>
-                                <li>{userFromApi.firstName} {userFromApi.lastName}</li>
+                                <li>{userFromApi.username} {userFromApi.email} {userFromApi.role}</li>
                             </ul>
                         }
                     </div>

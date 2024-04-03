@@ -56,6 +56,7 @@
 
 .d-mainprofile {
     width: calc(100% - 500px);
+    /* margin-right: 30px; */
 }
 
 .d-content, .dr2-content {
@@ -143,10 +144,12 @@
 .dr2-mainprofile {
     margin-left: 20px;
     width: calc(100% - 575px);
+    margin-left: 10px;
 }
 
 .dr2-content {
     height: 300px; /* Adjust the height as needed */
+    /* padding: 10px 20px 0px 20px; */
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
@@ -156,12 +159,13 @@
 .dr2-access {
     background-color: white;
     border-radius: 10px;
-    padding:  0px 0px 5px 40px;
+    /* padding:  0px 0px 5px 40px; */
+    padding:  5px 2px;
     font-size: 14px;
     margin-top: 5px;
     overflow-y: auto;
-    height: 232px;
-    max-height: 232px;
+    /* height: 255px; */
+    max-height: 260px;
     scrollbar-width: none;
     -ms-overflow-style: none;
 }

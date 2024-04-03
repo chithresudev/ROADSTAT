@@ -8,6 +8,8 @@ function AdminPage() {
         userService.getAll().then(users => setUsers(users));
     }, []);
 
+    console.log(users);
+
     return (
         <div>
             <h1>Admin</h1>
@@ -17,7 +19,7 @@ function AdminPage() {
                 {users &&
                     <ul>
                         {users.map(user =>
-                            <li key={user.id}>{user.firstName} {user.lastName}</li>
+                            <li key={user._id}>{user.username} {user.email} {user.role}</li>
                         )}
                     </ul>
                 }

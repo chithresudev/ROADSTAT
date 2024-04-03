@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import './Maintenance.css'
+import './Maintenance.css';
+
+const apiUrl = import.meta.env.VITE_API_URL;
 
 function MaintenancePage({updateHeader, updateButton}) {
 
@@ -35,7 +37,8 @@ function MaintenancePage({updateHeader, updateButton}) {
 
     const fetchEngineHealthData = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/engine-health');
+            // const response = await fetch('http://localhost:3000/api/engine-health');
+            const response = await fetch(`${apiUrl}/engine-health`);
             if (!response.ok) {
                 throw new Error('Failed to fetch engine health data');
             }
@@ -49,7 +52,8 @@ function MaintenancePage({updateHeader, updateButton}) {
 
     const fetchBrakeSystemData = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/brake-system');
+            // const response = await fetch('http://localhost:3000/api/brake-system');
+            const response = await fetch(`${apiUrl}/brake-system`);
             if (!response.ok) {
                 throw new Error('Failed to fetch brake system data');
             }
@@ -63,7 +67,8 @@ function MaintenancePage({updateHeader, updateButton}) {
 
     const fetchFuelSystemData = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/fuel-system');
+            // const response = await fetch('http://localhost:3000/api/fuel-system');
+            const response = await fetch(`${apiUrl}/fuel-system`);
             if (!response.ok) {
                 throw new Error('Failed to fetch fuel system data');
             }
@@ -77,6 +82,7 @@ function MaintenancePage({updateHeader, updateButton}) {
 
     const fetchTireHealthData = async () => {
         try {
+            // const response = await fetch('http://localhost:3000/api/tire-health');
             const response = await fetch('http://localhost:3000/api/tire-health');
             if (!response.ok) {
                 throw new Error('Failed to fetch tire health data');
@@ -91,6 +97,7 @@ function MaintenancePage({updateHeader, updateButton}) {
 
     const fetchBatteryStatusData = async () => {
         try {
+            // const response = await fetch('http://localhost:3000/api/battery-status');
             const response = await fetch('http://localhost:3000/api/battery-status');
             if (!response.ok) {
                 throw new Error('Failed to fetch battery status data');
@@ -105,6 +112,7 @@ function MaintenancePage({updateHeader, updateButton}) {
 
     const fetchTransmissionData = async () => {
         try {
+            // const response = await fetch('http://localhost:3000/api/transmission');
             const response = await fetch('http://localhost:3000/api/transmission');
             if (!response.ok) {
                 throw new Error('Failed to fetch transmission data');

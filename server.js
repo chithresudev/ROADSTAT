@@ -30,12 +30,18 @@ import tireHealthRouter from './src/api/maintenance/Tire-health.js';
 import batteryStatusRouter from './src/api/maintenance/Battery-status.js';
 import trucksMetricRouter from './src/api/truck-alerts--warnings/route.js'
 import transmissionRouter from  './src/api/maintenance/Transmission-status.js';
+import trucksMetricRouter from './src/api/truck-alerts--warnings/route.js';
+// import transmissionRouter from  './src/api/maintenance/Transmission-status.js';
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Set the environment variable
+process.env.VITE_API_URL = `http://localhost:${PORT}/api`; // Example URL
+
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URL)
+mongoose.connect(process.env.VITE_MONGO_URL)
 .then(() => {
   console.log('Connected to MongoDB');
 })

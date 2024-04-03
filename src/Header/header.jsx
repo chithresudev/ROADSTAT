@@ -41,7 +41,7 @@ function Header({ currentUser, logout, headerContent}) {
                     </Link>
                 </div>
                 <div className="user-profile">
-                    <span>{currentUser.role}</span>
+                    <span>{currentUser.username}</span>
                     <Link to="/profile"><img src="/images/profile.png" alt="Profile Icon" className="profile"/></Link>
                 </div>
                 <div>
