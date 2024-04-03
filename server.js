@@ -30,7 +30,7 @@ import tireHealthRouter from './src/api/maintenance/Tire-health.js';
 import batteryStatusRouter from './src/api/maintenance/Battery-status.js';
 import trucksMetricRouter from './src/api/truck-alerts--warnings/route.js'
 import transmissionRouter from  './src/api/maintenance/Transmission-status.js';
-import trucksMetricRouter from './src/api/truck-alerts--warnings/route.js';
+
 // import transmissionRouter from  './src/api/maintenance/Transmission-status.js';
 
 
