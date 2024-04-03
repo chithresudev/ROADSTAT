@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { Line } from 'react-chartjs-2';
 import './Driver.css'
 import annotationPlugin from 'chartjs-plugin-annotation';
-
 import Chart from "chart.js/auto";
 import { LinearScale, TimeScale } from "chart.js";
 
@@ -17,7 +16,9 @@ function DriverPage({updateHeader, updateButton,driverId}) {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const driverNo = queryParams.get('driverId');
-    const [selectedDriverNo, setSelectedDriverNo] = useState(driverNo || '');
+    const [selectedDriverNo, setSelectedDriverNo] = useState(driverId || '');
+
+    console.log(selectedDriverNo);
 
     // const [healthData, setHealthData] = useState([]);
     const [dHealthData, setDHealthData] = useState([]);
@@ -26,17 +27,18 @@ function DriverPage({updateHeader, updateButton,driverId}) {
     const [bodyTemps, setBodyTemps] = useState([]);
     const [hydrationLevels, setHydrationLevels] = useState([]);
     const [stressLevels, setStressLevels] = useState([]);
+    const [selectedRowIndex, setSelectedRowIndex] = useState(0); 
     const [selectedDriverId, setSelectedDriverId] = useState('');
-    const [graphData, setGraphData] = useState(heartRates);
+    const [graphData, setGraphData] = useState([]);
     const [min, setMin] = useState(50);
     const [max, setMax] = useState(150);
     const [stepSize, setStepSize] = useState(10);
     const [yLabel, setYLabel] = useState('');
     const chartRef = useRef(null);
     const [annotation, setAnnotation] = useState([]);
+    const [printedHealthData, setPrintedHealthData] = useState(null);
 
     const [drivers, setDrivers] = useState([]);
-
     let [flag, setFlag] = useState(0);
 
     useEffect(() => {
@@ -44,8 +46,6 @@ function DriverPage({updateHeader, updateButton,driverId}) {
         updateButton('Driver');
         fetchDriversData();
 
-        // Setting up polling to fetch heart rate data every 10 seconds
-        // (10000 milliseconds). Adjust the interval as needed.
         const intervalId = setInterval(() => {
             if (flag == 1) {
                 handleHeartRateClick();
@@ -66,8 +66,8 @@ function DriverPage({updateHeader, updateButton,driverId}) {
 
         // Cleanup: Clearing the interval when the component unmounts
         return () => clearInterval(intervalId);
-
     }, [updateHeader, updateButton, selectedDriverId, flag]);
+    
 
     // driverId=1;
 
@@ -86,13 +86,28 @@ function DriverPage({updateHeader, updateButton,driverId}) {
 
     };
 
+    const fetchDriverHealthData = async (driverId) => {
+        try {
+            const response = await fetch(`${apiUrl}/driver-health/${driverId}`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch driver health');
+            }
+            const driverHealthData = await response.json();
+            console.log('Driver Health Data:', driverHealthData);
+            setPrintedHealthData(driverHealthData); // Set the state with the fetched data
+        } catch (error) {
+            console.error('Error fetching driver health:', error);
+        }
+    };
+
     const handleHeartRateClick = async () => {
 
-        // if (!selectedDriverId) {
-        //     window.alert('Please select a driver.');
-        //     return;
-        // }
+        if (!selectedDriverId) {
+            window.alert('Please select a driver.');
+            return;
+        }
         
+        setFlag(1)
         try {
             // const response = await fetch(`http://localhost:3000/api/driver-health/${selectedDriverId}`);
             const response = await fetch(`${apiUrl}/driver-health/${selectedDriverId}`);
@@ -100,8 +115,15 @@ function DriverPage({updateHeader, updateButton,driverId}) {
                 throw new Error('Failed to fetch driver health');
             }
             const driverHealthData = await response.json();
+            
             setDHealthData(driverHealthData);
             setHeartRates(prevHeartRates => {
+                // const updatedHeartRates = Array.from({ length: 61 }, (_, i) => {
+                //     if (i % 1 === 0) {
+                //         return driverHealthData.heartRate;
+                //     }
+                //     return null;
+                // });
                 const updatedHeartRates = [...prevHeartRates, driverHealthData.heartRate].slice(-100);
                 setGraphData(updatedHeartRates);
                 const newMin = Math.min(...updatedHeartRates);
@@ -148,11 +170,11 @@ function DriverPage({updateHeader, updateButton,driverId}) {
 
     const handleFatigueLevelClick = async () => {
 
-        // if (!selectedDriverId) {
-        //     window.alert('Please select a driver.');
-        //     return;
-        // }
-
+        if (!selectedDriverId) {
+            window.alert('Please select a driver.');
+            return;
+        }
+        setFlag(2)
         try {
             // const response = await fetch(`http://localhost:3000/api/driver-health/${selectedDriverId}`);
             const response = await fetch(`${apiUrl}/driver-health/${selectedDriverId}`);
@@ -162,6 +184,12 @@ function DriverPage({updateHeader, updateButton,driverId}) {
             const driverHealthData = await response.json();
             setDHealthData(driverHealthData);
             setFatigueLevels(prevFatigueLevels => {
+                // const updatedFatigueLevels = Array.from({ length: 61 }, (_, i) => {
+                //     if (i % 1 === 0) {
+                //         return driverHealthData.fatigueLevel;
+                //     }
+                //     return null;
+                // });
                 const updatedFatigueLevels = [...prevFatigueLevels, driverHealthData.fatigueLevel].slice(-100);
                 setGraphData(updatedFatigueLevels);
                 const newMin = Math.min(...updatedFatigueLevels);
@@ -208,11 +236,11 @@ function DriverPage({updateHeader, updateButton,driverId}) {
 
     const handleBodyTempClick = async () => {
 
-        // if (!selectedDriverId) {
-        //     window.alert('Please select a driver.');
-        //     return;
-        // }
-
+        if (!selectedDriverId) {
+            window.alert('Please select a driver.');
+            return;
+        }
+        setFlag(3)
         try {
             // const response = await fetch(`http://localhost:3000/api/driver-health/${selectedDriverId}`);
             const response = await fetch(`${apiUrl}/driver-health/${selectedDriverId}`);
@@ -222,6 +250,12 @@ function DriverPage({updateHeader, updateButton,driverId}) {
             const driverHealthData = await response.json();
             setDHealthData(driverHealthData);
             setBodyTemps(prevBodyTemps => {
+                // const updatedBodyTemps = Array.from({ length: 61 }, (_, i) => {
+                //     if (i % 1 === 0) {
+                //         return driverHealthData.bodyTemp;
+                //     }
+                //     return null;
+                // });
                 const updatedBodyTemps = [...prevBodyTemps, driverHealthData.bodyTemp].slice(-100);
                 setGraphData(updatedBodyTemps);
                 const newMin = Math.min(...updatedBodyTemps);
@@ -279,11 +313,11 @@ function DriverPage({updateHeader, updateButton,driverId}) {
 
     const handleHydrationLevelClick = async () => {
 
-        // if (!selectedDriverId) {
-        //     window.alert('Please select a driver.');
-        //     return;
-        // }
-
+        if (!selectedDriverId) {
+            window.alert('Please select a driver.');
+            return;
+        }
+        setFlag(4)
         try {
             // const response = await fetch(`http://localhost:3000/api/driver-health/${selectedDriverId}`);
             const response = await fetch(`${apiUrl}/driver-health/${selectedDriverId}`);
@@ -293,6 +327,12 @@ function DriverPage({updateHeader, updateButton,driverId}) {
             const driverHealthData = await response.json();
             setDHealthData(driverHealthData);
             setHydrationLevels(prevHydrationLevels => {
+                // const updatedHydrationLevels = Array.from({ length: 61 }, (_, i) => {
+                //     if (i % 1 === 0) {
+                //         return driverHealthData.hydrationLevel;
+                //     }
+                //     return null;
+                // });
                 const updatedHydrationLevels = [...prevHydrationLevels, driverHealthData.hydrationLevel].slice(-100);
                 setGraphData(updatedHydrationLevels);
                 const newMin = Math.min(...updatedHydrationLevels);
@@ -328,7 +368,7 @@ function DriverPage({updateHeader, updateButton,driverId}) {
                             position: 'right'
                         }
                     }
-                ]) 
+                ])
                 return updatedHydrationLevels;                
             });
             
@@ -339,11 +379,11 @@ function DriverPage({updateHeader, updateButton,driverId}) {
 
     const handleStressLevelClick = async () => {
 
-        // if (!selectedDriverId) {
-        //     window.alert('Please select a driver.');
-        //     return;
-        // }
-
+        if (!selectedDriverId) {
+            window.alert('Please select a driver.');
+            return;
+        }
+        setFlag(5)
         try {
             // const response = await fetch(`http://localhost:3000/api/driver-health/${selectedDriverId}`);
             const response = await fetch(`${apiUrl}/driver-health/${selectedDriverId}`);
@@ -353,6 +393,12 @@ function DriverPage({updateHeader, updateButton,driverId}) {
             const driverHealthData = await response.json();
             setDHealthData(driverHealthData);
             setStressLevels(prevStressLevels => {
+                // const updatedStressLevels = Array.from({ length: 61 }, (_, i) => {
+                //     if (i % 1 === 0) {
+                //         return driverHealthData.stressLevel;
+                //     }
+                //     return null;
+                // });
                 const updatedStressLevels = [...prevStressLevels, driverHealthData.stressLevel].slice(-100);
                 setGraphData(updatedStressLevels);
                 const newMin = Math.min(...updatedStressLevels);
@@ -415,10 +461,10 @@ function DriverPage({updateHeader, updateButton,driverId}) {
                 type: 'linear', // Use 'linear' scale type for numeric data
                 title: {
                     display: true,
-                    text: 'Time in seconds' // Label for the x-axis
+                    text: 'Time' // Label for the x-axis
                 },
                 min: 0, // Set the minimum value of the y-axis
-                max: 100, // Set the maximum value of the y-axis
+                max: 60, // Set the maximum value of the y-axis
                 ticks: {
                     stepSize: 10 // Set the interval between each tick on the x-axis
                 }
@@ -446,6 +492,73 @@ function DriverPage({updateHeader, updateButton,driverId}) {
         }
     };
 
+    const handleRowClick = (index, driverId) => {
+        setSelectedRowIndex(index);
+        setSelectedDriverId(driverId);
+        fetchDriverHealthData(driverId);
+        setGraphData([])
+    };
+
+    useEffect(() => {
+        if (drivers.length > 0) {
+            const defaultDriverId = drivers[selectedRowIndex].driverId;
+            setSelectedDriverId(defaultDriverId);
+            fetchDriverHealthData(defaultDriverId);
+        }
+    }, [drivers, selectedRowIndex]);
+    
+
+    
+
+    const getFatigueLevelDescription = (level) => {
+        switch (level) {
+            case 1:
+                return 'Poor rested (Level 1)';
+            case 2:
+                return 'Okay rested (Level 2)';
+            case 3:
+                return 'Normal rested (Level 3)';
+            case 4:
+                return 'Good rested (Level 4)';
+            case 5:
+                return 'Well rested (Level 5)';
+            default:
+                return '-';
+        }
+    };
+    
+    const getHydrationLevelDescription = (level) => {
+        if (level >= 60 && level <= 65) {
+            return 'Not hydrated';
+        } else if (level > 65 && level <= 75) {
+            return 'Hydrated';
+        } else if (level > 75) {
+            return 'Well hydrated';
+        } else {
+            return '-';
+        }
+    };
+    
+    const getStressLevelDescription = (level) => {
+        switch (level) {
+            case 1:
+                return 'Low stress level (Level 1)';
+            case 2:
+                return 'Good stress level (Level 2)';
+            case 3:
+                return 'Moderate stress level (Level 3)';
+            case 4:
+                return 'Noraml stress level (Level 4)';
+            case 5:
+                return 'High stress level (Level 5)';
+            default:
+                return '-';
+        }
+    };
+    
+
+   
+
     return (
         <div className='d-main'>
             <div className='d-card'>
@@ -462,13 +575,12 @@ function DriverPage({updateHeader, updateButton,driverId}) {
                     </thead>
                     <tbody>
                     {drivers.map((driver, index) => (
-                            <tr key={index} className={driver.driverId === selectedDriverNo ? 'selected-row' : ''}>
+                            <tr key={index} 
+                                className={selectedRowIndex === index ? 'selected' : ''}
+                                onClick={() => handleRowClick(index, driver.driverId)}
+                            >
                                 <td>{index + 1}</td>
-                                <td><Link onClick={() => setSelectedDriverId(driver.driverId)}>
-                    {driver.driverId}
-                </Link></td>
-                                {/* <td><Link to="#" onClick={(event) => {event.preventDefault(); setSelectedDriverId(driver.driverId); }}> */}
-                                {/* {driver.driverId}</Link></td> */}
+                                <td> {driver.driverId}</td>
                                 <td>{driver.driverName}</td>
                                 <td>{driver.knownHealthIssues}</td>
                                 <td>{driver.experience}</td>
@@ -488,54 +600,24 @@ function DriverPage({updateHeader, updateButton,driverId}) {
                                     <table className='dr-table'>
                                         <tbody>
                                             <tr>
-                                                <td className='hp-head'><span className='test'><img src="/images/hr.png" className="dh-icon" /><Link onClick={() => {
-                                                                                                                                    if (!selectedDriverId) {
-                                                                                                                                        alert('Please select a driver first.');
-                                                                                                                                    } else {
-                                                                                                                                        setFlag(1);
-                                                                                                                                    }
-                                                                                                                                    }} className='dclick'>HEART RATE</Link></span></td>
-                                                <td className='hp-text'>60-100 BPM</td>
+                                                <td className='hp-head'><span className='test'><img src="/images/hr.png" className="dh-icon" /><Link onClick={() => handleHeartRateClick()} className='dclick'>HEART RATE</Link></span></td>
+                                                <td className='hp-text'>{printedHealthData ? `${printedHealthData.heartRate} BPM` : '-'}</td>
                                             </tr>
                                             <tr>
-                                                <td className='hp-head'><span className='test'><img src="/images/fl.png" className="dh-icon" /><Link onClick={() => {
-                                                                                                                                    if (!selectedDriverId) {
-                                                                                                                                        alert('Please select a driver first.');
-                                                                                                                                    } else {
-                                                                                                                                        setFlag(2);
-                                                                                                                                    }
-                                                                                                                                    }}className='dclick'>FATIGUE LEVEL</Link></span></td>
-                                                <td className='hp-text'>Well Rested (Level 1)</td>
+                                                <td className='hp-head'><span className='test'><img src="/images/fl.png" className="dh-icon" /><Link onClick={() => handleFatigueLevelClick()}className='dclick'>FATIGUE LEVEL</Link></span></td>
+                                                <td className='hp-text'>{printedHealthData ? getFatigueLevelDescription(printedHealthData.fatigueLevel) : '-'}</td>
                                             </tr>
                                             <tr>
-                                                <td className='hp-head'><span className='test'><img src="/images/bt.png" className="dh-icon" /><Link onClick={() => {
-                                                                                                                                    if (!selectedDriverId) {
-                                                                                                                                        alert('Please select a driver first.');
-                                                                                                                                    } else {
-                                                                                                                                        setFlag(3);
-                                                                                                                                    }
-                                                                                                                                    }} className='dclick'>BODY TEMP</Link></span></td>
-                                                <td className='hp-text'> 98.6 F</td>
+                                                <td className='hp-head'><span className='test'><img src="/images/bt.png" className="dh-icon" /><Link onClick={() => handleBodyTempClick()} className='dclick'>BODY TEMP</Link></span></td>
+                                                <td className='hp-text'> {printedHealthData ? `${printedHealthData.bodyTemp} F` : '-'}</td>
                                             </tr>
                                             <tr>
-                                                <td className='hp-head'><span className='test'><img src="/images/hl.png" className="dh-icon" /><Link onClick={() => {
-                                                                                                                                    if (!selectedDriverId) {
-                                                                                                                                        alert('Please select a driver first.');
-                                                                                                                                    } else {
-                                                                                                                                        setFlag(4);
-                                                                                                                                    }
-                                                                                                                                    }}className='dclick'>HYDRATION LEVEL</Link></span></td>
-                                                <td className='hp-text'>Well Hydrated (50% and above)</td>
+                                                <td className='hp-head'><span className='test'><img src="/images/hl.png" className="dh-icon" /><Link onClick={() => handleHydrationLevelClick()}className='dclick'>HYDRATION LEVEL</Link></span></td>
+                                                <td className='hp-text'>{printedHealthData ? getHydrationLevelDescription(printedHealthData.hydrationLevel) : '-'}</td>
                                             </tr>
                                             <tr>
-                                                <td className='hp-head'><span className='test'><img src="/images/sl.png" className="dh-icon" /><Link onClick={() => {
-                                                                                                                                    if (!selectedDriverId) {
-                                                                                                                                        alert('Please select a driver first.');
-                                                                                                                                    } else {
-                                                                                                                                        setFlag(5);
-                                                                                                                                    }
-                                                                                                                                    }} className='dclick'>STRESS LEVEL</Link></span></td>
-                                                <td className='hp-text'>Low Stress Level (Level 1)</td>
+                                                <td className='hp-head'><span className='test'><img src="/images/sl.png" className="dh-icon" /><Link onClick={() => handleStressLevelClick()} className='dclick'>STRESS LEVEL</Link></span></td>
+                                                <td className='hp-text'>{printedHealthData ? getStressLevelDescription(printedHealthData.stressLevel) : '-'}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -552,7 +634,7 @@ function DriverPage({updateHeader, updateButton,driverId}) {
                     <div className="dr2-content">
                         <div className='dr2-access'>
                             <div className='dr2-details'>
-                            <div className='dr2-table-container'>
+                            <div className='dr2-table-containers'>
                                 <Line ref={chartRef} data={data} options={options} />
                             </div>
                             </div>

@@ -125,6 +125,12 @@
     padding:8px 0px 0px 5px;
 }
 
+.note-ich{
+    height: 13px;
+    width: 13px;
+    font-weight: bolder;
+}
+
 
 /* Media Queries for Tablet */
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
