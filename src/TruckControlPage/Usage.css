@@ -167,6 +167,25 @@
     border-radius: 10px;
 }
 
+.popup {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    z-index: 1;
+}
+
+.popup-content {
+    font-size: 14px;
+}
+
+.close {
+    float: right;
+    cursor: pointer;
+}
+
+
+
 /* Media Queries for Tablet */
 @media only screen and (max-width: 1024px) {
     .u-main {

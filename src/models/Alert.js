@@ -9,3 +9,11 @@ const AlertSchema = new Schema({
   }, { timestamps: true });
   
   export const Alert = models?.Alert || model('Alert',AlertSchema);
+
+  AlertSchema.set('toJSON', {
+    transform: function (doc, ret) {
+        ret.createdAt = new Date(ret.createdAt).toLocaleString();
+        ret.updatedAt = new Date(ret.updatedAt).toLocaleString();
+        return ret;
+    }
+});

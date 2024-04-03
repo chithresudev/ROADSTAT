@@ -10,7 +10,7 @@ const DestinationSchema = new Schema({
   latitude: { type: Number},
   longitude: { type: Number},
   source: {type: String},
-  status: {type: String},
+  status: {type: String}, 
 }, { timestamps: true });
 
 export const Destination = models?.Destination || model('Destination',DestinationSchema);

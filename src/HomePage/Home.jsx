@@ -17,6 +17,7 @@ function HomePage({updateHeader,updateButton}) {
     const [mapKey, setMapKey] = useState(0);
     const [selectedTruckNo, setSelectedTruckNo] = useState(null);
     const open_weather_api = process.env.OPEN_WEATHER_API;
+    const [alertData, setAlertData] = useState([]); 
 
     useEffect(() => {
         updateHeader('Home');
@@ -63,6 +64,7 @@ function HomePage({updateHeader,updateButton}) {
             setTruckData(data);
         };
 
+        
         fetchWeather();
         fetchTruckData();
 
@@ -73,12 +75,27 @@ function HomePage({updateHeader,updateButton}) {
 
         return () => clearInterval(interval);
     }, []);
+
+    const fetchAlertData = async () => {
+        try {
+            const response = await fetch('http://localhost:3000/api/alerts');
+            const data = await response.json();
+            setAlertData(data);
+        } catch (error) {
+            console.error('Error fetching alert data:', error);
+            setAlertData([]);
+        }
+    };
+
     
     const handleButtonClick = async (buttonName) => {
         setActiveButton(buttonName);
         if (buttonName === "warnings") {
             await fetchTruckLocations();  
         } 
+        else if (buttonName === "alerts") {
+            await fetchAlertData(); // Fetch alert data when "Alerts" button is clicked
+        }
     };
 
     const handleMapButtonClick = async (truckNo) => {
@@ -128,7 +145,7 @@ function HomePage({updateHeader,updateButton}) {
                 <button className='scard-button' onClick={() => handleButtonClick('trucks')}>
                     <Link className='scard-link'>
                         <img src="/images/truck.png" alt="Home" className="scard-icon" />
-                        <span className="scard-text">Trucks</span>
+                        <span className="scard-text">Vehicles</span>
                     </Link>
                 </button>
             </div>
@@ -155,7 +172,7 @@ function HomePage({updateHeader,updateButton}) {
                 <thead>
                     <tr>
                         <th>S No</th>
-                        <th>Truck No</th>
+                        <th>Vehicle No</th>
                         <th>Driver Id</th>
                         <th>Location</th>
                         <th>Incidents</th>
@@ -183,16 +200,45 @@ function HomePage({updateHeader,updateButton}) {
         </div>
         )}
 
+        {activeButton === 'alerts' && (
+        <div className='card'>
+            <table className='table'>
+                <thead>
+                    <tr>
+                        <th>Vehicle No</th>
+                        <th>Metric</th>
+                        <th>Value</th>
+                        <th>Message</th>
+                        <th>Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {alertData.map((alert, index) => (
+                        <tr key={index}>
+                            <td>{alert.truckId}</td>
+                            <td>{alert.metric}</td>
+                            <td>{alert.value}</td>
+                            <td>{alert.message}</td>
+                            <td>{alert.createdAt}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+        )}
+
+
+
         {activeButton === 'warnings' && (
             <div className='card' style={{paddingLeft:"0px",paddingRight:"0px",overflow: "hidden"}}>
                 <MapComponent truckLocations={truckLocations} selectedTruckNo={selectedTruckNo}/>
             </div>
         )}
-        {activeButton === 'alerts' && (
+        {/* {activeButton === 'alerts' && (
             <div className='card'>
-                <p>No alerts</p>
+                {/* <p>No alerts</p> }
             </div>
-        )}
+        )} */}
     </div>
     );
 }

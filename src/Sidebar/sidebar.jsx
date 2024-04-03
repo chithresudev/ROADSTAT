@@ -40,6 +40,7 @@ const Sidebar = ({ isAdmin, logout, activeButtonC  }) => {
             <div className='logo'>
                 <p>Roadstat</p>
             </div>
+         
             <div>
                 <button className={`custom-button ${activeButtonC === 'Home' ? 'active' : ''}`} onClick={() => handleButtonClick('Home')}>
                     <Link to="/home" className="nav-item nav-link">
@@ -63,7 +64,7 @@ const Sidebar = ({ isAdmin, logout, activeButtonC  }) => {
             <button className={`custom-button ${activeButtonC === 'Truck Control' ? 'active' : ''}`} onClick={handleTruckControlClick}>  
                  <Link className="nav-item nav-link">
                     <img src="/images/truckcontrol.png" alt="Home" className="icon" />
-                    <span className="text">Truck Control</span>
+                    <span className="text">Vehicle Control</span>
                     <img src={showTruckControlLinks ? darrow : arrowLogo} alt="Arrow" className={`arrow-icon ${showTruckControlLinks ? 'down' : 'right'}`} />
                 </Link>
                 </button>
