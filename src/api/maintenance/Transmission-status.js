@@ -34,19 +34,17 @@ transmissionRouter.post('/transmission', async (req, res) => {
         const {
             _id,
             truckId,
-            RPM,
-            engineTemperature,
-            oilPressure,
-            coolantTemperature,
+            COlevel,
+            NOXlevel,
+            HClevel,
             status
         } = req.body;
         const transmission = await Transmission.create({
             _id,
             truckId,
-            RPM,
-            engineTemperature,
-            oilPressure,
-            coolantTemperature,
+            COlevel,
+            NOXlevel,
+            HClevel,
             status
         });
         res.json(transmission);
@@ -62,19 +60,17 @@ transmissionRouter.put('/transmission/:id', async (req, res) => {
         const { id } = req.params;
         const {
             truckId,
-            RPM,
-            engineTemperature,
-            oilPressure,
-            coolantTemperature,
+            COlevel,
+            NOXlevel,
+            HClevel,
             status
         } = req.body;
 
         const updatedTransmission = await Transmission.findByIdAndUpdate(id, {
             truckId,
-            RPM,
-            engineTemperature,
-            oilPressure,
-            coolantTemperature,
+            COlevel,
+            NOXlevel,
+            HClevel,
             status
         }, { new: true });
 

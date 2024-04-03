@@ -160,8 +160,8 @@ function UsagePage({ updateHeader, updateButton }) {
                         <table className='u-table'>
                             <thead>
                                 <tr>
-                                    <th>Truck No</th>
-                                    <th>Truck Model</th>
+                                    <th>Vehicle No</th>
+                                    <th>Vehicle Model</th>
                                     <th>Dist. <br />Travelled</th>
                                     <th>Location</th>
                                     <th>Idle <br />Start Dt</th>
@@ -240,7 +240,7 @@ function UsagePage({ updateHeader, updateButton }) {
             <table className='usa-table'>
                 <thead>
                     <tr>
-                        <th>Truck No</th>
+                        <th>Vehicle No</th>
                         <th>Date</th>
                         <th>Name</th>
                         <th>Time</th>

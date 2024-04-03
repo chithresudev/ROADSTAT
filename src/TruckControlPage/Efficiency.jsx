@@ -104,7 +104,7 @@ function EfficiencyPage({ updateHeader, updateButton }) {
                     <thead>
                         <tr>
                             <th>S No</th>
-                            <th>Truck No</th>
+                            <th>Vehicle No</th>
                             <th>Service History</th>
                             <th>Level</th>
                             <th>Status</th>
@@ -136,7 +136,7 @@ function EfficiencyPage({ updateHeader, updateButton }) {
                     <div className="e-content">
                         <div className='e-access'>
                             <div className='e-details'>
-                                <p><strong>Truck Number : <span className='ef-td-col'>{truckId}</span></strong></p>
+                                <p><strong>Vehicle Number : <span className='ef-td-col'>{truckId}</span></strong></p>
                                 <p className="flex-container">
                                     <span><strong>Speed : <span className='ef-td-col'>{speed}</span></strong> </span>
                                     <span className="align-right"><strong>Fuel Level : <span className='ef-td-col'>{fuelLevel}</span></strong></span>

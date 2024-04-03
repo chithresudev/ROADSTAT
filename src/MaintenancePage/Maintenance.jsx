@@ -241,7 +241,7 @@ function MaintenancePage({updateHeader, updateButton}) {
             <table className='table'>
                 <thead>
                     <tr>
-                        <th>Truck No</th>
+                        <th>Vehicle No</th>
                         <th>RMP</th>
                         <th>Engine Temperature</th>
                         <th>Oil Pressure</th>
@@ -269,8 +269,8 @@ function MaintenancePage({updateHeader, updateButton}) {
             <table className='table'>
                 <thead>
                     <tr>
-                        <th>Truck No</th>
-                        <th>Truck Model</th>
+                        <th>Vehicle No</th>
+                        <th>Vehicle Model</th>
                         <th>Pad Wear</th>
                         <th>Fluid Level</th>
                         <th>Pressure</th>
@@ -297,8 +297,8 @@ function MaintenancePage({updateHeader, updateButton}) {
             <table className='table'>
                 <thead>
                     <tr>
-                        <th>Truck No</th>
-                        <th>Truck Model</th>
+                        <th>Vehicle No</th>
+                        <th>Vehicle Model</th>
                         <th>Fuel Level</th>
                         <th>Fuel Consumption Rate</th>
                         <th>Fuel Efficiency</th>
@@ -323,8 +323,8 @@ function MaintenancePage({updateHeader, updateButton}) {
             <table className='table'>
                 <thead>
                     <tr>
-                        <th>Truck No</th>
-                        <th>Truck Model</th>
+                        <th>Vehicle No</th>
+                        <th>Vehicle Model</th>
                         <th>Tire Pressure</th>
                         <th>Temperature</th>
                         <th>Tire Depth</th>
@@ -351,8 +351,8 @@ function MaintenancePage({updateHeader, updateButton}) {
             <table className='table'>
                 <thead>
                     <tr>
-                        <th>Truck No</th>
-                        <th>Truck Model</th>
+                        <th>Vehicle No</th>
+                        <th>Vehicle Model</th>
                         <th>Battery (V)</th>
                         <th>Charge Status</th>
                         <th>Health %</th>
@@ -379,11 +379,10 @@ function MaintenancePage({updateHeader, updateButton}) {
            <table className='table'>
                <thead>
                    <tr>
-                       <th>Truck No</th>
-                       <th>RMP</th>
-                       <th>Engine Temp</th>
-                       <th>Oil Pressure</th>
-                       <th>Coolant Temp</th>
+                       <th>Vehicle No</th>
+                       <th>CO Level</th>
+                       <th>NOX Level</th>
+                       <th>HC Level</th>
                        <th>Status</th>
                    </tr>
                </thead>
@@ -391,10 +390,9 @@ function MaintenancePage({updateHeader, updateButton}) {
                {filteredtransmissionData.map((transmission, index) => (
                                 <tr key={index} className={transmission.truckId === selectedTruckNo ? 'selected-row' : ''}>
                                     <td>{transmission.truckId}</td>
-                                    <td>{transmission.RPM}</td>
-                                    <td>{transmission.engineTemperature}</td>
-                                    <td>{transmission.oilPressure}</td>
-                                    <td>{transmission.coolantTemperature}</td>
+                                    <td>{transmission.COlevel}</td>
+                                    <td>{transmission.NOXlevel}</td>
+                                    <td>{transmission.HClevel}</td>
                                     <td>{transmission.status}</td>
                                 </tr>
                             ))}
