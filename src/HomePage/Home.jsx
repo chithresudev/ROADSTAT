@@ -223,7 +223,7 @@ function HomePage({updateHeader,updateButton}) {
                     <tr>
                         <th>Vehicle No</th>
                         <th>Metric</th>
-                        <th>Value</th>
+                        {/* <th>Value</th> */}
                         <th>Message</th>
                         <th>Timestamp</th>
                     </tr>
@@ -233,7 +233,7 @@ function HomePage({updateHeader,updateButton}) {
                         <tr key={index}>
                             <td>{alert.truckId}</td>
                             <td>{alert.metric}</td>
-                            <td>{alert.value}</td>
+                            {/* <td>{alert.value}</td> */}
                             <td>{alert.message}</td>
                             <td>{alert.createdAt}</td>
                         </tr>
