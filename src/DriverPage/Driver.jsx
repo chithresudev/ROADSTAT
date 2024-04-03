@@ -62,12 +62,12 @@ function DriverPage({updateHeader, updateButton,driverId}) {
             if (flag == 5) {
                 handleStressLevelClick();
             }
-        }, 10000);
+        }, 1000);
 
         // Cleanup: Clearing the interval when the component unmounts
         return () => clearInterval(intervalId);
 
-    }, [updateHeader, updateButton, flag]);
+    }, [updateHeader, updateButton, selectedDriverId, flag]);
 
     // driverId=1;
 
@@ -88,10 +88,10 @@ function DriverPage({updateHeader, updateButton,driverId}) {
 
     const handleHeartRateClick = async () => {
 
-        if (!selectedDriverId) {
-            window.alert('Please select a driver.');
-            return;
-        }
+        // if (!selectedDriverId) {
+        //     window.alert('Please select a driver.');
+        //     return;
+        // }
         
         try {
             // const response = await fetch(`http://localhost:3000/api/driver-health/${selectedDriverId}`);
@@ -148,10 +148,10 @@ function DriverPage({updateHeader, updateButton,driverId}) {
 
     const handleFatigueLevelClick = async () => {
 
-        if (!selectedDriverId) {
-            window.alert('Please select a driver.');
-            return;
-        }
+        // if (!selectedDriverId) {
+        //     window.alert('Please select a driver.');
+        //     return;
+        // }
 
         try {
             // const response = await fetch(`http://localhost:3000/api/driver-health/${selectedDriverId}`);
@@ -208,10 +208,10 @@ function DriverPage({updateHeader, updateButton,driverId}) {
 
     const handleBodyTempClick = async () => {
 
-        if (!selectedDriverId) {
-            window.alert('Please select a driver.');
-            return;
-        }
+        // if (!selectedDriverId) {
+        //     window.alert('Please select a driver.');
+        //     return;
+        // }
 
         try {
             // const response = await fetch(`http://localhost:3000/api/driver-health/${selectedDriverId}`);
@@ -279,10 +279,10 @@ function DriverPage({updateHeader, updateButton,driverId}) {
 
     const handleHydrationLevelClick = async () => {
 
-        if (!selectedDriverId) {
-            window.alert('Please select a driver.');
-            return;
-        }
+        // if (!selectedDriverId) {
+        //     window.alert('Please select a driver.');
+        //     return;
+        // }
 
         try {
             // const response = await fetch(`http://localhost:3000/api/driver-health/${selectedDriverId}`);
@@ -339,10 +339,10 @@ function DriverPage({updateHeader, updateButton,driverId}) {
 
     const handleStressLevelClick = async () => {
 
-        if (!selectedDriverId) {
-            window.alert('Please select a driver.');
-            return;
-        }
+        // if (!selectedDriverId) {
+        //     window.alert('Please select a driver.');
+        //     return;
+        // }
 
         try {
             // const response = await fetch(`http://localhost:3000/api/driver-health/${selectedDriverId}`);
@@ -467,6 +467,8 @@ function DriverPage({updateHeader, updateButton,driverId}) {
                                 <td><Link onClick={() => setSelectedDriverId(driver.driverId)}>
                     {driver.driverId}
                 </Link></td>
+                                {/* <td><Link to="#" onClick={(event) => {event.preventDefault(); setSelectedDriverId(driver.driverId); }}> */}
+                                {/* {driver.driverId}</Link></td> */}
                                 <td>{driver.driverName}</td>
                                 <td>{driver.knownHealthIssues}</td>
                                 <td>{driver.experience}</td>
@@ -486,23 +488,53 @@ function DriverPage({updateHeader, updateButton,driverId}) {
                                     <table className='dr-table'>
                                         <tbody>
                                             <tr>
-                                                <td className='hp-head'><span className='test'><img src="/images/hr.png" className="dh-icon" /><Link onClick={() => {handleHeartRateClick(); setFlag(1);}} className='dclick'>HEART RATE</Link></span></td>
+                                                <td className='hp-head'><span className='test'><img src="/images/hr.png" className="dh-icon" /><Link onClick={() => {
+                                                                                                                                    if (!selectedDriverId) {
+                                                                                                                                        alert('Please select a driver first.');
+                                                                                                                                    } else {
+                                                                                                                                        setFlag(1);
+                                                                                                                                    }
+                                                                                                                                    }} className='dclick'>HEART RATE</Link></span></td>
                                                 <td className='hp-text'>60-100 BPM</td>
                                             </tr>
                                             <tr>
-                                                <td className='hp-head'><span className='test'><img src="/images/fl.png" className="dh-icon" /><Link onClick={() => {handleFatigueLevelClick(); setFlag(2);}}className='dclick'>FATIGUE LEVEL</Link></span></td>
+                                                <td className='hp-head'><span className='test'><img src="/images/fl.png" className="dh-icon" /><Link onClick={() => {
+                                                                                                                                    if (!selectedDriverId) {
+                                                                                                                                        alert('Please select a driver first.');
+                                                                                                                                    } else {
+                                                                                                                                        setFlag(2);
+                                                                                                                                    }
+                                                                                                                                    }}className='dclick'>FATIGUE LEVEL</Link></span></td>
                                                 <td className='hp-text'>Well Rested (Level 1)</td>
                                             </tr>
                                             <tr>
-                                                <td className='hp-head'><span className='test'><img src="/images/bt.png" className="dh-icon" /><Link onClick={() => {handleBodyTempClick(); setFlag(3);}} className='dclick'>BODY TEMP</Link></span></td>
+                                                <td className='hp-head'><span className='test'><img src="/images/bt.png" className="dh-icon" /><Link onClick={() => {
+                                                                                                                                    if (!selectedDriverId) {
+                                                                                                                                        alert('Please select a driver first.');
+                                                                                                                                    } else {
+                                                                                                                                        setFlag(3);
+                                                                                                                                    }
+                                                                                                                                    }} className='dclick'>BODY TEMP</Link></span></td>
                                                 <td className='hp-text'> 98.6 F</td>
                                             </tr>
                                             <tr>
-                                                <td className='hp-head'><span className='test'><img src="/images/hl.png" className="dh-icon" /><Link onClick={() => {handleHydrationLevelClick(); setFlag(4);}}className='dclick'>HYDRATION LEVEL</Link></span></td>
+                                                <td className='hp-head'><span className='test'><img src="/images/hl.png" className="dh-icon" /><Link onClick={() => {
+                                                                                                                                    if (!selectedDriverId) {
+                                                                                                                                        alert('Please select a driver first.');
+                                                                                                                                    } else {
+                                                                                                                                        setFlag(4);
+                                                                                                                                    }
+                                                                                                                                    }}className='dclick'>HYDRATION LEVEL</Link></span></td>
                                                 <td className='hp-text'>Well Hydrated (50% and above)</td>
                                             </tr>
                                             <tr>
-                                                <td className='hp-head'><span className='test'><img src="/images/sl.png" className="dh-icon" /><Link onClick={() => {handleStressLevelClick(); setFlag(5);}} className='dclick'>STRESS LEVEL</Link></span></td>
+                                                <td className='hp-head'><span className='test'><img src="/images/sl.png" className="dh-icon" /><Link onClick={() => {
+                                                                                                                                    if (!selectedDriverId) {
+                                                                                                                                        alert('Please select a driver first.');
+                                                                                                                                    } else {
+                                                                                                                                        setFlag(5);
+                                                                                                                                    }
+                                                                                                                                    }} className='dclick'>STRESS LEVEL</Link></span></td>
                                                 <td className='hp-text'>Low Stress Level (Level 1)</td>
                                             </tr>
                                         </tbody>
