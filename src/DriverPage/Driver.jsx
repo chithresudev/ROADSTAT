@@ -40,37 +40,11 @@ function DriverPage({updateHeader, updateButton,driverId}) {
 
     const [drivers, setDrivers] = useState([]);
 
-    let [flag, setFlag] = useState(0);
-
     useEffect(() => {
         updateHeader('Driver');
         updateButton('Driver');
         fetchDriversData();
-
-        // Setting up polling to fetch heart rate data every 10 seconds
-        // (10000 milliseconds). Adjust the interval as needed.
-        const intervalId = setInterval(() => {
-            if (flag == 1) {
-                handleHeartRateClick();
-            }
-            if (flag == 2) {
-                handleFatigueLevelClick();
-            }
-            if (flag == 3) {
-                handleBodyTempClick();
-            }
-            if (flag == 4) {
-                handleHydrationLevelClick();
-            }
-            if (flag == 5) {
-                handleStressLevelClick();
-            }
-        }, 10000);
-
-        // Cleanup: Clearing the interval when the component unmounts
-        return () => clearInterval(intervalId);
-
-    }, [updateHeader, updateButton, flag]);
+    }, [updateHeader, updateButton]);
 
     // driverId=1;
 
@@ -120,15 +94,12 @@ function DriverPage({updateHeader, updateButton,driverId}) {
             
             setDHealthData(driverHealthData);
             setHeartRates(prevHeartRates => {
-              
-//                 const updatedHeartRates = Array.from({ length: 61 }, (_, i) => {
-//                     if (i % 1 === 0) {
-//                         return driverHealthData.heartRate;
-//                     }
-//                     return null;
-//                 });
-              
-                const updatedHeartRates = [...prevHeartRates, driverHealthData.heartRate].slice(-100);
+                const updatedHeartRates = Array.from({ length: 61 }, (_, i) => {
+                    if (i % 1 === 0) {
+                        return driverHealthData.heartRate;
+                    }
+                    return null;
+                });
                 setGraphData(updatedHeartRates);
                 const newMin = Math.min(...updatedHeartRates);
                 const newMax = Math.max(...updatedHeartRates);
@@ -188,15 +159,12 @@ function DriverPage({updateHeader, updateButton,driverId}) {
             const driverHealthData = await response.json();
             setDHealthData(driverHealthData);
             setFatigueLevels(prevFatigueLevels => {
-
-//                 const updatedFatigueLevels = Array.from({ length: 61 }, (_, i) => {
-//                     if (i % 1 === 0) {
-//                         return driverHealthData.fatigueLevel;
-//                     }
-//                     return null;
-//                 });
-
-                const updatedFatigueLevels = [...prevFatigueLevels, driverHealthData.fatigueLevel].slice(-100);
+                const updatedFatigueLevels = Array.from({ length: 61 }, (_, i) => {
+                    if (i % 1 === 0) {
+                        return driverHealthData.fatigueLevel;
+                    }
+                    return null;
+                });
                 setGraphData(updatedFatigueLevels);
                 const newMin = Math.min(...updatedFatigueLevels);
                 const newMax = Math.max(...updatedFatigueLevels);
@@ -256,16 +224,12 @@ function DriverPage({updateHeader, updateButton,driverId}) {
             const driverHealthData = await response.json();
             setDHealthData(driverHealthData);
             setBodyTemps(prevBodyTemps => {
-
-//                 const updatedBodyTemps = Array.from({ length: 61 }, (_, i) => {
-//                     if (i % 1 === 0) {
-//                         return driverHealthData.bodyTemp;
-//                     }
-//                     return null;
-//                 });
-
-                const updatedBodyTemps = [...prevBodyTemps, driverHealthData.bodyTemp].slice(-100);
-              
+                const updatedBodyTemps = Array.from({ length: 61 }, (_, i) => {
+                    if (i % 1 === 0) {
+                        return driverHealthData.bodyTemp;
+                    }
+                    return null;
+                });
                 setGraphData(updatedBodyTemps);
                 const newMin = Math.min(...updatedBodyTemps);
                 const newMax = Math.max(...updatedBodyTemps);
@@ -336,16 +300,12 @@ function DriverPage({updateHeader, updateButton,driverId}) {
             const driverHealthData = await response.json();
             setDHealthData(driverHealthData);
             setHydrationLevels(prevHydrationLevels => {
-
-//                 const updatedHydrationLevels = Array.from({ length: 61 }, (_, i) => {
-//                     if (i % 1 === 0) {
-//                         return driverHealthData.hydrationLevel;
-//                     }
-//                     return null;
-//                 });
-
-                const updatedHydrationLevels = [...prevHydrationLevels, driverHealthData.hydrationLevel].slice(-100);
-
+                const updatedHydrationLevels = Array.from({ length: 61 }, (_, i) => {
+                    if (i % 1 === 0) {
+                        return driverHealthData.hydrationLevel;
+                    }
+                    return null;
+                });
                 setGraphData(updatedHydrationLevels);
                 const newMin = Math.min(...updatedHydrationLevels);
                 const newMax = Math.max(...updatedHydrationLevels);
@@ -380,7 +340,7 @@ function DriverPage({updateHeader, updateButton,driverId}) {
                             position: 'right'
                         }
                     }
-                ]) 
+                ])
                 return updatedHydrationLevels;                
             });
             
@@ -405,16 +365,12 @@ function DriverPage({updateHeader, updateButton,driverId}) {
             const driverHealthData = await response.json();
             setDHealthData(driverHealthData);
             setStressLevels(prevStressLevels => {
-
-//                 const updatedStressLevels = Array.from({ length: 61 }, (_, i) => {
-//                     if (i % 1 === 0) {
-//                         return driverHealthData.stressLevel;
-//                     }
-//                     return null;
-//                 });
-
-                const updatedStressLevels = [...prevStressLevels, driverHealthData.stressLevel].slice(-100);
-
+                const updatedStressLevels = Array.from({ length: 61 }, (_, i) => {
+                    if (i % 1 === 0) {
+                        return driverHealthData.stressLevel;
+                    }
+                    return null;
+                });
                 setGraphData(updatedStressLevels);
                 const newMin = Math.min(...updatedStressLevels);
                 const newMax = Math.max(...updatedStressLevels);
@@ -476,7 +432,7 @@ function DriverPage({updateHeader, updateButton,driverId}) {
                 type: 'linear', // Use 'linear' scale type for numeric data
                 title: {
                     display: true,
-                    text: 'Time in seconds' // Label for the x-axis
+                    text: 'Time' // Label for the x-axis
                 },
                 min: 0, // Set the minimum value of the y-axis
                 max: 60, // Set the maximum value of the y-axis
