@@ -143,6 +143,26 @@ function HomePage({updateHeader,updateButton}) {
         }
         setFilteredTruckData(sortedTruckData);
     }, [truckData, searchedTruckNo]);
+
+    const [showPopup, setShowPopup] = useState(false);
+    const [popupContent, setPopupContent] = useState('');
+    const [popupPosition, setPopupPosition] = useState({ x: 0, y: 0 });
+
+    const handleIconClick = (description, event) => {
+        const iconRect = event.target.getBoundingClientRect();
+        const popupX = iconRect.left + window.pageXOffset+15;
+        const popupY = iconRect.top + window.pageYOffset ; 
+        const contentAfterIs = description.split('is')[1].trim();
+        setShowPopup(true);
+        setPopupContent(contentAfterIs);
+        setPopupPosition({ x: popupX, y: popupY });
+    };
+    
+
+    const handleClosePopup = () => {
+        setShowPopup(false);
+        setPopupContent('');
+    };
     
     return (
     <div className='main'>
@@ -234,12 +254,29 @@ function HomePage({updateHeader,updateButton}) {
                             <td>{alert.truckId}</td>
                             <td>{alert.metric}</td>
                             {/* <td>{alert.value}</td> */}
-                            <td>{alert.message}</td>
+                            <td>
+                                {alert.message.includes('is') ? (
+                                    <>
+                                        {alert.message.split('is')[0]} 
+                                        <img src="/images/note.png" className='note-ich' onClick={(event) => handleIconClick(alert.message, event)}  />
+                                    </>
+                                ) : (
+                                    alert.message
+                                )}
+                            </td>
                             <td>{alert.createdAt}</td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+            {showPopup && (
+                <div className="popup" style={{ position: 'absolute', top: popupPosition.y, left: popupPosition.x }}>
+                    <div className="popup-content">
+                        <span className="close" onClick={handleClosePopup}>&times;</span>
+                        <p className='pp'>{popupContent}</p>
+                    </div>
+                </div>
+            )}
         </div>
         )}
 
