@@ -129,6 +129,61 @@ function MaintenancePage({updateHeader, updateButton}) {
     const handleButtonClick = (buttonName) => {
         setActiveButton(buttonName);
     }
+
+    const filteredEngineHealthData = engineHealthData.reduce((acc, engine) => {
+        if (selectedTruckNo && engine.truckId === selectedTruckNo) {
+            acc.unshift(engine); 
+        } else {
+            acc.push(engine); 
+        }
+        return acc;
+    }, []);
+
+    const filteredbrakeSystemData = brakeSystemData.reduce((acc, brake) => {
+        if (selectedTruckNo && brake.truckId === selectedTruckNo) {
+            acc.unshift(brake); 
+        } else {
+            acc.push(brake); 
+        }
+        return acc;
+    }, []);
+
+    const filteredfuelSystemData = fuelSystemData.reduce((acc, fuel) => {
+        if (selectedTruckNo && fuel.truckId === selectedTruckNo) {
+            acc.unshift(fuel); 
+        } else {
+            acc.push(fuel); 
+        }
+        return acc;
+    }, []);
+
+    const filteredtireHealthData = tireHealthData.reduce((acc, tire) => {
+        if (selectedTruckNo && tire.truckId === selectedTruckNo) {
+            acc.unshift(tire); 
+        } else {
+            acc.push(tire); 
+        }
+        return acc;
+    }, []);
+
+    const filteredbatteryStatusData = batteryStatusData.reduce((acc, battery) => {
+        if (selectedTruckNo && battery.truckId === selectedTruckNo) {
+            acc.unshift(battery); 
+        } else {
+            acc.push(battery); 
+        }
+        return acc;
+    }, []);
+    
+    const filteredtransmissionData = transmissionData.reduce((acc, transmission) => {
+        if (selectedTruckNo && transmission.truckId === selectedTruckNo) {
+            acc.unshift(transmission); 
+        } else {
+            acc.push(transmission); 
+        }
+        return acc;
+    }, []);
+
     return (
     <div className='ma-main'>
         <div className='m-topcards'> 
@@ -195,7 +250,7 @@ function MaintenancePage({updateHeader, updateButton}) {
                     </tr>
                 </thead>
                 <tbody>
-                {engineHealthData.map((engine, index) => (
+                {filteredEngineHealthData.map((engine, index) => (
                                  <tr key={index} className={engine.truckId === selectedTruckNo ? 'selected-row' : ''}>
                                     <td>{engine.truckId}</td>
                                     <td>{engine.RPM}</td>
@@ -223,7 +278,7 @@ function MaintenancePage({updateHeader, updateButton}) {
                     </tr>
                 </thead>
                 <tbody>
-                {brakeSystemData.map((brake, index) => (
+                {filteredbrakeSystemData.map((brake, index) => (
                                 <tr key={index} className={brake.truckId === selectedTruckNo ? 'selected-row' : ''}>
                                     <td>{brake.truckId}</td>
                                     <td>{brake.truckName}</td>
@@ -250,7 +305,7 @@ function MaintenancePage({updateHeader, updateButton}) {
                     </tr>
                 </thead>
                 <tbody>
-                {fuelSystemData.map((fuel, index) => (
+                {filteredfuelSystemData.map((fuel, index) => (
                     <tr key={index} className={fuel.truckId === selectedTruckNo ? 'selected-row' : ''}>
                         <td>{fuel.truckId}</td>
                         <td>{fuel.truckName}</td>
@@ -277,7 +332,7 @@ function MaintenancePage({updateHeader, updateButton}) {
                     </tr>
                 </thead>
                 <tbody>
-                {tireHealthData.map((tire, index) => (
+                {filteredtireHealthData.map((tire, index) => (
                             <tr key={index} className={tire.truckId === selectedTruckNo ? 'selected-row' : ''}>
                                 <td>{tire.truckId}</td>
                                 <td>{tire.truckName}</td>
@@ -305,7 +360,7 @@ function MaintenancePage({updateHeader, updateButton}) {
                     </tr>
                 </thead>
                 <tbody>
-                {batteryStatusData.map((battery, index) => (
+                {filteredbatteryStatusData.map((battery, index) => (
                                 <tr key={index} className={battery.truckId === selectedTruckNo ? 'selected-row' : ''}>
                                     <td>{battery.truckId}</td>
                                     <td>{battery.truckName}</td>
@@ -332,7 +387,7 @@ function MaintenancePage({updateHeader, updateButton}) {
                    </tr>
                </thead>
                <tbody>
-               {transmissionData.map((transmission, index) => (
+               {filteredtransmissionData.map((transmission, index) => (
                                 <tr key={index} className={transmission.truckId === selectedTruckNo ? 'selected-row' : ''}>
                                     <td>{transmission.truckId}</td>
                                     <td>{transmission.COlevel}</td>

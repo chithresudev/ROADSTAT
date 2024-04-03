@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { GoogleMap, DirectionsService, DirectionsRenderer } from '@react-google-maps/api';
 import './Track.css';
 import DMapComponent from './DMapComponent';
@@ -17,6 +17,11 @@ function TrackPage({updateHeader, updateButton}) {
     const [truckDestinations, setTruckDestinations] = useState([]);
     const [showRunningOnly, setShowRunningOnly] = useState(false);
 
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const truckNo = queryParams.get('truckNo');
+    const [searchedTruckNo, setSearchedTruckNo] = useState(truckNo || '');
+
     useEffect(() => {
         updateHeader('Track');
         updateButton('Track');
@@ -31,6 +36,18 @@ function TrackPage({updateHeader, updateButton}) {
             fetchTruckLocationsAndDestinations(firstTruckNo);
         }
     }, [trackData]);
+
+    useEffect(() => {
+        if (searchedTruckNo) {
+            const foundIndex = trackData.findIndex(trackLocation => trackLocation.truckId === searchedTruckNo);
+            if (foundIndex !== -1) {
+                setSelectedRowIndex(foundIndex);
+                setSelectedTruckNo(searchedTruckNo);
+                fetchTruckLocationsAndDestinations(searchedTruckNo);
+            }
+        }
+    }, [searchedTruckNo, trackData]);
+    
 
     const fetchData = async () => {
         try {
@@ -78,7 +95,13 @@ function TrackPage({updateHeader, updateButton}) {
     const handleRowClick = (index, truckId) => {
         setSelectedRowIndex(index);
         setSelectedTruckNo(truckId);
+        setSearchedTruckNo('');
     };
+
+    
+    const filteredTrackData = showRunningOnly ? trackData.filter(item => item.locationStatus === 'Running') : trackData;
+    const searchedTruckIndex = filteredTrackData.findIndex(trackLocation => trackLocation.truckId === searchedTruckNo);
+    let sortedTrackData = [...filteredTrackData];
 
     useEffect(() => {
         if (selectedTruckNo) {
@@ -86,7 +109,20 @@ function TrackPage({updateHeader, updateButton}) {
         }
     }, [selectedTruckNo]);
 
-    const filteredTrackData = showRunningOnly ? trackData.filter(item => item.locationStatus === 'Running') : trackData;
+    useEffect(() => {
+        if (searchedTruckNo) {
+            const foundIndex = sortedTrackData.findIndex(trackLocation => trackLocation.truckId === searchedTruckNo);
+            if (foundIndex !== -1) {
+                setSelectedRowIndex(foundIndex);
+            }
+        }
+    }, [searchedTruckNo, sortedTrackData]);
+    
+
+    if (searchedTruckIndex !== -1) {
+        const searchedTruck = sortedTrackData.splice(searchedTruckIndex, 1)[0];
+        sortedTrackData = [searchedTruck, ...sortedTrackData];
+    }
 
     return (
         <div className='tr-main'>
@@ -108,7 +144,7 @@ function TrackPage({updateHeader, updateButton}) {
                         </tr>
                     </thead>
                     <tbody>
-                            {filteredTrackData.map((trackLocation, index) => (
+                            {sortedTrackData.map((trackLocation, index) => (
                             <tr 
                                 key={index}
                                 className={selectedRowIndex === index ? 'selected' : ''}
@@ -177,7 +213,8 @@ function TrackPage({updateHeader, updateButton}) {
                                         <td>{truckDestinations.status}</td>
                                     </tr>
                                     <tr>
-                                        <td><Link className='click'>Trailer Location</Link></td>
+                                        {/* <td><Link className='click'>Trailer Location</Link></td> */}
+                                        <td></td>
                                         <td></td>
                                         <td><button className='tra-al-button'>Alert ?</button></td>
                                     </tr>

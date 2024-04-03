@@ -141,10 +141,8 @@
     margin-right: 10px;
 }
 
-.dr2-mainprofile {
-    margin-left: 20px;
-    width: calc(100% - 575px);
-    margin-left: 10px;
+.dr2-mainprofile{
+    width: calc(100% - 600px);
 }
 
 .dr2-content {
@@ -159,8 +157,7 @@
 .dr2-access {
     background-color: white;
     border-radius: 10px;
-    /* padding:  0px 0px 5px 40px; */
-    padding:  5px 2px;
+    padding:  0px 0px 0px 0px;
     font-size: 14px;
     margin-top: 5px;
     overflow-y: auto;
@@ -209,7 +206,7 @@
 .test {
     display: flex;
     align-items: center;
-    padding-left: 60px;
+    padding-left: 10px;
 }
 
 .dclick {
@@ -221,3 +218,13 @@
     color: #BC4E61;
     text-decoration: underline;
 }
+.dr2-table-containers{
+  
+  height: 200px; /* Set the desired height */
+}
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    .d-main {
+       margin-top: 325px;
+    }
+}
+

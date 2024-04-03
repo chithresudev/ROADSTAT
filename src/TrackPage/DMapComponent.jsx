@@ -21,7 +21,7 @@ function DMapComponent({ truckLocations, truckDestinations }) {
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: google_map_api
+    googleMapsApiKey: "AIzaSyAiCj4d2M6PAX7OZ1c0cSSQCdT7RXmhwA0"
   });
 
   const center = {

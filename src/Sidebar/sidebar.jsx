@@ -38,9 +38,9 @@ const Sidebar = ({ isAdmin, logout, activeButtonC  }) => {
     <nav className="navbar navbar-expand navbar-dark bg-dark">
         <div className="navbar-nav">
             <div className='logo'>
-                <p>Roadstat</p>
+                <img src="/images/logo2.png" alt="Logo" className="logo-img" />
             </div>
-         
+            <div className='testham'>
             <div>
                 <button className={`custom-button ${activeButtonC === 'Home' ? 'active' : ''}`} onClick={() => handleButtonClick('Home')}>
                     <Link to="/home" className="nav-item nav-link">
@@ -102,6 +102,7 @@ const Sidebar = ({ isAdmin, logout, activeButtonC  }) => {
             {/* <div>
                 {isAdmin && <button><Link to="/admin" className="nav-item nav-link">Admin</Link></button>}
             </div> */}
+            </div>
         </div>
     </nav>
     

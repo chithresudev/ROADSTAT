@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { GoogleMap, Marker, LoadScript } from '@react-google-maps/api';
 import './Home.css';
 import MapComponent from './MapComponent';
@@ -16,6 +16,12 @@ function HomePage({updateHeader,updateButton}) {
     const [filteredTruckData, setFilteredTruckData] = useState([]);
     const [mapKey, setMapKey] = useState(0);
     const [selectedTruckNo, setSelectedTruckNo] = useState(null);
+
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const truckNo = queryParams.get('truckNo');
+    const [searchedTruckNo, setSearchedTruckNo] = useState(truckNo || '');
+
     const open_weather_api = process.env.OPEN_WEATHER_API;
     const [alertData, setAlertData] = useState([]); 
 
@@ -30,7 +36,6 @@ function HomePage({updateHeader,updateButton}) {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(async (position) => {
                     const { latitude, longitude } = position.coords;
-                    // const apiKey = process.env.OPEN_WEATHER_API;
                     const apiKey = import.meta.env.VITE_OPEN_WEATHER_API;
                     const apiURL = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
                     try {
@@ -127,6 +132,17 @@ function HomePage({updateHeader,updateButton}) {
         const otherData = truckData.filter(truck => truck.status !== status);
         setFilteredTruckData([...filteredData, ...otherData]);
     };
+
+    useEffect(() => {
+        setFilteredTruckData(truckData);
+        const searchedTruckIndex = truckData.findIndex(truck => truck.truckId === searchedTruckNo);
+        let sortedTruckData = [...truckData];
+        if (searchedTruckIndex !== -1) {
+            const searchedTruck = sortedTruckData.splice(searchedTruckIndex, 1)[0];
+            sortedTruckData = [searchedTruck, ...sortedTruckData];
+        }
+        setFilteredTruckData(sortedTruckData);
+    }, [truckData, searchedTruckNo]);
     
     return (
     <div className='main'>
@@ -185,7 +201,7 @@ function HomePage({updateHeader,updateButton}) {
                 </thead>
                 <tbody>
                     {filteredTruckData.map((truck, index) => (
-                        <tr key={index}>
+                        <tr key={index} className={truck.truckId === searchedTruckNo ? 'selected-row' : ''}>
                             <td>{index + 1}</td>
                             <td>{truck.truckId}</td>
                             <td>{truck.driverId}</td>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './Efficiency.css';
 
 const apiUrl = import.meta.env.VITE_API_URL;
@@ -17,6 +17,11 @@ function EfficiencyPage({ updateHeader, updateButton }) {
     const [NOXLevel, setNOXLevels] = useState(null);
     const [HCLevel, setHCLevels] = useState(null);
 
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const truckNo = queryParams.get('truckNo');
+    const [searchedTruckNo, setSearchedTruckNo] = useState(truckNo || '');
+
     useEffect(() => {
         if (truckData.length > 0) {
             const defaultSelectedTruckId = truckData[0].truckId;
@@ -29,6 +34,17 @@ function EfficiencyPage({ updateHeader, updateButton }) {
         updateHeader('Truck Control / Efficiency');
         updateButton('Efficiency');
     }, [updateHeader, updateButton]);
+
+    useEffect(() => {
+        if (searchedTruckNo) {
+            const foundIndex = truckData.findIndex(truck => truck.truckId === searchedTruckNo);
+            if (foundIndex !== -1) {
+                setSelectedRowIndex(0);
+                setSelectedTruckNo(searchedTruckNo);
+                fetchTruckControlData(searchedTruckNo);
+            }
+        }
+    }, [searchedTruckNo, truckData]);
 
     const fetchTruckData = async () => {
         // const response = await fetch('http://localhost:3000/api/truck-efficiency');
@@ -77,6 +93,9 @@ function EfficiencyPage({ updateHeader, updateButton }) {
         alert(alertMessage);
     };
 
+    const filteredTruckData = truckData.filter(truck => truck.truckId === searchedTruckNo);
+    const remainingTruckData = truckData.filter(truck => truck.truckId !== searchedTruckNo);
+    const sortedTruckData = [...filteredTruckData, ...remainingTruckData];
 
     return (
         <div className='mains'>
@@ -92,7 +111,7 @@ function EfficiencyPage({ updateHeader, updateButton }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {truckData.map((truck, index) => (
+                        {sortedTruckData.map((truck, index) => (
                             
                             <tr key={index} className={selectedRowIndex === index ? 'selected-row' : ''} onClick={() => handleTruckClick(index, truck.truckId)}>
                                 <td>{index + 1}</td>
