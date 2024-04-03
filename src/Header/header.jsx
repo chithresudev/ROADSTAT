@@ -1,11 +1,12 @@
 import React, { useState, useEffect  } from 'react';
 import '../Header/header.css';
-import { Link} from 'react-router-dom';
+import { Link, useLocation} from 'react-router-dom';
 
 
 function Header({ currentUser, logout, headerContent}) {
     const [searchQuery, setSearchQuery] = useState('');
     const [currentPath, setCurrentPath] = useState('/');
+    const location = useLocation();
 
     useEffect(() => {
         if (currentPath !== '/') {
@@ -27,7 +28,14 @@ function Header({ currentUser, logout, headerContent}) {
         else if (query === 'brake') {
             setCurrentPath('/maintenance');
         }
+        else if (query.startsWith('trk')) {
+                const currentPath = location.pathname;
+                const url = `${currentPath}?truckNo=${query.toUpperCase()}`;
+                window.location.href = url;
+        }
     };
+   
+
     return (
         <header className="header">
             <h1>{headerContent}</h1>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './Usage.css';
 
 const apiUrl = import.meta.env.VITE_API_URL;
@@ -24,12 +24,29 @@ function UsagePage({ updateHeader, updateButton }) {
     const [fuelLevel, setFuelLevel] = useState(null); 
     const [selectedRowIndex, setSelectedRowIndex] = useState(0);
 
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const truckNo = queryParams.get('truckNo');
+    const [searchedTruckNo, setSearchedTruckNo] = useState(truckNo || '');
+
+
     useEffect(() => {
         if (truckData.length > 0) {
             const defaultSelectedTruckId = truckData[0].truckId;
             fetchTruckControlData(defaultSelectedTruckId);
         }
     }, [truckData]);
+
+    useEffect(() => {
+        if (searchedTruckNo) {
+            const foundIndex = truckData.findIndex(truck => truck.truckId === searchedTruckNo);
+            if (foundIndex !== -1) {
+                setSelectedRowIndex(0);
+                setSelectedTruckNo(searchedTruckNo);
+                fetchTruckControlData(searchedTruckNo);
+            }
+        }
+    }, [searchedTruckNo, truckData]);
 
     const fetchTruckData = async () => {
         try {
@@ -110,7 +127,11 @@ function UsagePage({ updateHeader, updateButton }) {
             alert(`Alert raised for Truck No: ${selectedTruckNo}`);
         }
     };
-    
+    const sortedTruckData = [
+        ...truckData.filter(truck => truck.truckId === searchedTruckNo), 
+        ...truckData.filter(truck => truck.truckId !== searchedTruckNo)
+    ];
+
 
     return (
         <div className='u-main'>
@@ -151,7 +172,7 @@ function UsagePage({ updateHeader, updateButton }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {truckData.map((truck, index) => (
+                                {sortedTruckData.map((truck, index) => (
                                     <tr key={index} className={selectedRowIndex === index ? 'selected-row' : ''} onClick={() => handleTruckClick(index, truck.truckId)}>
                                         <td>{truck.truckId}</td>
                                         <td>{truck.truckName}</td>

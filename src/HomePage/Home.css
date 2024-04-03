@@ -129,7 +129,7 @@
 /* Media Queries for Tablet */
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
     .main {
-        padding-top: 80px;
+       margin-top: 325px;
     }
 
     .topcards {

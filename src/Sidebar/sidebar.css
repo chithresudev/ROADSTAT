@@ -35,13 +35,20 @@ button{
 }
 .logo{
     color: #FF8A00;
-    padding: 0px;
+    padding: 0px 0px 0px 0px;
     font-size: 30px;
     font-weight: bold;
     height: auto;
     margin-bottom: 20px;
-    border-bottom: 1px solid #FFFFFF;
+    border: 1px solid white;
 }
+
+.logo img {
+  width: 250px;
+  height: 85px;
+  padding-bottom: 0px;
+}
+
 
 button:hover {
     background-color: #1D2331;
@@ -102,6 +109,23 @@ button:hover {
 
 .active .sub-nav{
   color: #4385C4;
+}
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .testham{
+    display: flex;
+  }
+  .custom-button{
+   
+    font-size: 10px;
+    height: 90px;
+  }
+  .logo{
+    margin-bottom: 0px;
+  }
+  .navbar{
+    height: 95px;
+    margin-bottom: 100px;
+  }
 }
 
 /* .logo {

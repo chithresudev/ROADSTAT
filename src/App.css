@@ -7,3 +7,9 @@
   margin: 0;
   padding: 0;
 }
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .jumbotrons{
+    width: calc(100% + 250px);
+    padding: 0px 50px;
+  }
+}

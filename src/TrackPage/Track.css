@@ -149,3 +149,8 @@
     padding-top: 10px;
     background-color: red;
 }
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    .tr-main {
+       margin-top: 325px;
+    }
+}
