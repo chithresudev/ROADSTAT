@@ -32,8 +32,8 @@ destinationRouter.get('/destinations/:truckId', async (req, res) => {
 // POST route handler for adding new destination details
 destinationRouter.post('/destinations', async (req, res) => {
     try {
-        const { _id, destinationId, truckId, driverId, latitude, longitude, source, status } = req.body;
-        const destination = await Destination.create({ _id, destinationId, truckId, driverId, latitude, longitude, source, status });
+        const { _id, destinationId, destinationName, truckId, driverId, latitude, longitude, source, status } = req.body;
+        const destination = await Destination.create({ _id, destinationId, destinationName, truckId, driverId, latitude, longitude, source, status });
         res.json(destination);
     } catch (error) {
         console.error('Error adding destination details:', error);
@@ -45,9 +45,9 @@ destinationRouter.post('/destinations', async (req, res) => {
 destinationRouter.put('/destinations/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const { destinationId, truckId, driverId, latitude, longitude, source, status } = req.body;
+        const { destinationId, destinationName, truckId, driverId, latitude, longitude, source, status } = req.body;
         const updatedDestination = await Destination.findByIdAndUpdate(id, {
-            destinationId, truckId, driverId, latitude, longitude, source, status
+            destinationId, destinationName, truckId, driverId, latitude, longitude, source, status
         }, { new: true });
         if (!updatedDestination) {
             return res.status(404).json({ message: "Destination not found" });

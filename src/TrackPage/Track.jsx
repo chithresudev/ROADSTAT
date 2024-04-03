@@ -89,7 +89,7 @@ function TrackPage({updateHeader, updateButton}) {
                     <thead>
                         <tr>
                             <th>S No</th>
-                            <th>Truck No</th>
+                            <th>Vehicle No</th>
                             <th>Trailer No</th>
                             <th>GPS</th>
                             <th>Strength</th>
@@ -156,12 +156,12 @@ function TrackPage({updateHeader, updateButton}) {
                                         </td> 
                                     </tr>
                                     <tr>
-                                        <td><strong>Destination Id</strong></td>
+                                        <td><strong>Destination Name</strong></td>
                                         <td><strong>:</strong></td>
-                                        <td>{truckDestinations.destinationId ? truckDestinations.destinationId : '-'}</td> 
+                                        <td>{truckDestinations.destinationName ? truckDestinations.destinationName : '-'}</td> 
                                     </tr>
                                     <tr>
-                                        <td><strong>Truck Condition</strong></td>
+                                        <td><strong>Vehicle Condition</strong></td>
                                         <td><strong>:</strong></td>
                                         <td><Link to={`/maintenance?truckNo=${truckDestinations.truckId}`} className='click'>Click Here</Link></td>
                                     </tr>

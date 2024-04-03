@@ -4,10 +4,9 @@ const { models, model, Schema } = mongoose;
 const TransmissionSchema = new Schema({
     _id: { type: String },
     truckId: { type: String, ref: 'Truck' },
-    RPM: { type: Number },
-    engineTemperature: { type: Number },
-    oilPressure: { type: Number },
-    coolantTemperature: { type: Number },
+    COlevel: { type: Number },
+    NOXlevel: { type: Number },
+    HClevel: { type: Number },
     status: { type: String },
 }, { timestamps: true });
 
