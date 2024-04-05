@@ -7,7 +7,7 @@ import DMapComponent from './DMapComponent';
 const apiUrl = import.meta.env.VITE_API_URL;
 
 function TrackPage({updateHeader, updateButton}) {
-
+    const [popupVisible, setPopupVisible] = useState(false); 
     const [startPoint, setStartPoint] = useState(null);
     const [endPoint, setEndPoint] = useState(null);
     const [trackData, setTrackData] = useState([]);
@@ -47,6 +47,13 @@ function TrackPage({updateHeader, updateButton}) {
             }
         }
     }, [searchedTruckNo, trackData]);
+    
+    const handleAlertButtonClick = () => {
+        setPopupVisible(true); // Set popupVisible to true
+        // Fetch additional data or perform any necessary actions here
+        const alertMessage = `Truck Number: ${selectedTruckNo}`;
+        alert(alertMessage);
+    };
     
 
     const fetchData = async () => {
@@ -123,6 +130,8 @@ function TrackPage({updateHeader, updateButton}) {
         const searchedTruck = sortedTrackData.splice(searchedTruckIndex, 1)[0];
         sortedTrackData = [searchedTruck, ...sortedTrackData];
     }
+
+    
 
     return (
         <div className='tr-main'>
@@ -216,7 +225,7 @@ function TrackPage({updateHeader, updateButton}) {
                                         {/* <td><Link className='click'>Trailer Location</Link></td> */}
                                         <td></td>
                                         <td></td>
-                                        <td><button className='tra-al-button'>Alert ?</button></td>
+                                        <td><button className='tra-al-button' onClick={handleAlertButtonClick}>Alert ?</button></td>
                                     </tr>
                                 </tbody>
 
