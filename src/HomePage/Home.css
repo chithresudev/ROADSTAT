@@ -130,6 +130,10 @@
     width: 13px;
     font-weight: bolder;
 }
+.hovertable:hover {
+    color: #ee1f1f; 
+    cursor: pointer;
+}
 
 
 /* Media Queries for Tablet */

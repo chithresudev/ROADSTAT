@@ -163,6 +163,11 @@ function HomePage({updateHeader,updateButton}) {
         setShowPopup(false);
         setPopupContent('');
     };
+
+    const handleRowClick = (index, truckId) => {
+        
+        window.location.href = `/truckcontrol/usage?truckNo=${truckId}`;
+    };
     
     return (
     <div className='main'>
@@ -223,7 +228,7 @@ function HomePage({updateHeader,updateButton}) {
                     {filteredTruckData.map((truck, index) => (
                         <tr key={index} className={truck.truckId === searchedTruckNo ? 'selected-row' : ''}>
                             <td>{index + 1}</td>
-                            <td>{truck.truckId}</td>
+                            <td className='hovertable' onClick={() => handleRowClick(index, truck.truckId)}>{truck.truckId}</td>
                             <td>{truck.driverId}</td>
                             <td><Link to="#" onClick={() => handleMapButtonClick(truck.truckId)} className='click'>Click Here</Link></td>
                             <td>{truck.incidents}</td>

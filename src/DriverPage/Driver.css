@@ -129,7 +129,7 @@ font-size: 18px;
 }
 
 .dr2-mainprofile{
-    width: calc(100% - 600px);
+    width: calc(100% - 580px);
 }
 .dr2-content {
     /* padding: 20px 20px 0px 20px; */
@@ -145,8 +145,8 @@ font-size: 18px;
     font-size: 14px;
     margin-top: 5px;
     overflow-y: auto;
-    height: 232px;
-    max-height: 232px;
+    height: 255px;
+    max-height: 255px;
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
@@ -199,7 +199,7 @@ font-size: 18px;
 }
 .dr2-table-containers{
   
-  height: 200px; /* Set the desired height */
+  height: 210px; /* Set the desired height */
 }
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
     .d-main {
