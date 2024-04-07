@@ -77,6 +77,7 @@ function DriverPage({updateHeader, updateButton,driverId}) {
         return () => clearInterval(intervalId);
     }, [updateHeader, updateButton, selectedDriverId, flag]);
 
+
     const handleRowClick = (index, driverId) => {
         setSelectedRowIndex(index);
         setSelectedDriverId(driverId);
@@ -94,7 +95,7 @@ function DriverPage({updateHeader, updateButton,driverId}) {
         }
     }, [drivers, selectedRowIndex]);
 
-    useEffect(() => {
+   useEffect(() => {
         setGraphData([]);
         setHeartRates([]);
         setFatigueLevels([]);
@@ -108,6 +109,7 @@ function DriverPage({updateHeader, updateButton,driverId}) {
             fetchDriverHealthData(selectedDriverId);
         }
     }, [selectedDriverId]);
+
     
 
     // driverId=1;
