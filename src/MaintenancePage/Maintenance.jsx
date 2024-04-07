@@ -20,6 +20,7 @@ function MaintenancePage({updateHeader, updateButton}) {
     const [transmissionData, setTransmissionData] = useState([]); // State to store transmission data
 
     const [activeButton, setActiveButton] = useState('Engine Health');
+    const [selectedRowIndex, setSelectedRowIndex] = useState(0); 
 
     useEffect(() => {
         updateHeader('Maintenance');
@@ -184,6 +185,11 @@ function MaintenancePage({updateHeader, updateButton}) {
         return acc;
     }, []);
 
+    const handleRowClick = (index, truckId) => {
+        setSelectedRowIndex(index);
+        window.location.href = `/truckcontrol/usage?truckNo=${truckId}`;
+    };
+
     return (
     <div className='ma-main'>
         <div className='m-topcards'> 
@@ -249,9 +255,9 @@ function MaintenancePage({updateHeader, updateButton}) {
                         <th>Status</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className='hoverrow'>
                 {filteredEngineHealthData.map((engine, index) => (
-                                 <tr key={index} className={engine.truckId === selectedTruckNo ? 'selected-row' : ''}>
+                                <tr key={index} className={selectedRowIndex === index ? 'selected-row' : ''} onClick={() => handleRowClick(index, engine.truckId)}>
                                     <td>{engine.truckId}</td>
                                     <td>{engine.RPM}</td>
                                     <td>{engine.engineTemperature}</td>
@@ -277,9 +283,9 @@ function MaintenancePage({updateHeader, updateButton}) {
                         <th>ABS Status</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className='hoverrow'>
                 {filteredbrakeSystemData.map((brake, index) => (
-                                <tr key={index} className={brake.truckId === selectedTruckNo ? 'selected-row' : ''}>
+                                <tr key={index} className={selectedRowIndex === index ? 'selected-row' : ''} onClick={() => handleRowClick(index, brake.truckId)}>
                                     <td>{brake.truckId}</td>
                                     <td>{brake.truckName}</td>
                                     <td>{brake.padWear}</td>
@@ -304,9 +310,9 @@ function MaintenancePage({updateHeader, updateButton}) {
                         <th>Fuel Efficiency</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className='hoverrow'>
                 {filteredfuelSystemData.map((fuel, index) => (
-                    <tr key={index} className={fuel.truckId === selectedTruckNo ? 'selected-row' : ''}>
+                    <tr key={index} className={selectedRowIndex === index ? 'selected-row' : ''} onClick={() => handleRowClick(index, fuel.truckId)}>
                         <td>{fuel.truckId}</td>
                         <td>{fuel.truckName}</td>
                         <td>{fuel.fuelLevel}</td>
@@ -331,9 +337,9 @@ function MaintenancePage({updateHeader, updateButton}) {
                         <th>Tire Age</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className='hoverrow'>
                 {filteredtireHealthData.map((tire, index) => (
-                            <tr key={index} className={tire.truckId === selectedTruckNo ? 'selected-row' : ''}>
+                            <tr key={index} className={selectedRowIndex === index ? 'selected-row' : ''} onClick={() => handleRowClick(index, tire.truckId)}>
                                 <td>{tire.truckId}</td>
                                 <td>{tire.truckName}</td>
                                 <td>{tire.tirePressure}</td>
@@ -359,9 +365,9 @@ function MaintenancePage({updateHeader, updateButton}) {
                         <th>Last Replace</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className='hoverrow'>
                 {filteredbatteryStatusData.map((battery, index) => (
-                                <tr key={index} className={battery.truckId === selectedTruckNo ? 'selected-row' : ''}>
+                                <tr key={index} className={selectedRowIndex === index ? 'selected-row' : ''} onClick={() => handleRowClick(index, battery.truckId)}>
                                     <td>{battery.truckId}</td>
                                     <td>{battery.truckName}</td>
                                     <td>{battery.batteryVoltage}</td>
@@ -386,9 +392,9 @@ function MaintenancePage({updateHeader, updateButton}) {
                        <th>Status</th>
                    </tr>
                </thead>
-               <tbody>
+               <tbody className='hoverrow'>
                {filteredtransmissionData.map((transmission, index) => (
-                                <tr key={index} className={transmission.truckId === selectedTruckNo ? 'selected-row' : ''}>
+                                <tr key={index} className={selectedRowIndex === index ? 'selected-row' : ''} onClick={() => handleRowClick(index, transmission.truckId)}>
                                     <td>{transmission.truckId}</td>
                                     <td>{transmission.COlevel}</td>
                                     <td>{transmission.NOXlevel}</td>

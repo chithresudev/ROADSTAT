@@ -16,9 +16,7 @@ function DriverPage({updateHeader, updateButton,driverId}) {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const driverNo = queryParams.get('driverId');
-    const [selectedDriverNo, setSelectedDriverNo] = useState(driverId || '');
-
-    console.log(selectedDriverNo);
+    const [searchedDriverNo, setSearchedDriverNo] = useState(driverNo || '');
 
     // const [healthData, setHealthData] = useState([]);
     const [dHealthData, setDHealthData] = useState([]);
@@ -40,6 +38,17 @@ function DriverPage({updateHeader, updateButton,driverId}) {
 
     const [drivers, setDrivers] = useState([]);
     let [flag, setFlag] = useState(0);
+
+    useEffect(() => {
+        if (drivers.length > 0 && searchedDriverNo) {
+            const foundIndex = drivers.findIndex(driver => driver.driverId === searchedDriverNo);
+            if (foundIndex !== -1) {
+                setSelectedRowIndex(foundIndex);
+                setSelectedDriverId(searchedDriverNo);
+            }
+        }
+    }, [drivers, searchedDriverNo]);
+
 
     useEffect(() => {
         updateHeader('Driver');
@@ -67,6 +76,38 @@ function DriverPage({updateHeader, updateButton,driverId}) {
         // Cleanup: Clearing the interval when the component unmounts
         return () => clearInterval(intervalId);
     }, [updateHeader, updateButton, selectedDriverId, flag]);
+
+    const handleRowClick = (index, driverId) => {
+        setSelectedRowIndex(index);
+        setSelectedDriverId(driverId);
+        setSearchedDriverNo(null);
+        fetchDriverHealthData(driverId);
+        setGraphData([ ]);
+        console.log(graphData);
+    };
+
+    useEffect(() => {
+        if (drivers.length > 0) {
+            const defaultDriverId = drivers[selectedRowIndex].driverId;
+            setSelectedDriverId(defaultDriverId);
+            fetchDriverHealthData(defaultDriverId);
+        }
+    }, [drivers, selectedRowIndex]);
+
+    useEffect(() => {
+        setGraphData([]);
+        setHeartRates([]);
+        setFatigueLevels([]);
+        setBodyTemps([]);
+        setHydrationLevels([]);
+        setStressLevels([]);
+        setAnnotation([]);
+        setPrintedHealthData(null);
+    
+        if (selectedDriverId) {
+            fetchDriverHealthData(selectedDriverId);
+        }
+    }, [selectedDriverId]);
     
 
     // driverId=1;
@@ -78,13 +119,29 @@ function DriverPage({updateHeader, updateButton,driverId}) {
             if (!response.ok) {
                 throw new Error('Failed to fetch drivers data');
             }
+            
             const driversData = await response.json();
-            setDrivers(driversData);
+
+            let filteredDrivers = [...driversData];
+            if (searchedDriverNo) {
+                filteredDrivers = driversData.filter(driver => driver.driverId === searchedDriverNo);
+            }
+            if (filteredDrivers.length > 0) {
+                const searchedDriver = filteredDrivers[0];
+                filteredDrivers = [searchedDriver, ...driversData.filter(driver => driver.driverId !== searchedDriverNo)];
+            }
+
+            if (searchedDriverNo) {
+                setDrivers(filteredDrivers);
+            } else {
+                setDrivers(driversData);
+            }
         } catch (error) {
             console.error('Error fetching drivers data:', error);
         }
 
     };
+
 
     const fetchDriverHealthData = async (driverId) => {
         try {
@@ -93,7 +150,7 @@ function DriverPage({updateHeader, updateButton,driverId}) {
                 throw new Error('Failed to fetch driver health');
             }
             const driverHealthData = await response.json();
-            console.log('Driver Health Data:', driverHealthData);
+           
             setPrintedHealthData(driverHealthData); // Set the state with the fetched data
         } catch (error) {
             console.error('Error fetching driver health:', error);
@@ -101,11 +158,6 @@ function DriverPage({updateHeader, updateButton,driverId}) {
     };
 
     const handleHeartRateClick = async () => {
-
-        if (!selectedDriverId) {
-            window.alert('Please select a driver.');
-            return;
-        }
         
         setFlag(1)
         try {
@@ -115,7 +167,6 @@ function DriverPage({updateHeader, updateButton,driverId}) {
                 throw new Error('Failed to fetch driver health');
             }
             const driverHealthData = await response.json();
-            
             setDHealthData(driverHealthData);
             setHeartRates(prevHeartRates => {
                 // const updatedHeartRates = Array.from({ length: 61 }, (_, i) => {
@@ -464,7 +515,7 @@ function DriverPage({updateHeader, updateButton,driverId}) {
                     text: 'Time' // Label for the x-axis
                 },
                 min: 0, // Set the minimum value of the y-axis
-                max: 60, // Set the maximum value of the y-axis
+                max: 100, // Set the maximum value of the y-axis
                 ticks: {
                     stepSize: 10 // Set the interval between each tick on the x-axis
                 }
@@ -492,23 +543,6 @@ function DriverPage({updateHeader, updateButton,driverId}) {
         }
     };
 
-    const handleRowClick = (index, driverId) => {
-        setSelectedRowIndex(index);
-        setSelectedDriverId(driverId);
-        fetchDriverHealthData(driverId);
-        setGraphData([])
-    };
-
-    useEffect(() => {
-        if (drivers.length > 0) {
-            const defaultDriverId = drivers[selectedRowIndex].driverId;
-            setSelectedDriverId(defaultDriverId);
-            fetchDriverHealthData(defaultDriverId);
-        }
-    }, [drivers, selectedRowIndex]);
-    
-
-    
 
     const getFatigueLevelDescription = (level) => {
         switch (level) {
@@ -556,8 +590,6 @@ function DriverPage({updateHeader, updateButton,driverId}) {
         }
     };
     
-
-   
 
     return (
         <div className='d-main'>
