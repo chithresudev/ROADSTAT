@@ -62,11 +62,33 @@ function DriverPage({updateHeader, updateButton,driverId}) {
             if (flag == 5) {
                 handleStressLevelClick();
             }
-        }, 10000);
+        }, 1000);
 
         // Cleanup: Clearing the interval when the component unmounts
         return () => clearInterval(intervalId);
     }, [updateHeader, updateButton, selectedDriverId, flag]);
+
+    useEffect(() => {
+        // Clear graph-related states whenever the selectedDriverId changes
+        setGraphData([]);
+        setHeartRates([]);
+        // Add any other states that need to be reset for a new driver
+        setFatigueLevels([]);
+        setBodyTemps([]);
+        setHydrationLevels([]);
+        setStressLevels([]);
+        setAnnotation([]);
+        // Optionally, you might want to reset printed health data or other related information
+        setPrintedHealthData(null);
+    
+        // If you want to automatically fetch new data for the newly selected driver, you can do so here
+        if (selectedDriverId) {
+            fetchDriverHealthData(selectedDriverId);
+            // You might also want to automatically click one of the health parameter buttons
+            // handleHeartRateClick(); // Uncomment if you want to automatically load heart rate data for the new driver
+        }
+    }, [selectedDriverId]);
+    
     
 
     // driverId=1;
