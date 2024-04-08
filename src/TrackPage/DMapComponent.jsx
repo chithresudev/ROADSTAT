@@ -2,15 +2,12 @@ import React from 'react';
 import { GoogleMap, useJsApiLoader, Marker, DirectionsService, DirectionsRenderer } from '@react-google-maps/api';
 import truckIcon from '/images/truck.png';
 import truckDest from '/images/truckloc.png';
-import dotenv from 'dotenv';
 
 const containerStyle = {
   width: '100%',
   height: '175px'
 };
 
-
-// const google_map_api = process.env.GOOGLE_MAP_API;
 const google_map_api = import.meta.env.VITE_GOOGLE_MAP_API;
 
 function DMapComponent({ truckLocations, truckDestinations }) {
@@ -21,7 +18,7 @@ function DMapComponent({ truckLocations, truckDestinations }) {
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: "AIzaSyAiCj4d2M6PAX7OZ1c0cSSQCdT7RXmhwA0"
+    googleMapsApiKey: google_map_api
   });
 
   const center = {

@@ -47,7 +47,6 @@ function EfficiencyPage({ updateHeader, updateButton }) {
     }, [searchedTruckNo, truckData]);
 
     const fetchTruckData = async () => {
-        // const response = await fetch('http://localhost:3000/api/truck-efficiency');
         const response = await fetch(`${apiUrl}/truck-efficiency`);
         const data = await response.json();
         setTruckData(data);
@@ -59,7 +58,6 @@ function EfficiencyPage({ updateHeader, updateButton }) {
 
     const fetchTruckControlData = async (truckId) => {
         try {
-            // const response = await fetch(`http://localhost:3000/api/truck-control/${truckId}`);
             const response = await fetch(`${apiUrl}/truck-control/${truckId}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch truck control data');

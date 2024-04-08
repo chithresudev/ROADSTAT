@@ -50,7 +50,6 @@ function UsagePage({ updateHeader, updateButton }) {
 
     const fetchTruckData = async () => {
         try {
-            // const response = await fetch('http://localhost:3000/api/truck-information');
             const response = await fetch(`${apiUrl}/truck-information`);
             if (!response.ok) {
                 throw new Error('Failed to fetch data');
@@ -64,7 +63,6 @@ function UsagePage({ updateHeader, updateButton }) {
 
     const fetchCollisionHistory = async () => {
         try {
-            // const response = await fetch('http://localhost:3000/api/collision-history');
             const response = await fetch(`${apiUrl}/collision-history`);
             if (!response.ok) {
                 throw new Error('Failed to fetch collision history data');
@@ -78,7 +76,6 @@ function UsagePage({ updateHeader, updateButton }) {
 
     const fetchTruckControlData = async (truckId) => {
         try {
-            // const response = await fetch(`http://localhost:3000/api/truck-control/${truckId}`);
             const response = await fetch(`${apiUrl}/truck-control/${truckId}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch truck control data');
@@ -262,7 +259,6 @@ function UsagePage({ updateHeader, updateButton }) {
                         <td>{collision.location}</td>
                         <td>{collision.speedMPH}</td>
                         <td>{collision.brakingMS2}</td>
-                        {/* <td>{collision.collisionType}</td> */}
                         <td>{collision.severity}</td>
                         <td style={{fontSize:"12px"}}>{collision.collisionType}</td>
                         <td>

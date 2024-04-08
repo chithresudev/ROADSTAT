@@ -18,7 +18,6 @@ function DriverPage({updateHeader, updateButton,driverId}) {
     const driverNo = queryParams.get('driverId');
     const [searchedDriverNo, setSearchedDriverNo] = useState(driverNo || '');
 
-    // const [healthData, setHealthData] = useState([]);
     const [dHealthData, setDHealthData] = useState([]);
     const [heartRates, setHeartRates] = useState([]);
     const [fatigueLevels, setFatigueLevels] = useState([]);
@@ -110,13 +109,9 @@ function DriverPage({updateHeader, updateButton,driverId}) {
         }
     }, [selectedDriverId]);
 
-    
-
-    // driverId=1;
 
     const fetchDriversData = async () => {
         try {
-            // const response = await fetch('http://localhost:3000/api/drivers');
             const response = await fetch(`${apiUrl}/drivers`);
             if (!response.ok) {
                 throw new Error('Failed to fetch drivers data');
@@ -163,7 +158,6 @@ function DriverPage({updateHeader, updateButton,driverId}) {
         
         setFlag(1)
         try {
-            // const response = await fetch(`http://localhost:3000/api/driver-health/${selectedDriverId}`);
             const response = await fetch(`${apiUrl}/driver-health/${selectedDriverId}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch driver health');
@@ -171,12 +165,6 @@ function DriverPage({updateHeader, updateButton,driverId}) {
             const driverHealthData = await response.json();
             setDHealthData(driverHealthData);
             setHeartRates(prevHeartRates => {
-                // const updatedHeartRates = Array.from({ length: 61 }, (_, i) => {
-                //     if (i % 1 === 0) {
-                //         return driverHealthData.heartRate;
-                //     }
-                //     return null;
-                // });
                 const updatedHeartRates = [...prevHeartRates, driverHealthData.heartRate].slice(-100);
                 setGraphData(updatedHeartRates);
                 const newMin = Math.min(...updatedHeartRates);
@@ -229,7 +217,6 @@ function DriverPage({updateHeader, updateButton,driverId}) {
         }
         setFlag(2)
         try {
-            // const response = await fetch(`http://localhost:3000/api/driver-health/${selectedDriverId}`);
             const response = await fetch(`${apiUrl}/driver-health/${selectedDriverId}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch driver health');
@@ -237,12 +224,6 @@ function DriverPage({updateHeader, updateButton,driverId}) {
             const driverHealthData = await response.json();
             setDHealthData(driverHealthData);
             setFatigueLevels(prevFatigueLevels => {
-                // const updatedFatigueLevels = Array.from({ length: 61 }, (_, i) => {
-                //     if (i % 1 === 0) {
-                //         return driverHealthData.fatigueLevel;
-                //     }
-                //     return null;
-                // });
                 const updatedFatigueLevels = [...prevFatigueLevels, driverHealthData.fatigueLevel].slice(-100);
                 setGraphData(updatedFatigueLevels);
                 const newMin = Math.min(...updatedFatigueLevels);
@@ -295,7 +276,6 @@ function DriverPage({updateHeader, updateButton,driverId}) {
         }
         setFlag(3)
         try {
-            // const response = await fetch(`http://localhost:3000/api/driver-health/${selectedDriverId}`);
             const response = await fetch(`${apiUrl}/driver-health/${selectedDriverId}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch driver health');
@@ -303,12 +283,6 @@ function DriverPage({updateHeader, updateButton,driverId}) {
             const driverHealthData = await response.json();
             setDHealthData(driverHealthData);
             setBodyTemps(prevBodyTemps => {
-                // const updatedBodyTemps = Array.from({ length: 61 }, (_, i) => {
-                //     if (i % 1 === 0) {
-                //         return driverHealthData.bodyTemp;
-                //     }
-                //     return null;
-                // });
                 const updatedBodyTemps = [...prevBodyTemps, driverHealthData.bodyTemp].slice(-100);
                 setGraphData(updatedBodyTemps);
                 const newMin = Math.min(...updatedBodyTemps);
@@ -372,7 +346,6 @@ function DriverPage({updateHeader, updateButton,driverId}) {
         }
         setFlag(4)
         try {
-            // const response = await fetch(`http://localhost:3000/api/driver-health/${selectedDriverId}`);
             const response = await fetch(`${apiUrl}/driver-health/${selectedDriverId}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch driver health');
@@ -380,12 +353,6 @@ function DriverPage({updateHeader, updateButton,driverId}) {
             const driverHealthData = await response.json();
             setDHealthData(driverHealthData);
             setHydrationLevels(prevHydrationLevels => {
-                // const updatedHydrationLevels = Array.from({ length: 61 }, (_, i) => {
-                //     if (i % 1 === 0) {
-                //         return driverHealthData.hydrationLevel;
-                //     }
-                //     return null;
-                // });
                 const updatedHydrationLevels = [...prevHydrationLevels, driverHealthData.hydrationLevel].slice(-100);
                 setGraphData(updatedHydrationLevels);
                 const newMin = Math.min(...updatedHydrationLevels);
@@ -438,7 +405,6 @@ function DriverPage({updateHeader, updateButton,driverId}) {
         }
         setFlag(5)
         try {
-            // const response = await fetch(`http://localhost:3000/api/driver-health/${selectedDriverId}`);
             const response = await fetch(`${apiUrl}/driver-health/${selectedDriverId}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch driver health');
@@ -446,12 +412,6 @@ function DriverPage({updateHeader, updateButton,driverId}) {
             const driverHealthData = await response.json();
             setDHealthData(driverHealthData);
             setStressLevels(prevStressLevels => {
-                // const updatedStressLevels = Array.from({ length: 61 }, (_, i) => {
-                //     if (i % 1 === 0) {
-                //         return driverHealthData.stressLevel;
-                //     }
-                //     return null;
-                // });
                 const updatedStressLevels = [...prevStressLevels, driverHealthData.stressLevel].slice(-100);
                 setGraphData(updatedStressLevels);
                 const newMin = Math.min(...updatedStressLevels);

@@ -51,7 +51,6 @@ function TrackPage({updateHeader, updateButton}) {
 
     const fetchData = async () => {
         try {
-            // const response = await fetch('http://localhost:3000/api/track-location');
             const response = await fetch(`${apiUrl}/track-location`);
             if (!response.ok) {
                 throw new Error('Failed to fetch data');
@@ -72,9 +71,7 @@ function TrackPage({updateHeader, updateButton}) {
 
     const fetchTruckLocationsAndDestinations = async (truckId) => {
         try {
-            // const locationsResponse = await fetch(`http://localhost:3000/api/truck-location/${truckId}`);
             const locationsResponse = await fetch(`${apiUrl}/truck-location/${truckId}`);
-            // const destinationsResponse = await fetch(`http://localhost:3000/api/destinations/${truckId}`);
             const destinationsResponse = await fetch(`${apiUrl}/destinations/${truckId}`);
             if (!locationsResponse.ok || !destinationsResponse.ok) {
                 throw new Error('Failed to fetch truck locations or destinations');
@@ -213,7 +210,6 @@ function TrackPage({updateHeader, updateButton}) {
                                         <td>{truckDestinations.status}</td>
                                     </tr>
                                     <tr>
-                                        {/* <td><Link className='click'>Trailer Location</Link></td> */}
                                         <td></td>
                                         <td></td>
                                         <td><button className='tra-al-button'>Alert ?</button></td>

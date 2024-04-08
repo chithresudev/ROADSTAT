@@ -63,7 +63,6 @@ function HomePage({updateHeader,updateButton}) {
         };
 
         const fetchTruckData = async () => {
-            // const response = await fetch('http://localhost:3000/api/trucks');
             const response = await fetch(`${apiUrl}/trucks`);
             const data = await response.json();
             setTruckData(data);
@@ -83,7 +82,7 @@ function HomePage({updateHeader,updateButton}) {
 
     const fetchAlertData = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/alerts');
+            const response = await fetch(`${apiUrl}/alerts`);
             const data = await response.json();
             setAlertData(data);
         } catch (error) {
@@ -113,7 +112,6 @@ function HomePage({updateHeader,updateButton}) {
 
     const fetchTruckLocations = async () => {
         try {
-            // const response = await fetch('http://localhost:3000/api/truck-location');
             const response = await fetch(`${apiUrl}/truck-location`);
             const data = await response.json();
             setTruckLocations(data);
@@ -248,7 +246,6 @@ function HomePage({updateHeader,updateButton}) {
                     <tr>
                         <th>Vehicle No</th>
                         <th>Metric</th>
-                        {/* <th>Value</th> */}
                         <th>Message</th>
                         <th>Timestamp</th>
                     </tr>
@@ -258,7 +255,6 @@ function HomePage({updateHeader,updateButton}) {
                         <tr key={index}>
                             <td>{alert.truckId}</td>
                             <td>{alert.metric}</td>
-                            {/* <td>{alert.value}</td> */}
                             <td>
                                 {alert.message.includes('is') ? (
                                     <>
@@ -292,11 +288,7 @@ function HomePage({updateHeader,updateButton}) {
                 <MapComponent truckLocations={truckLocations} selectedTruckNo={selectedTruckNo}/>
             </div>
         )}
-        {/* {activeButton === 'alerts' && (
-            <div className='card'>
-                {/* <p>No alerts</p> }
-            </div>
-        )} */}
+
     </div>
     );
 }
