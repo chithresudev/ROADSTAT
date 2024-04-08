@@ -33,6 +33,11 @@ function Header({ currentUser, logout, headerContent}) {
                 const url = `${currentPath}?truckNo=${query.toUpperCase()}`;
                 window.location.href = url;
         }
+        else if (query.startsWith('dr')) {
+            const currentPath = location.pathname;
+            const url = `${currentPath}?driverId=${query.toUpperCase()}`;
+            window.location.href = url;
+    }
     };
    
 

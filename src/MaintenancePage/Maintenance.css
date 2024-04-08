@@ -122,6 +122,10 @@
     background-color: #CFCFCF;
 }
 
+.hoverrow tr:hover{
+    background-color: #f1f1f1;
+}
+
 /* Media Queries for Tablet */
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
     .ma-main {
