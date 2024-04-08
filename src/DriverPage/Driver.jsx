@@ -13,6 +13,8 @@ Chart.register(annotationPlugin);
 const apiUrl = import.meta.env.VITE_API_URL;
 
 function DriverPage({updateHeader, updateButton,driverId}) {
+    const [popupVisible, setPopupVisible] = useState(false); 
+    
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const driverNo = queryParams.get('driverId');
@@ -109,6 +111,13 @@ function DriverPage({updateHeader, updateButton,driverId}) {
         }
     }, [selectedDriverId]);
 
+
+    const handleAlertButtonClick = () => {
+        setPopupVisible(true); // Set popupVisible to true
+        // Fetch additional data or perform any necessary actions here
+        const alertMessage = `Driver ID: ${selectedDriverId}`;
+        alert(alertMessage);
+    };
 
     const fetchDriversData = async () => {
         try {
@@ -618,7 +627,7 @@ function DriverPage({updateHeader, updateButton,driverId}) {
                                 </div>
                                 </div>
                                 <div className='dtr-details'>
-                                    <button className='dtr-map'>Alert Driver !</button>
+                                    <button className='dtr-map' onClick={handleAlertButtonClick}>Alert Driver !</button>
                                 </div>
                             </div>
                     </div>
