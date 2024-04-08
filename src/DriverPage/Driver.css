@@ -145,8 +145,8 @@ font-size: 18px;
     font-size: 14px;
     margin-top: 5px;
     overflow-y: auto;
-    height: 232px;
-    max-height: 232px;
+    height: 272px;
+    max-height: 272px;
     scrollbar-width: none;
     -ms-overflow-style: none;
 }

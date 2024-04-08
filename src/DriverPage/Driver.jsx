@@ -486,7 +486,7 @@ function DriverPage({updateHeader, updateButton,driverId}) {
                     text: 'Time' // Label for the x-axis
                 },
                 min: 0, // Set the minimum value of the y-axis
-                max: 60, // Set the maximum value of the y-axis
+                max: 100, // Set the maximum value of the y-axis
                 ticks: {
                     stepSize: 10 // Set the interval between each tick on the x-axis
                 }
