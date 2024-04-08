@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 import './MapComponent.css'; // Import the external CSS file
 
+const google_map_api = import.meta.env.VITE_GOOGLE_MAP_API;
+
 class MapComponent extends Component {
   render() {
     return (
@@ -24,5 +26,6 @@ class MapComponent extends Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyDXEl50nvjcEQ5MHoCuJOm7-oWmn6-onAc', // Replace with your API key
+  // apiKey: 'AIzaSyDXEl50nvjcEQ5MHoCuJOm7-oWmn6-onAc', // Replace with your API key
+  apiKey: google_map_api,
 })(MapComponent);
