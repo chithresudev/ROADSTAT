@@ -72,7 +72,7 @@ function DriverPage({updateHeader, updateButton,driverId}) {
             if (flag == 5) {
                 handleStressLevelClick();
             }
-        }, 1000);
+        }, 5000);
 
         // Cleanup: Clearing the interval when the component unmounts
         return () => clearInterval(intervalId);
