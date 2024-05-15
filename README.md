@@ -25,8 +25,11 @@ additional steps :-
 =====
 
 VITE_MONGO_URL = mongodb+srv://capstoneuser:qwerty12345@cluster0.bqcplaf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
 VITE_API_URL = http://localhost:3000/api
+
 VITE_GOOGLE_MAP_API=[api key]
+
 VITE_OPEN_WEATHER_API=[api key]
 
 =====
@@ -40,4 +43,5 @@ application exec:
 -- connectivity
 
 server.js (database connection and api routes)
+
 vite.config.js (backend server connection - runs on specified port)
