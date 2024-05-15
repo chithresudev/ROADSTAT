@@ -10,6 +10,7 @@ install software's:
 repo clone steps:
 
 -> create an empty folder
+
 -> in command line, initialize an empty git repository (follow below commands)
 
 - use cd command and change to created project directory/folder loc.
@@ -20,6 +21,7 @@ repo clone steps:
 additional steps :-
 
 -> create api tokens/keys for google maps and open weather
+
 -> create .env file and place below contents
 
 =====
