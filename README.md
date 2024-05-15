@@ -26,7 +26,7 @@ additional steps :-
 
 =====
 
-VITE_MONGO_URL = mongodb+srv://capstoneuser:qwerty12345@cluster0.bqcplaf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+VITE_MONGO_URL = [mongoDB connection URL]
 
 VITE_API_URL = http://localhost:3000/api
 
