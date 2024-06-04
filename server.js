@@ -38,7 +38,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Set the environment variable
-process.env.VITE_API_URL = `http://localhost:${PORT}/api`; // Example URL
+process.env.VITE_API_URL = `http://roadstat-1958f9dd23afe0b9.elb.us-east-1.amazonaws.com:${PORT}/api`; // Example URL
 
 // Connect to MongoDB
 mongoose.connect(process.env.VITE_MONGO_URL)
