@@ -2,6 +2,7 @@ name: Deploy to AWS
 on:
     push:
         branches: main
+    pull_request:
 
 jobs:
     deploy:
@@ -31,12 +32,16 @@ jobs:
             - name: Login to AWS ECR
               run: |
                aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 843257401278.dkr.ecr.us-east-1.amazonaws.com
-            - name: Build and Push Docker Image
+            - name: Build Docker Image
               run: |  
                 docker build -t roadstat .
+            - name: Push Docker Image
+              if: github.ref == 'refs/heads/main'
+              run: |
                 docker tag roadstat:latest 843257401278.dkr.ecr.us-east-1.amazonaws.com/roadstat:latest
                 docker push 843257401278.dkr.ecr.us-east-1.amazonaws.com/roadstat:latest
             - name: Deploy to AWS ECS
+              if: github.ref == 'refs/heads/main'
               run: |
                 aws ecs update-service --cluster 'roadstat-cluster' --service 'roadstat-app-service' --force-new-deployment
 
