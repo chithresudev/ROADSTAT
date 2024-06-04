@@ -22,7 +22,6 @@ export default defineConfig({
     proxy: {
       // Proxy requests to your backend server
       '/api': {
-        target: 'http://roadstat-1958f9dd23afe0b9.elb.us-east-1.amazonaws.com:3000',
         // target: 'http://localhost:3000', // Change this to your backend server's URL
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''), // Remove '/api' prefix
