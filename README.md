@@ -5,6 +5,7 @@ install software's:
 * visual studio code (https://code.visualstudio.com/download)
 * node and npm (https://nodejs.org/en/download)
 * mongodb (https://www.mongodb.com/try/download/community)
+* git (https://www.git-scm.com/download/win)
 
 
 repo clone steps:
