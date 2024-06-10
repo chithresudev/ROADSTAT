@@ -15,7 +15,7 @@ jobs:
             - name: Create .env file
               run: |
                 touch .env
-                echo VITE_MONGO_URL = 'mongodb+srv://${{ secrets.MONGODB_USER }}:${{ secrets.MONGODB_PASS }}@gokaddal.qicnveb.mongodb.net/?retryWrites=true&w=majority&appName=${{ secrets.MONGODB_NAME }}' >> .env
+                echo VITE_MONGO_URL = 'mongodb+srv://${{ secrets.MONGODB_USER }}:${{ secrets.MONGODB_PASS }}@gokaddal.qicnveb.mongodb.net/${{ secrets.DB_NAME }}?retryWrites=true&w=majority&appName=${{ secrets.MONGODB_NAME }}' >> .env
                 echo VITE_API_URL = ${{ secrets.BACKEND_API }} >> .env
                 echo VITE_GOOGLE_MAP_API=${{ secrets.GOOGLE_MAP_API_KEY }} >> .env
                 echo VITE_OPEN_WEATHER_API=${{ secrets.OPEN_WEATHER }} >> .env
@@ -31,17 +31,17 @@ jobs:
                 aws-region: 'us-east-1'
             - name: Login to AWS ECR
               run: |
-               aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 843257401278.dkr.ecr.us-east-1.amazonaws.com
+               aws ecr get-login-password --region us-east-1 | docker login --username ${{ secrets.ECR_USER }} --password-stdin ${{ secrets.ECR_PASS }}
             - name: Build Docker Image
               run: |  
                 docker build -t roadstat .
             - name: Push Docker Image
               if: github.ref == 'refs/heads/main'
               run: |
-                docker tag roadstat:latest 843257401278.dkr.ecr.us-east-1.amazonaws.com/roadstat:latest
-                docker push 843257401278.dkr.ecr.us-east-1.amazonaws.com/roadstat:latest
+                docker tag roadstat:latest ${{ secrets.ECR_PASS }}/${{ secrets.ECR_REPO }}:latest
+                docker push ${{ secrets.ECR_PASS }}/${{ secrets.ECR_REPO }}:latest
             - name: Deploy to AWS ECS
               if: github.ref == 'refs/heads/main'
               run: |
-                aws ecs update-service --cluster 'roadstat-cluster' --service 'roadstat-app-service' --force-new-deployment
+                aws ecs update-service --cluster ${{ secrets.ROADSTAT_CLUSTER_NAME }} --service ${{ secrets.ROADSTAT_SERVICE_NAME }} --force-new-deployment
 
