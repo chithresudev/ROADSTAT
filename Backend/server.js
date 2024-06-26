@@ -54,6 +54,10 @@ mongoose.connect(process.env.VITE_MONGO_URL)
 app.use(express.json());
 app.use(cors());
 
+app.get('/', (req, res) => {
+  res.send('Welcome to the Truck Management System API');
+});
+
 // Use API routes
 //app.use('/api', userRouter);
 
