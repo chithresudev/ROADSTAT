@@ -1,10 +1,7 @@
-import express from 'express';
 import { User } from '../../Models/User.js';
 
-const userRouter = express.Router();
-
 // GET route handler for fetching all user details
-userRouter.get('/users', async (req, res) => {
+export const getAllUsers = async (req, res) => {
     try {
         const users = await User.find();
         res.json(users);
@@ -12,10 +9,10 @@ userRouter.get('/users', async (req, res) => {
         console.error('Error fetching user details:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
+};
 
 // GET route handler for fetching user details by ID
-userRouter.get('/users/:id', async (req, res) => {
+export const getUserByID = async (req, res) => {
     try {
         const { id } = req.params;
         const user = await User.findById(id);
@@ -27,40 +24,35 @@ userRouter.get('/users/:id', async (req, res) => {
         console.error('Error fetching user details:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
-
-// POST route handler for creating a new user
-userRouter.post('/users', async (req, res) => {
-    try {
-        const { _id, username, email, password, role } = req.body;
-        const user = await User.create({ _id, username, email, password, role });
-        res.json(user);
-    } catch (error) {
-        console.error('Error creating user:', error);
-        res.status(500).json({ message: 'Internal server error' });
-    }
-});
+};
 
 // PUT route handler for updating user details by ID
-userRouter.put('/users/:id', async (req, res) => {
+export const updateUser = async (req, res) => {
     try {
-        const { id } = req.params;
-        const { username, email, password, role } = req.body;
-        const updatedUser = await User.findByIdAndUpdate(id, {
-            username, email, password, role
-        }, { new: true });
-        if (!updatedUser) {
-            return res.status(404).json({ message: "User not found" });
-        }
-        res.json(updatedUser);
+      const id = req.params.userId;
+      if (id !== req.user.id) {
+        return res.status(403).json({ message: 'Forbidden. You are not authorized to update this profile.' });
+      }
+  
+      // Find user by ID and update with data from req.body
+      const updatedUser = await User.findByIdAndUpdate(
+        id,
+        { $set: req.body }, // Use $set to update only specified fields from req.body
+        { new: true } // To return the updated document
+      ).select('-password'); // To exclude the password field from the returned document
+  
+      if (!updatedUser) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      res.status(200).json({ message: 'Profile updated successfully', success: true, user: updatedUser });
     } catch (error) {
-        console.error('Error updating user details:', error);
-        res.status(500).json({ message: 'Internal server error' });
+      return res.status(500).json({ message: 'Internal server error: ' + error.message, success: false });
     }
-});
+};
 
 // DELETE route handler for deleting user by ID
-userRouter.delete('/users/:id', async (req, res) => {
+export const deleteUser = async (req, res) => {
     try {
         const { id } = req.params;
         const deletedUser = await User.findByIdAndDelete(id);
@@ -72,6 +64,4 @@ userRouter.delete('/users/:id', async (req, res) => {
         console.error('Error deleting user:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
-
-export default userRouter;
+};
