@@ -1,7 +1,7 @@
 {
-  "name": "roadstat",
+  "name": "Roadstat",
   "version": "1.0.0",
-  "description": "ROADSTAT APP",
+  "description": "ROADSTAT FULLSTACK APP",
   "main": "index.js",
   "scripts": {
     "dev": "concurrently \"npm run server\" \"npm run client\"",

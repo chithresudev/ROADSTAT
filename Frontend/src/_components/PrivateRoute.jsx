@@ -1,6 +1,5 @@
-import React from 'react';
 import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
-import { authenticationService } from '@/_services';
+import { authenticationService } from '../../../Backend/src/_services';
 import { LoginPage } from '@/LoginPage';
 import { AdminPage } from '@/AdminPage';
 import Profile from '../ProfilePage/profile';

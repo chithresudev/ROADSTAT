@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { userService } from '@/_services';
+import { userService } from '../../../Backend/src/_services';
 
 function AdminPage() {
     const [users, setUsers] = useState(null);

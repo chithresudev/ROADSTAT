@@ -1,6 +1,6 @@
 // import config from 'config';
-import { authHeader, handleResponse } from '@/_helpers';
-const apiUrl = import.meta.env.VITE_API_URL;
+import { authHeader, handleResponse } from '../_helpers';
+const apiUrl = process.env.VITE_API_URL;
 
 export const userService = {
     getAll,

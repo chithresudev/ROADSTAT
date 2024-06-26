@@ -4,8 +4,8 @@ import './App.css'
 // import { Router, Route, Link } from 'react-router-dom';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
-import { history, Role } from '@/_helpers';
-import { authenticationService } from '@/_services';
+import { history, Role } from '../../Backend/src/_helpers';
+import { authenticationService } from '../../Backend/src/_services';
 import { PrivateRoute } from '@/_components';
 import { AdminPage } from '@/AdminPage';
 import { LoginPage } from '@/LoginPage';

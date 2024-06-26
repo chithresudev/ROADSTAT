@@ -1,8 +1,8 @@
 import { BehaviorSubject } from 'rxjs';
 
 // import config from 'config';
-import { handleResponse } from '@/_helpers';
-const apiUrl = import.meta.env.VITE_API_URL;
+import { handleResponse } from '../_helpers';
+const apiUrl = process.env.VITE_API_URL;
 
 const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
 

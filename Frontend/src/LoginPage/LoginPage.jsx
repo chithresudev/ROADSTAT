@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
-import { authenticationService } from '@/_services';
+import { authenticationService } from '../../../Backend/src/_services';
 import './loginPage.css';
 
 function LoginPage() {

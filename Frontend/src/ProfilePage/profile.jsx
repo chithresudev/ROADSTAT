@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { userService, authenticationService } from '@/_services';
+import { userService, authenticationService } from '../../../Backend/src/_services';
 import './profile.css';
 
 function Profile({updateHeader, updateButton}) {

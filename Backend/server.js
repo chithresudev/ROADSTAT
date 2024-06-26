@@ -39,9 +39,6 @@ import transmissionRouter from  './src/Controllers/maintenance/Transmission-stat
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Set the environment variable
-//process.env.VITE_API_URL = ; // Example URL
-
 // Connect to MongoDB
 mongoose.connect(process.env.VITE_MONGO_URL)
 .then(() => {
