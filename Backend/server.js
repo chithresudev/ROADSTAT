@@ -6,14 +6,12 @@ import db from './src/Db/database.js';
 import cors from 'cors'; // Import CORS middleware
 const app = express();
 const PORT = process.env.PORT || 3000;
-
 const __dirname = path.resolve();
 dotenv.config({path: __dirname + '/.env'}); // Load environment variables from .env file
-db.connect();
-// import userRoutes from './src/api/user.js';
-// Import other API route files as needed
+db.connect(); // Connect to the database
 
-// import { router } from '@/api/truck-location/route.js';
+app.use(express.json());
+app.use(cors());
 
 import destinationRouter from './src/Controllers/destination-details/route.js';
 import collisionHistoryRouter from './src/Controllers/collision-history/route.js';
@@ -37,17 +35,13 @@ import userRouter from './src/Routes/userRoutes.js';
 // import transmissionRouter from  './src/api/maintenance/Transmission-status.js';
 
 
-app.use(express.json());
-app.use(cors());
-
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
   res.send('Welcome to the Truck Management System API');
 });
 
-// Use API routes
-//app.use('/api', userRouter);
-
-app.use('/api', destinationRouter); 
+app.use('/api/user', userRouter);
+/**
+ * app.use('/api', destinationRouter); 
 app.use('/api', collisionHistoryRouter);
 app.use('/api', driverRouter);
 app.use('/api', driverHealthRouter);  
@@ -57,7 +51,6 @@ app.use('/api', truckControlRouter);
 app.use('/api', truckDetailsRouter);
 app.use('/api', truckInformationRouter);
 app.use('/api', truckLocationRouter);
-app.use('/api/user', userRouter);
 app.use('/api', truckEfficiencyRouter);
 app.use('/api', EngineHealthRouter);
 app.use('/api', brakeSystemRouter);
@@ -65,9 +58,8 @@ app.use('/api', fuelSystemRouter);
 app.use('/api', tireHealthRouter);
 app.use('/api', batteryStatusRouter);
 app.use('/api', trucksMetricRouter);
-app.use('/api', transmissionRouter);
+app.use('/api', transmissionRouter);**/
 
-// Use other API routes as needed
 
 // Start the server
 app.listen(PORT, () => {
