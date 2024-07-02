@@ -62,7 +62,7 @@ const register = async (req, res) => {
 
     res.status(200).json({ message: 'User registered successfully.', success: true, data: user });
   } catch (error) {
-    return res.status(500).json({ message: 'Internal server error' + error.message, success: false });
+    return res.status(500).json({ message: 'Internal server error: ' + error.message, success: false });
   }
 };
 
@@ -105,9 +105,9 @@ const login = async (req, res) => {
     const { email, password } = req.body;
 
     // Check if user exists
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ email });
     if (!user) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+      return res.status(401).json({ message: 'Email not registered. Please sign up.' });
     }
 
     // Check password
@@ -120,9 +120,9 @@ const login = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '72h' });
 
     const userId = user._id;
-    res.status(200).json({ token, userId , success: true });
+    res.status(200).json({ message: 'Login successful.',  success: true, token });
   } catch (error) {
-    return res.status(500).json({ message: 'Internal server error' + error.message, success: false });
+    return res.status(500).json({ message: 'Internal server error: ' + error.message, success: false });
   }
 };
 

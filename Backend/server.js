@@ -11,8 +11,9 @@ dotenv.config({path: __dirname + '/.env'}); // Load environment variables from .
 db.connect(); // Connect to the database
 
 app.use(cors());
-app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true}));
+
 
 import destinationRouter from './src/Controllers/destination-details/route.js';
 import collisionHistoryRouter from './src/Controllers/collision-history/route.js';

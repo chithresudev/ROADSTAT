@@ -15,11 +15,12 @@ export const getAllUsers = async (req, res) => {
 export const getUserByID = async (req, res) => {
     try {
         const { id } = req.params;
-        const user = await User.findById(id);
-        if (!user) {
-            return res.status(404).json({ message: "User not found" });
+        if (id !== req.user.id) {
+            return res.status(403).json({ message: 'Forbidden. You are not authorized to update this profile.' });
         }
-        res.json(user);
+
+        const user = await User.findById(id).select('-password');
+        res.status(200).json(user);
     } catch (error) {
         console.error('Error fetching user details:', error);
         res.status(500).json({ message: 'Internal server error' });
@@ -29,7 +30,7 @@ export const getUserByID = async (req, res) => {
 // PUT route handler for updating user details by ID
 export const updateUser = async (req, res) => {
     try {
-      const id = req.params.userId;
+      const { id } = req.params;
       if (id !== req.user.id) {
         return res.status(403).json({ message: 'Forbidden. You are not authorized to update this profile.' });
       }
@@ -55,13 +56,15 @@ export const updateUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
     try {
         const { id } = req.params;
+        if (id !== req.user.id) {
+            return res.status(403).json({ message: 'Forbidden. You are not authorized to update this profile.' });
+        }
         const deletedUser = await User.findByIdAndDelete(id);
         if (!deletedUser) {
             return res.status(404).json({ message: "User not found" });
         }
         res.json({ message: "User deleted successfully" });
     } catch (error) {
-        console.error('Error deleting user:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
 };
