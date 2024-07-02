@@ -10,8 +10,9 @@ const __dirname = path.resolve();
 dotenv.config({path: __dirname + '/.env'}); // Load environment variables from .env file
 db.connect(); // Connect to the database
 
-app.use(express.json());
 app.use(cors());
+app.use(express.urlencoded({ extended: true}));
+app.use(express.json());
 
 import destinationRouter from './src/Controllers/destination-details/route.js';
 import collisionHistoryRouter from './src/Controllers/collision-history/route.js';
@@ -32,6 +33,7 @@ import batteryStatusRouter from './src/Controllers/maintenance/Battery-status.js
 import trucksMetricRouter from './src/Controllers/truck-alerts--warnings/route.js'
 import transmissionRouter from  './src/Controllers/maintenance/Transmission-status.js';
 import userRouter from './src/Routes/userRoutes.js';
+import authRouter from './src/Routes/authRoute.js'
 // import transmissionRouter from  './src/api/maintenance/Transmission-status.js';
 
 
@@ -39,6 +41,7 @@ app.get('/api', (req, res) => {
   res.send('Welcome to the Truck Management System API');
 });
 
+app.use('/api/auth', authRouter)
 app.use('/api/user', userRouter);
 /**
  * app.use('/api', destinationRouter); 

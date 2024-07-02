@@ -1,5 +1,4 @@
-import mongoose from 'mongoose';
-const { models, model, Schema } = mongoose;
+import mongoose, { model, Schema } from 'mongoose';
 
 const UserSchema = new Schema({
   firstName: {
@@ -18,12 +17,6 @@ const UserSchema = new Schema({
     trim: true,
     required: [true, 'Please enter your email address'],
   },
-  username: { 
-    type: String, 
-    unique: true,
-    trim: true,
-    required: [true, 'Please choose a username'],
-  },
   password: {
     type: String,
     required: [true, 'Please choose a password'],
@@ -35,6 +28,10 @@ const UserSchema = new Schema({
   isVerified: { 
     type: Boolean, 
     default: false 
+  },
+  userType: {
+    type: String,
+    enum: ['Individual', 'Organization']
   }
 }, { timestamps: true });
 

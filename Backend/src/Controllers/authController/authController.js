@@ -1,8 +1,9 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
 //const nodemailer = require('nodemailer');
-const User = require('../../Models/User');
-//require('dotenv').config();
+import {User} from '../../Models/User.js'
+import dotenv from 'dotenv'
+dotenv.config()
 
 // const transporter = nodemailer.createTransport({
 //   service: 'Gmail',
@@ -15,20 +16,19 @@ const User = require('../../Models/User');
 
 const register = async (req, res) => {
   try {
-    const { firstName, lastName, email, username, password } = req.body;
+    const { firstName, lastName, email, password, userType } = req.body;
+
+    if(!(firstName && lastName && email && password)){
+      return res.status(409).json({message: "Some fields are empty"})
+    }
 
     // Convert email and username to lowercase
     const lowerCaseEmail = email.toLowerCase();
-    const lowerCaseUsername = username.toLowerCase();
 
     // Check if email/username already exists
-    const existingUser = await User.findOne({ $or: [{ email: lowerCaseEmail }, { username: lowerCaseUsername }] });
+    const existingUser = await User.findOne({ email: lowerCaseEmail });
     if (existingUser) {
       return res.status(409).json({ message: 'Email or username already taken' });
-    }
-
-    if(!(firstName && lastName && email && username && password)){
-      return res.status(409).json({message: "Some fields are empty"})
     }
 
     // Hash password
@@ -41,13 +41,14 @@ const register = async (req, res) => {
       firstName,
       lastName,
       email: lowerCaseEmail,
-      username: lowerCaseUsername,
       password: hashedPassword,
+      userType: userType
       //verificationCode,
     });
 
     // Save user to database
     await user.save();
+    
 
     // Send the verification code to the user's email
     /** const mailOptions = {
@@ -59,7 +60,7 @@ const register = async (req, res) => {
 
     await transporter.sendMail(mailOptions); **/
 
-    res.status(200).json({ message: 'User registered successfully. Please check your email for the verification code.', success: true });
+    res.status(200).json({ message: 'User registered successfully.', success: true, data: user });
   } catch (error) {
     return res.status(500).json({ message: 'Internal server error' + error.message, success: false });
   }
@@ -101,10 +102,10 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    const { email, username, password } = req.body;
+    const { email, password } = req.body;
 
     // Check if user exists
-    const user = await User.findOne({ $or: [{ email }, { username }] });
+    const user = await User.findOne({ username });
     if (!user) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
@@ -125,4 +126,4 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { register, login };
+export { register, login };
