@@ -9,6 +9,7 @@ import { authenticationService } from '@/_services';
 import { PrivateRoute } from '@/_components';
 import { AdminPage } from '@/AdminPage';
 import { LoginPage } from '@/LoginPage';
+import { SignUpPage } from '@/SignUpPage';
 import Sidebar from './Sidebar/sidebar';
 import Header from './Header/header';
 import Profile from '@/ProfilePage/profile';
@@ -69,6 +70,7 @@ function App() {
                                 <Routes>
                                     {/* <Route path="/" element={<HomePage updateHeader={updateHeader} updateButton={updateButton}/> } /> */}
                                     <Route path="/login" element={<LoginPage updateHeader={updateHeader} updateButton={updateButton}/>}/>
+                                    <Route path="/signup" element={<SignUpPage updateHeader={updateHeader} updateButton={updateButton}/>}/>
                                     {/* <Route path="/profile" element={<Profile updateHeader={updateHeader} updateButton={updateButton}/>} />
                                     <Route path="/home" element={<HomePage updateHeader={updateHeader} updateButton={updateButton}/>} />
                                     <Route path="/track" element={<TrackPage updateHeader={updateHeader} updateButton={updateButton}/>} />
