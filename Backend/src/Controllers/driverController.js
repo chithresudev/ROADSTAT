@@ -1,9 +1,6 @@
-import express from 'express';
-import { Driver } from '../../Models/Driver.js';
+import { Driver } from '../Models/Driver.js';
 
-const driverRouter = express.Router();
-
-driverRouter.get('/drivers', async (req, res) => {
+export const getAllDrivers = async (req, res) => {
     try {
         const allDrivers = await Driver.find();
         res.json(allDrivers);
@@ -11,9 +8,9 @@ driverRouter.get('/drivers', async (req, res) => {
         console.error('Error fetching all drivers:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
+};
 
-driverRouter.get('/drivers/:driverId', async (req, res) => {
+export const getDriverById = async (req, res) => {
     try {
         const { driverId } = req.params;
         const driverDetail = await Driver.findById(driverId);
@@ -25,9 +22,9 @@ driverRouter.get('/drivers/:driverId', async (req, res) => {
         console.error('Error fetching driver details:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
+};
 
-driverRouter.post('/drivers', async (req, res) => {
+export const addDriver = async (req, res) => {
     try {
         const { _id, driverId, driverName, knownHealthIssues, experience, status } = req.body;
         const driverDetail = await Driver.create({ _id, driverId, driverName, knownHealthIssues, experience, status });
@@ -36,9 +33,9 @@ driverRouter.post('/drivers', async (req, res) => {
         console.error('Error adding driver:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
+};
 
-driverRouter.put('/drivers/:driverId', async (req, res) => {
+export const updateDriverById = async (req, res) => {
     try {
         const { driverId } = req.params;
         const { driverName, knownHealthIssues, experience, status } = req.body;
@@ -51,9 +48,9 @@ driverRouter.put('/drivers/:driverId', async (req, res) => {
         console.error('Error updating driver:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
+};
 
-driverRouter.delete('/drivers/:driverId', async (req, res) => {
+export const deleteDriverById = async (req, res) => {
     try {
         const { driverId } = req.params;
         const deletedDriver = await Driver.findByIdAndDelete(driverId);
@@ -65,6 +62,4 @@ driverRouter.delete('/drivers/:driverId', async (req, res) => {
         console.error('Error deleting driver:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
-
-export default driverRouter;
+};

@@ -18,7 +18,7 @@ import userRouter from './src/Routes/userRoute.js';
 import authRouter from './src/Routes/authRoute.js'
 import collisionHistoryRouter from './src/Routes/collisionHistoryRoute.js';
 import destinationRouter from './src/Routes/destinationRoute.js';
-import driverRouter from './src/Controllers/driver-details/route.js';
+import driverRouter from './src/Routes/driverRoute.js';
 import driverHealthRouter from './src/Routes/driverHealthRoute.js';
 import trailerDetailsRouter from './src/Controllers/trailer-details/route.js';
 import trackLocationRouter from './src/Controllers/track-location/route.js';
@@ -47,10 +47,9 @@ app.use('/api/user', userRouter);
 app.use('/api/collision-history', collisionHistoryRouter);
 app.use('/api/destination', destinationRouter); 
 app.use('/api/driver-health', driverHealthRouter); 
+app.use('/api/driver', driverRouter);
 /**
  * 
-app.use('/api', driverRouter);
- 
 app.use('/api', trailerDetailsRouter);
 app.use('/api', trackLocationRouter);
 app.use('/api', truckControlRouter);
