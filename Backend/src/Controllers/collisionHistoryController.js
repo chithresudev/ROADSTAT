@@ -1,10 +1,6 @@
-import express from 'express';
-import { CollisionHistory } from '../../Models/CollisionHistory.js';
+import { CollisionHistory } from '../Models/CollisionHistory.js';
 
-const collisionHistoryRouter = express.Router();
-
-// GET route handler for fetching all collision history
-collisionHistoryRouter.get('/collision-history', async (req, res) => {
+export const getAllCollisionHistory = async (req, res) => {
     try {
         const collisions = await CollisionHistory.find();
         res.json(collisions);
@@ -12,10 +8,9 @@ collisionHistoryRouter.get('/collision-history', async (req, res) => {
         console.error('Error fetching collision history:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
+};
 
-// GET route handler for fetching collision history by ID
-collisionHistoryRouter.get('/collision-history/:id', async (req, res) => {
+export const getCollisionHistoryById = async (req, res) => {
     try {
         const { id } = req.params;
         const collision = await CollisionHistory.findById(id);
@@ -27,10 +22,9 @@ collisionHistoryRouter.get('/collision-history/:id', async (req, res) => {
         console.error('Error fetching collision history:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
+};
 
-// POST route handler for adding new collision history
-collisionHistoryRouter.post('/collision-history', async (req, res) => {
+export const addCollisionHistory = async (req, res) => {
     try {
         const { _id, truckId, date, driverName, time, location, speedMPH, brakingMS2, collisionType, severity, description } = req.body;
         const newCollision = await CollisionHistory.create({ _id, truckId, date, driverName, time, location, speedMPH, brakingMS2, collisionType, severity, description });
@@ -39,10 +33,9 @@ collisionHistoryRouter.post('/collision-history', async (req, res) => {
         console.error('Error adding collision history:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
+};
 
-// PUT route handler for updating collision history by ID
-collisionHistoryRouter.put('/collision-history/:id', async (req, res) => {
+export const updateCollisionHistoryById = async (req, res) => {
     try {
         const { id } = req.params;
         const { truckId, date, driverName, time, location, speedMPH, brakingMS2, collisionType, severity, description } = req.body;
@@ -57,10 +50,9 @@ collisionHistoryRouter.put('/collision-history/:id', async (req, res) => {
         console.error('Error updating collision history:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
+};
 
-// DELETE route handler for deleting collision history by ID
-collisionHistoryRouter.delete('/collision-history/:id', async (req, res) => {
+export const deleteCollisionHistoryById = async (req, res) => {
     try {
         const { id } = req.params;
         const deletedCollision = await CollisionHistory.findByIdAndDelete(id);
@@ -72,6 +64,4 @@ collisionHistoryRouter.delete('/collision-history/:id', async (req, res) => {
         console.error('Error deleting collision history:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
-
-export default collisionHistoryRouter;
+};

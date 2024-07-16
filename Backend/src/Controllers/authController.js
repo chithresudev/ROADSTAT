@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 //const nodemailer = require('nodemailer');
-import {User} from '../../Models/User.js'
+import {User} from '../Models/User.js'
 import dotenv from 'dotenv'
 dotenv.config()
 
@@ -16,17 +16,18 @@ dotenv.config()
 
 const register = async (req, res) => {
   try {
-    const { firstName, lastName, email, password, userType } = req.body;
+    const { firstName, lastName, email, password, username, userType } = req.body;
 
-    if(!(firstName && lastName && email && password)){
+    if(!(firstName && lastName && email && username && password && userType)){
       return res.status(409).json({message: "Some fields are empty"})
     }
 
     // Convert email and username to lowercase
     const lowerCaseEmail = email.toLowerCase();
+    const lowerCaseUsername = username.toLowerCase();
 
     // Check if email/username already exists
-    const existingUser = await User.findOne({ email: lowerCaseEmail });
+    const existingUser = await User.findOne({ $or : [{email: lowerCaseEmail}, {username: username}] });
     if (existingUser) {
       return res.status(409).json({ message: 'Email or username already taken' });
     }
@@ -41,6 +42,7 @@ const register = async (req, res) => {
       firstName,
       lastName,
       email: lowerCaseEmail,
+      username: lowerCaseUsername,
       password: hashedPassword,
       userType: userType
       //verificationCode,
@@ -102,10 +104,10 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, username, password } = req.body;
 
     // Check if user exists
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ $or : [{email: email}, {username: username}] });
     if (!user) {
       return res.status(401).json({ message: 'Email not registered. Please sign up.' });
     }
