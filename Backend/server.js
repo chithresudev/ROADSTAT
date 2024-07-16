@@ -14,12 +14,12 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 
-import userRouter from './src/Routes/userRoutes.js';
+import userRouter from './src/Routes/userRoute.js';
 import authRouter from './src/Routes/authRoute.js'
 import collisionHistoryRouter from './src/Routes/collisionHistoryRoute.js';
-import destinationRouter from './src/Controllers/destination-details/route.js';
+import destinationRouter from './src/Routes/destinationRoute.js';
 import driverRouter from './src/Controllers/driver-details/route.js';
-import driverHealthRouter from './src/Controllers/driver-health-details/route.js';
+import driverHealthRouter from './src/Controllers/driverHealth.js';
 import trailerDetailsRouter from './src/Controllers/trailer-details/route.js';
 import trackLocationRouter from './src/Controllers/track-location/route.js';
 import truckControlRouter from './src/Controllers/truck-control/route.js';
@@ -45,9 +45,10 @@ app.get('/api', (req, res) => {
 app.use('/api/auth', authRouter)
 app.use('/api/user', userRouter);
 app.use('/api/collision-history', collisionHistoryRouter);
-/**
- * app.use('/api', destinationRouter); 
+app.use('/api/destination', destinationRouter); 
 
+/**
+ * 
 app.use('/api', driverRouter);
 app.use('/api', driverHealthRouter);  
 app.use('/api', trailerDetailsRouter);

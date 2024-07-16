@@ -1,10 +1,6 @@
-import express from 'express';
-import { DriverHealth } from '../../Models/DriverHealth.js';
+import { DriverHealth } from '../Models/DriverHealth.js';
 
-const driverHealthRouter = express.Router();
-
-// GET route handler for fetching all driver health details
-driverHealthRouter.get('/driver-health', async (req, res) => {
+export const getAllDriverHealthDetails = async (req, res) => {
     try {
         const allDriverHealthDetails = await DriverHealth.find({});
         res.json(allDriverHealthDetails);   
@@ -12,10 +8,9 @@ driverHealthRouter.get('/driver-health', async (req, res) => {
         console.error('Error fetching all driver health details:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
+};
 
-// GET route handler for fetching driver health details by ID
-driverHealthRouter.get('/driver-health/:driverId', async (req, res) => {
+export const getDriverHealthDetailsById = async (req, res) => {
     try {
         const { driverId } = req.params;
         const driverHealthDetail = await DriverHealth.findOne({ driverId: driverId });
@@ -27,10 +22,9 @@ driverHealthRouter.get('/driver-health/:driverId', async (req, res) => {
         console.error('Error fetching driver health details:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
+};
 
-// POST route handler for adding new driver health details
-driverHealthRouter.post('/driver-health', async (req, res) => {
+export const addDriverHealthDetails = async (req, res) => {
     try {
         const { _id, driverId, heartRate, fatigueLevel, bodyTemp, hydrationLevel, stressLevel, healthStatus } = req.body;
         const driverHealthDetail = await DriverHealth.create({ _id, driverId, heartRate, fatigueLevel, bodyTemp, hydrationLevel, stressLevel, healthStatus });
@@ -39,10 +33,9 @@ driverHealthRouter.post('/driver-health', async (req, res) => {
         console.error('Error adding driver health details:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
+};
 
-// PUT route handler for updating driver health details by ID
-driverHealthRouter.put('/driver-health/:driverNo', async (req, res) => {
+export const updateDriverHealthDetailsById = async (req, res) => {
     try {
         const { driverNo } = req.params;
         const { driverId, heartRate, fatigueLevel, bodyTemp, hydrationLevel, stressLevel, healthStatus } = req.body;
@@ -57,10 +50,9 @@ driverHealthRouter.put('/driver-health/:driverNo', async (req, res) => {
         console.error('Error updating driver health details:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
+};
 
-// DELETE route handler for deleting driver health details by ID
-driverHealthRouter.delete('/driver-health/:driverId', async (req, res) => {
+export const deleteDriverHealthDetailsById = async (req, res) => {
     try {
         const { driverId } = req.params;
         const deletedDriverHealthDetail = await DriverHealth.findOneAndDelete({ driverId });
@@ -72,6 +64,4 @@ driverHealthRouter.delete('/driver-health/:driverId', async (req, res) => {
         console.error('Error deleting driver health details:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
-
-export default driverHealthRouter;
+};
