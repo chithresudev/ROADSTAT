@@ -20,12 +20,12 @@ import collisionHistoryRouter from './src/Routes/collisionHistoryRoute.js';
 import destinationRouter from './src/Routes/destinationRoute.js';
 import driverRouter from './src/Routes/driverRoute.js';
 import driverHealthRouter from './src/Routes/driverHealthRoute.js';
+import truckLocationRouter from './src/Routes/truckLocationRoute.js';
 import trailerDetailsRouter from './src/Controllers/trailer-details/route.js';
-import trackLocationRouter from './src/Controllers/track-location/route.js';
+import trackLocationRouter from './src/Routes/trackLocationRoute.js';
 import truckControlRouter from './src/Controllers/truck-control/route.js';
 import truckDetailsRouter from './src/Controllers/truck-details/route.js';
 import truckInformationRouter from './src/Controllers/truck-information/route.js';
-import truckLocationRouter from './src/Controllers/truck-location/route.js';
 import truckEfficiencyRouter from './src/Controllers/truck-efficiency/route.js'
 import EngineHealthRouter from './src/Controllers/maintenance/Engine-health.js';
 import brakeSystemRouter from './src/Controllers/maintenance/Brake-system.js';
@@ -48,14 +48,15 @@ app.use('/api/collision-history', collisionHistoryRouter);
 app.use('/api/destination', destinationRouter); 
 app.use('/api/driver-health', driverHealthRouter); 
 app.use('/api/driver', driverRouter);
+app.use('/api/truck-location', truckLocationRouter);
+app.use('/api/track-location', trackLocationRouter);
+
 /**
  * 
 app.use('/api', trailerDetailsRouter);
-app.use('/api', trackLocationRouter);
 app.use('/api', truckControlRouter);
 app.use('/api', truckDetailsRouter);
 app.use('/api', truckInformationRouter);
-app.use('/api', truckLocationRouter);
 app.use('/api', truckEfficiencyRouter);
 app.use('/api', EngineHealthRouter);
 app.use('/api', brakeSystemRouter);
@@ -64,7 +65,6 @@ app.use('/api', tireHealthRouter);
 app.use('/api', batteryStatusRouter);
 app.use('/api', trucksMetricRouter);
 app.use('/api', transmissionRouter);**/
-
 
 // Start the server
 app.listen(PORT, () => {

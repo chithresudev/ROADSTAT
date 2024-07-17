@@ -1,4 +1,4 @@
-import { User } from '../../Models/User.js';
+import { User } from '../Models/User.js';
 
 // GET route handler for fetching all user details
 export const getAllUsers = async (req, res) => {

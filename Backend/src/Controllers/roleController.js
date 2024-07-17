@@ -1,10 +1,6 @@
-import express from 'express';
-import { Role } from '../../models/Role.js';
+import { Role } from '../models/Role.js';
 
-const roleRouter = express.Router();
-
-// GET route handler for fetching all role details
-roleRouter.get('/roles', async (req, res) => {
+export const getAllRoles = async (req, res) => {
     try {
         const roles = await Role.find();
         res.json(roles);
@@ -12,10 +8,9 @@ roleRouter.get('/roles', async (req, res) => {
         console.error('Error fetching role details:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
+};
 
-// GET route handler for fetching role details by ID
-roleRouter.get('/roles/:id', async (req, res) => {
+export const getRoleById = async (req, res) => {
     try {
         const { id } = req.params;
         const role = await Role.findById(id);
@@ -27,10 +22,9 @@ roleRouter.get('/roles/:id', async (req, res) => {
         console.error('Error fetching role details:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
+};
 
-// POST route handler for creating a new role
-roleRouter.post('/roles', async (req, res) => {
+export const createRole = async (req, res) => {
     try {
         const { _id, roleName } = req.body;
         const role = await Role.create({ _id, roleName });
@@ -39,16 +33,13 @@ roleRouter.post('/roles', async (req, res) => {
         console.error('Error creating role:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
+};
 
-// PUT route handler for updating role details by ID
-roleRouter.put('/roles/:id', async (req, res) => {
+export const updateRoleById = async (req, res) => {
     try {
         const { id } = req.params;
         const { roleName } = req.body;
-        const updatedRole = await Role.findByIdAndUpdate(id, {
-            roleName
-        }, { new: true });
+        const updatedRole = await Role.findByIdAndUpdate(id, { roleName }, { new: true });
         if (!updatedRole) {
             return res.status(404).json({ message: "Role not found" });
         }
@@ -57,10 +48,9 @@ roleRouter.put('/roles/:id', async (req, res) => {
         console.error('Error updating role details:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
+};
 
-// DELETE route handler for deleting role by ID
-roleRouter.delete('/roles/:id', async (req, res) => {
+export const deleteRoleById = async (req, res) => {
     try {
         const { id } = req.params;
         const deletedRole = await Role.findByIdAndDelete(id);
@@ -72,6 +62,4 @@ roleRouter.delete('/roles/:id', async (req, res) => {
         console.error('Error deleting role:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
-
-export default roleRouter;
+};
