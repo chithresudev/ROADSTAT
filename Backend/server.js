@@ -21,12 +21,12 @@ import destinationRouter from './src/Routes/destinationRoute.js';
 import driverRouter from './src/Routes/driverRoute.js';
 import driverHealthRouter from './src/Routes/driverHealthRoute.js';
 import truckLocationRouter from './src/Routes/truckLocationRoute.js';
-import trailerDetailsRouter from './src/Controllers/trailer-details/route.js';
+import trailerDetailsRouter from './src/Routes/trailerDetailsRoute.js';
 import trackLocationRouter from './src/Routes/trackLocationRoute.js';
-import truckControlRouter from './src/Controllers/truck-control/route.js';
-import truckDetailsRouter from './src/Controllers/truck-details/route.js';
-import truckInformationRouter from './src/Controllers/truck-information/route.js';
-import truckEfficiencyRouter from './src/Controllers/truck-efficiency/route.js'
+import truckControlRouter from './src//Routes/truckControlRoute.js';
+import truckDetailsRouter from './src/Routes/truckDetailsRoute.js';
+import truckInformationRouter from './src/Routes/truckInfoRoute.js';
+import truckEfficiencyRouter from './src/Routes/truckEfficiencyRoute.js'
 import EngineHealthRouter from './src/Controllers/maintenance/Engine-health.js';
 import brakeSystemRouter from './src/Controllers/maintenance/Brake-system.js';
 import fuelSystemRouter from './src/Controllers/maintenance/Fuel-system.js';
@@ -50,14 +50,13 @@ app.use('/api/driver-health', driverHealthRouter);
 app.use('/api/driver', driverRouter);
 app.use('/api/truck-location', truckLocationRouter);
 app.use('/api/track-location', trackLocationRouter);
-
+app.use('/api/truck-info', truckInformationRouter);
+app.use('/api', truckControlRouter);
+app.use('/api', trailerDetailsRouter);
+app.use('/api', truckEfficiencyRouter);
 /**
  * 
-app.use('/api', trailerDetailsRouter);
-app.use('/api', truckControlRouter);
 app.use('/api', truckDetailsRouter);
-app.use('/api', truckInformationRouter);
-app.use('/api', truckEfficiencyRouter);
 app.use('/api', EngineHealthRouter);
 app.use('/api', brakeSystemRouter);
 app.use('/api', fuelSystemRouter);
