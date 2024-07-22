@@ -37,7 +37,7 @@ function LoginPage() {
         <div className='login_bg'>
             <div>
                 <img src="/images/companyLogo.png" alt="Logo" className="company_logo" />
-                <img src="/images/roadstatNewLogo.png" alt="Logo" className="road_logo" />
+                <img src="/images/roadstatLogo.png" alt="Logo" className="road_logo" />
             </div>
             <div className='login_page'>
                 <h2 className='login'>Login</h2>

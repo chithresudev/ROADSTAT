@@ -51,37 +51,40 @@ function App() {
   return (
 
     <Router history={history}>
-            <div>
-            {currentUser && <Header currentUser={currentUser} logout={logout} headerContent={headerContent}/>}
-            {currentUser && <Sidebar isAdmin={isAdmin} logout={logout} activeButtonC={activeButtonC}/>}
+            <div className='app_bg'>
+                <div className='top_page'>
+                    {currentUser && <Header currentUser={currentUser} logout={logout} headerContent={headerContent} activeButtonC={activeButtonC}/>}
+                    {currentUser && <Sidebar isAdmin={isAdmin} logout={logout} activeButtonC={activeButtonC}/>}
+                </div>
+                
                 <div className="jumbotrons">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-md-6 offset-md-3">
-                                <PrivateRoute path="/" element={<HomePage updateHeader={updateHeader} updateButton={updateButton}/>} />
-                                <PrivateRoute path="/admin" element={<AdminPage updateHeader={updateHeader} updateButton={updateButton}/>} roles={[Role.Admin]}/>
-                                <PrivateRoute path="/profile" element={<Profile updateHeader={updateHeader} updateButton={updateButton}/>} />
-                                <PrivateRoute path="/home" element={<HomePage updateHeader={updateHeader} updateButton={updateButton}/>} />
-                                <PrivateRoute path="/track" element={<TrackPage updateHeader={updateHeader} updateButton={updateButton}/>} />
-                                <PrivateRoute path="/truckcontrol/usage" element={<TruckUsage updateHeader={updateHeader} updateButton={updateButton}/>} />
-                                <PrivateRoute path="/truckcontrol/efficiency" element={<TruckEfficiency updateHeader={updateHeader} updateButton={updateButton}/>} />
-                                <PrivateRoute path="/maintenance" element={<Maintenance updateHeader={updateHeader} updateButton={updateButton}/>} />
-                                <PrivateRoute path="/driver" element={<Driver updateHeader={updateHeader} updateButton={updateButton}/>} />
-                                <Routes>
-                                    {/* <Route path="/" element={<HomePage updateHeader={updateHeader} updateButton={updateButton}/> } /> */}
-                                    <Route path="/login" element={<LoginPage updateHeader={updateHeader} updateButton={updateButton}/>}/>
-                                    <Route path="/signup" element={<SignUpPage updateHeader={updateHeader} updateButton={updateButton}/>}/>
-                                    {/* <Route path="/profile" element={<Profile updateHeader={updateHeader} updateButton={updateButton}/>} />
-                                    <Route path="/home" element={<HomePage updateHeader={updateHeader} updateButton={updateButton}/>} />
-                                    <Route path="/track" element={<TrackPage updateHeader={updateHeader} updateButton={updateButton}/>} />
-                                    <Route path="/truckcontrol/usage" element={<TruckUsage updateHeader={updateHeader} updateButton={updateButton}/>} />
-                                    <Route path="/truckcontrol/efficiency" element={<TruckEfficiency updateHeader={updateHeader} updateButton={updateButton}/>} />
-                                    <Route path="/maintenance" element={<Maintenance updateHeader={updateHeader} updateButton={updateButton}/>} />
-                                    <Route path="/driver" element={<Driver updateHeader={updateHeader} updateButton={updateButton}/>} /> */}
-                                </Routes>
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-md-6 offset-md-3">
+                                    <PrivateRoute path="/" element={<HomePage updateHeader={updateHeader} updateButton={updateButton}/>} />
+                                    <PrivateRoute path="/admin" element={<AdminPage updateHeader={updateHeader} updateButton={updateButton}/>} roles={[Role.Admin]}/>
+                                    <PrivateRoute path="/profile" element={<Profile updateHeader={updateHeader} updateButton={updateButton}/>} />
+                                    <PrivateRoute path="/home" element={<HomePage updateHeader={updateHeader} updateButton={updateButton}/>} />
+                                    <PrivateRoute path="/track" element={<TrackPage updateHeader={updateHeader} updateButton={updateButton}/>} />
+                                    <PrivateRoute path="/truckcontrol/usage" element={<TruckUsage updateHeader={updateHeader} updateButton={updateButton}/>} />
+                                    <PrivateRoute path="/truckcontrol/efficiency" element={<TruckEfficiency updateHeader={updateHeader} updateButton={updateButton}/>} />
+                                    <PrivateRoute path="/maintenance" element={<Maintenance updateHeader={updateHeader} updateButton={updateButton}/>} />
+                                    <PrivateRoute path="/driver" element={<Driver updateHeader={updateHeader} updateButton={updateButton}/>} />
+                                    <Routes>
+                                        {/* <Route path="/" element={<HomePage updateHeader={updateHeader} updateButton={updateButton}/> } /> */}
+                                        <Route path="/login" element={<LoginPage updateHeader={updateHeader} updateButton={updateButton}/>}/>
+                                        <Route path="/signup" element={<SignUpPage updateHeader={updateHeader} updateButton={updateButton}/>}/>
+                                        {/* <Route path="/profile" element={<Profile updateHeader={updateHeader} updateButton={updateButton}/>} />
+                                        <Route path="/home" element={<HomePage updateHeader={updateHeader} updateButton={updateButton}/>} />
+                                        <Route path="/track" element={<TrackPage updateHeader={updateHeader} updateButton={updateButton}/>} />
+                                        <Route path="/truckcontrol/usage" element={<TruckUsage updateHeader={updateHeader} updateButton={updateButton}/>} />
+                                        <Route path="/truckcontrol/efficiency" element={<TruckEfficiency updateHeader={updateHeader} updateButton={updateButton}/>} />
+                                        <Route path="/maintenance" element={<Maintenance updateHeader={updateHeader} updateButton={updateButton}/>} />
+                                        <Route path="/driver" element={<Driver updateHeader={updateHeader} updateButton={updateButton}/>} /> */}
+                                    </Routes>
+                                </div>
                             </div>
                         </div>
-                    </div>
                 </div>
             </div>
         </Router>

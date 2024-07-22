@@ -179,7 +179,7 @@ function HomePage({updateHeader,updateButton}) {
                 <span className="info-text">{weather}</span>
             </div>
         </div>
-        <div className='topcards'> 
+        {/* <div className='topcards'> 
             <div className={`scard ${activeButton === 'trucks' ? 'active' : ''}`}>
                 <button className='scard-button' onClick={() => handleButtonClick('trucks')}>
                     <Link className='scard-link'>
@@ -204,8 +204,8 @@ function HomePage({updateHeader,updateButton}) {
                     </Link>
                 </button>
             </div>
-        </div>
-        {activeButton === 'trucks' && (
+        </div> */}
+        {/* {activeButton === 'trucks' && (
         <div className='card'>
             <table className='table'>
                 <thead>
@@ -237,7 +237,7 @@ function HomePage({updateHeader,updateButton}) {
                 </tbody>
             </table>
         </div>
-        )}
+        )} */}
 
         {activeButton === 'alerts' && (
         <div className='card'>

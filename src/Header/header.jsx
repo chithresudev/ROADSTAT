@@ -1,70 +1,93 @@
-import React, { useState, useEffect  } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../Header/header.css';
-import { Link, useLocation} from 'react-router-dom';
 
+function Header({ currentUser, logout, headerContent, activeButtonC }) {
 
-function Header({ currentUser, logout, headerContent}) {
-    const [searchQuery, setSearchQuery] = useState('');
-    const [currentPath, setCurrentPath] = useState('/');
-    const location = useLocation();
+    const [activeButton, setActiveButton] = useState('Home');
+    const [popupVisible, setPopupVisible] = useState(false);
+    const popupRef = useRef(null);
+
+    const handleButtonClick = (buttonName) => {
+        setActiveButton(buttonName);
+    };
+    const togglePopup = () => {
+        setPopupVisible(!popupVisible);
+    };
+    const handleClickOutside = (event) => {
+        if (popupRef.current && !popupRef.current.contains(event.target)) {
+            setPopupVisible(false);
+        }
+    };
 
     useEffect(() => {
-        if (currentPath !== '/') {
-            window.location.href = currentPath;
-        }
-    }, [currentPath]);
-
-    const handleSearch = () => {
-        const query = searchQuery.toLowerCase();
-        console.log(query)
-        if (query === '') {
-            setCurrentPath('/home');
-        } else if (query === 'track') {
-            setCurrentPath('/track');
-        }
-        else if (query === 'track') {
-            setCurrentPath('/track');
-        }
-        else if (query === 'brake') {
-            setCurrentPath('/maintenance');
-        }
-        else if (query.startsWith('trk')) {
-                const currentPath = location.pathname;
-                const url = `${currentPath}?truckNo=${query.toUpperCase()}`;
-                window.location.href = url;
-        }
-        else if (query.startsWith('dr')) {
-            const currentPath = location.pathname;
-            const url = `${currentPath}?driverId=${query.toUpperCase()}`;
-            window.location.href = url;
-    }
-    };
-   
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
     return (
-        <header className="header">
-            <h1>{headerContent}</h1>
-            <div className='header-content'>
-                <div className="searchb">
-                    <input type="text" className="search-bar" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}/>
-                    <Link onClick={handleSearch}>
-                        <span className="search-icon">
-                            <img src="/images/search.png" alt="Search Icon" />
-                        </span>
-                    </Link>
-                </div>
-                <div className="user-profile">
-                    <span>{currentUser.username}</span>
-                    <Link to="/profile"><img src="/images/profile.png" alt="Profile Icon" className="profile"/></Link>
-                </div>
-                <div>
-                    <button className='lbutton' onClick={logout}>
-                        <Link><img src="/images/logout.png" alt="Logout Icon" className="logout"/></Link>
-                    </button>
+        <header className='header_bg'>
+            <div className='icons'>
+                <img src="/images/roadstatLogo.png" alt="Logo" className="road_logo" />
+
+                <img src="/images/userIcon.png" alt="User Icon"
+                    className="user_icon"
+                    onClick={togglePopup}
+                />
+
+                {popupVisible && (
+                    <div className="user_popup" ref={popupRef}>
+                        <p>
+                            <img src="/images/user.png" alt="User Icon" />
+                            {currentUser.username}
+                        </p>
+                        <a href="#" onClick={logout}>
+                            <img src="/images/logout.png" alt="Logout Icon" />
+                            Logout
+                        </a>
+                    </div>
+                )}
+
+                <div className='nav_container'>
+                    <div
+                        className={activeButton === 'Home' ? 'active' : ''}
+                        onClick={() => handleButtonClick('Home')}
+                    >
+                        Home
+                    </div>
+                    <div
+                        className={activeButton === 'Track' ? 'active' : ''}
+                        onClick={() => handleButtonClick('Track')}
+                    >
+                        Track
+                    </div>
+                    <div
+                        className={activeButton === 'Vehicle Control' ? 'active' : ''}
+                        onClick={() => handleButtonClick('Vehicle Control')}
+                    >
+                        Vehicle Control
+                    </div>
+                    <div
+                        className={activeButton === 'Maintenance' ? 'active' : ''}
+                        onClick={() => handleButtonClick('Maintenance')}
+                    >
+                        Maintenance
+                    </div>
+                    <div
+                        className={activeButton === 'Driver' ? 'active' : ''}
+                        onClick={() => handleButtonClick('Driver')}
+                    >
+                        Driver
+                    </div>
                 </div>
             </div>
         </header>
+
+
     );
+
 }
 
 export default Header;
+
