@@ -1,10 +1,9 @@
-import express from 'express';
-import { TireHealth } from '../../Models/TireHealth.js'; // Corrected import path
+import { TireHealth } from '../../Models/TireHealth.js'; // Import TireHealth model
 
-const tireHealthRouter = express.Router();
-
-// GET route handler
-tireHealthRouter.get('/tire-health', async (req, res) => {
+/**
+ * GET route handler to fetch all tire health details
+ */
+export const getAllTireHealths = async (req, res) => {
     try {
         const tireHealths = await TireHealth.find();
         res.json(tireHealths);
@@ -12,9 +11,12 @@ tireHealthRouter.get('/tire-health', async (req, res) => {
         console.error('Error fetching tire health details:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
+};
 
-tireHealthRouter.get('/tire-health/:id', async (req, res) => {
+/**
+ * GET route handler to fetch tire health details by ID
+ */
+export const getTireHealthById = async (req, res) => {
     try {
         const { id } = req.params;
         const tireHealth = await TireHealth.findById(id);
@@ -26,10 +28,12 @@ tireHealthRouter.get('/tire-health/:id', async (req, res) => {
         console.error('Error fetching tire health details:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
+};
 
-// POST route handler
-tireHealthRouter.post('/tire-health', async (req, res) => {
+/**
+ * POST route handler to add new tire health details
+ */
+export const addTireHealth = async (req, res) => {
     try {
         const {
             _id,
@@ -54,10 +58,12 @@ tireHealthRouter.post('/tire-health', async (req, res) => {
         console.error('Error adding tire health details:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
+};
 
-// PUT route handler
-tireHealthRouter.put('/tire-health/:id', async (req, res) => {
+/**
+ * PUT route handler to update tire health details by ID
+ */
+export const updateTireHealth = async (req, res) => {
     try {
         const { id } = req.params;
         const {
@@ -87,10 +93,12 @@ tireHealthRouter.put('/tire-health/:id', async (req, res) => {
         console.error('Error updating tire health details:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
+};
 
-// DELETE route handler
-tireHealthRouter.delete('/tire-health/:id', async (req, res) => {
+/**
+ * DELETE route handler to delete tire health details by ID
+ */
+export const deleteTireHealth = async (req, res) => {
     try {
         const { id } = req.params;
 
@@ -105,6 +113,4 @@ tireHealthRouter.delete('/tire-health/:id', async (req, res) => {
         console.error('Error deleting tire health details:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
-
-export default tireHealthRouter;
+};

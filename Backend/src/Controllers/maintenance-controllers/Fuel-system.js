@@ -1,10 +1,9 @@
-import express from 'express';
-import { FuelSystem } from '../../Models/FuelSystem.js'; // Corrected import path
+import { FuelSystem } from '../../Models/FuelSystem.js'; // Import FuelSystem model
 
-const fuelSystemRouter = express.Router();
-
-// GET route handler
-fuelSystemRouter.get('/fuel-system', async (req, res) => {
+/**
+ * GET route handler to fetch all fuel system details
+ */
+export const getAllFuelSystems = async (req, res) => {
     try {
         const fuelSystems = await FuelSystem.find();
         res.json(fuelSystems);
@@ -12,9 +11,12 @@ fuelSystemRouter.get('/fuel-system', async (req, res) => {
         console.error('Error fetching fuel system details:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
+};
 
-fuelSystemRouter.get('/fuel-system/:id', async (req, res) => {
+/**
+ * GET route handler to fetch fuel system details by ID
+ */
+export const getFuelSystemById = async (req, res) => {
     try {
         const { id } = req.params;
         const fuelSystem = await FuelSystem.findById(id);
@@ -26,10 +28,12 @@ fuelSystemRouter.get('/fuel-system/:id', async (req, res) => {
         console.error('Error fetching fuel system details:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
+};
 
-// POST route handler
-fuelSystemRouter.post('/fuel-system', async (req, res) => {
+/**
+ * POST route handler to add a new fuel system detail
+ */
+export const addFuelSystem = async (req, res) => {
     try {
         const {
             _id,
@@ -52,10 +56,12 @@ fuelSystemRouter.post('/fuel-system', async (req, res) => {
         console.error('Error adding fuel system details:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
+};
 
-// PUT route handler
-fuelSystemRouter.put('/fuel-system/:id', async (req, res) => {
+/**
+ * PUT route handler to update fuel system details by ID
+ */
+export const updateFuelSystem = async (req, res) => {
     try {
         const { id } = req.params;
         const {
@@ -83,10 +89,12 @@ fuelSystemRouter.put('/fuel-system/:id', async (req, res) => {
         console.error('Error updating fuel system details:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
+};
 
-// DELETE route handler
-fuelSystemRouter.delete('/fuel-system/:id', async (req, res) => {
+/**
+ * DELETE route handler to delete fuel system details by ID
+ */
+export const deleteFuelSystem = async (req, res) => {
     try {
         const { id } = req.params;
 
@@ -101,6 +109,4 @@ fuelSystemRouter.delete('/fuel-system/:id', async (req, res) => {
         console.error('Error deleting fuel system details:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
-
-export default fuelSystemRouter;
+};

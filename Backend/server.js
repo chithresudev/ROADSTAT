@@ -28,15 +28,13 @@ import truckDetailsRouter from './src/Routes/truckDetailsRoute.js';
 import truckInformationRouter from './src/Routes/truckInfoRoute.js';
 import truckEfficiencyRouter from './src/Routes/truckEfficiencyRoute.js'
 import trailerLocationRouter from './src/Routes/trailerLocationRoute.js';
-import EngineHealthRouter from './src/Controllers/maintenance/Engine-health.js';
-import brakeSystemRouter from './src/Controllers/maintenance/Brake-system.js';
-import fuelSystemRouter from './src/Controllers/maintenance/Fuel-system.js';
-import tireHealthRouter from './src/Controllers/maintenance/Tire-health.js';
-import batteryStatusRouter from './src/Controllers/maintenance/Battery-status.js';
+import EngineHealthRouter from './src/Routes/maintenance-routes/engineHealthRoute.js';
+import brakeSystemRouter from './src/Routes/maintenance-routes/brakeSystemRoute.js';
+import fuelSystemRouter from './src/Routes/maintenance-routes/fuelSystemRoute.js';
+import tireHealthRouter from './src/Routes/maintenance-routes/tireHealthRoute.js';
+import batteryStatusRouter from './src/Routes/maintenance-routes/batteryStatusRoute.js';
 import trucksMetricsRouter from './src/Routes/truckMetricsRoute.js';
-import transmissionRouter from  './src/Controllers/maintenance/Transmission-status.js';
-
-// import transmissionRouter from  './src/api/maintenance/Transmission-status.js';
+import transmissionRouter from  './src/Routes/maintenance-routes/transmissionStatusRoute.js';
 
 
 app.get('/api', (req, res) => {
@@ -58,16 +56,12 @@ app.use('/api/truck-efficiency', truckEfficiencyRouter);
 app.use('/api/truck-details', truckDetailsRouter);
 app.use('/api/truck-metrics', trucksMetricsRouter);
 app.use('/api/trailer-location', trailerLocationRouter);
-
-/**
- * 
-
-app.use('/api', EngineHealthRouter);
-app.use('/api', brakeSystemRouter);
-app.use('/api', fuelSystemRouter);
-app.use('/api', tireHealthRouter);
-app.use('/api', batteryStatusRouter);
-app.use('/api', transmissionRouter);**/
+app.use('/api/battery-status', batteryStatusRouter);
+app.use('/api/brake-system', brakeSystemRouter);
+app.use('/api/engine-health', EngineHealthRouter);
+app.use('/api/fuel-system', fuelSystemRouter);
+app.use('/api/tire-health', tireHealthRouter);
+app.use('/api/transmission-status', transmissionRouter);
 
 // Start the server
 app.listen(PORT, () => {

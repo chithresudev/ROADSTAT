@@ -1,10 +1,9 @@
-import express from 'express';
-import { BatteryStatus } from '../../Models/BatteryStatus.js';
+import { BatteryStatus } from '../../Models/BatteryStatus.js'; // Import BatteryStatus model
 
-const batteryStatusRouter = express.Router();
-
-// GET route handler
-batteryStatusRouter.get('/battery-status', async (req, res) => {
+/**
+ * GET route handler to fetch all battery statuses
+ */
+export const getAllBatteryStatuses = async (req, res) => {
     try {
         const batteryStatuses = await BatteryStatus.find();
         res.json(batteryStatuses);
@@ -12,9 +11,12 @@ batteryStatusRouter.get('/battery-status', async (req, res) => {
         console.error('Error fetching battery status details:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
+};
 
-batteryStatusRouter.get('/battery-status/:id', async (req, res) => {
+/**
+ * GET route handler to fetch a battery status by ID
+ */
+export const getBatteryStatusById = async (req, res) => {
     try {
         const { id } = req.params;
         const batteryStatus = await BatteryStatus.findById(id);
@@ -26,10 +28,12 @@ batteryStatusRouter.get('/battery-status/:id', async (req, res) => {
         console.error('Error fetching battery status details:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
+};
 
-// POST route handler
-batteryStatusRouter.post('/battery-status', async (req, res) => {
+/**
+ * POST route handler to add a new battery status
+ */
+export const addBatteryStatus = async (req, res) => {
     try {
         const {
             _id,
@@ -54,10 +58,12 @@ batteryStatusRouter.post('/battery-status', async (req, res) => {
         console.error('Error adding battery status details:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
+};
 
-// PUT route handler
-batteryStatusRouter.put('/battery-status/:id', async (req, res) => {
+/**
+ * PUT route handler to update a battery status by ID
+ */
+export const updateBatteryStatus = async (req, res) => {
     try {
         const { id } = req.params;
         const {
@@ -87,10 +93,12 @@ batteryStatusRouter.put('/battery-status/:id', async (req, res) => {
         console.error('Error updating battery status details:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
+};
 
-// DELETE route handler
-batteryStatusRouter.delete('/battery-status/:id', async (req, res) => {
+/**
+ * DELETE route handler to delete a battery status by ID
+ */
+export const deleteBatteryStatus = async (req, res) => {
     try {
         const { id } = req.params;
 
@@ -105,6 +113,4 @@ batteryStatusRouter.delete('/battery-status/:id', async (req, res) => {
         console.error('Error deleting battery status details:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
-
-export default batteryStatusRouter;
+};

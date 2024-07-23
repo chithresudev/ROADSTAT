@@ -1,10 +1,9 @@
-import express from 'express';
-import { Transmission } from '../../Models/Transmission.js';
+import { Transmission } from '../../Models/Transmission.js'; // Import Transmission model
 
-const transmissionRouter = express.Router();
-
-// GET route handler
-transmissionRouter.get('/transmission', async (req, res) => {
+/**
+ * GET route handler to fetch all transmission details
+ */
+export const getAllTransmissions = async (req, res) => {
     try {
         const transmissions = await Transmission.find();
         res.json(transmissions);
@@ -12,9 +11,12 @@ transmissionRouter.get('/transmission', async (req, res) => {
         console.error('Error fetching transmission details:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
+};
 
-transmissionRouter.get('/transmission/:truckId', async (req, res) => {
+/**
+ * GET route handler to fetch transmission details by truck ID
+ */
+export const getTransmissionById = async (req, res) => {
     try {
         const { id } = req.params;
         const transmission = await Transmission.findById(id);
@@ -26,10 +28,12 @@ transmissionRouter.get('/transmission/:truckId', async (req, res) => {
         console.error('Error fetching transmission details:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
+};
 
-// POST route handler
-transmissionRouter.post('/transmission', async (req, res) => {
+/**
+ * POST route handler to add new transmission details
+ */
+export const addTransmission = async (req, res) => {
     try {
         const {
             _id,
@@ -52,10 +56,12 @@ transmissionRouter.post('/transmission', async (req, res) => {
         console.error('Error adding transmission details:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
+};
 
-// PUT route handler
-transmissionRouter.put('/transmission/:id', async (req, res) => {
+/**
+ * PUT route handler to update transmission details by ID
+ */
+export const updateTransmission = async (req, res) => {
     try {
         const { id } = req.params;
         const {
@@ -83,10 +89,12 @@ transmissionRouter.put('/transmission/:id', async (req, res) => {
         console.error('Error updating transmission details:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
+};
 
-// DELETE route handler
-transmissionRouter.delete('/transmission/:id', async (req, res) => {
+/**
+ * DELETE route handler to delete transmission details by ID
+ */
+export const deleteTransmission = async (req, res) => {
     try {
         const { id } = req.params;
 
@@ -101,6 +109,4 @@ transmissionRouter.delete('/transmission/:id', async (req, res) => {
         console.error('Error deleting transmission details:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
-
-export default transmissionRouter;
+};
