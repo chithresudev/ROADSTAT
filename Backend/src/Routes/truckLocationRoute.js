@@ -9,10 +9,10 @@ import {
 
 const truckLocationRouter = express.Router();
 
-truckLocationRouter.get('/truck-location/:truckId', getTruckLocationByTruckId);
-truckLocationRouter.get('/truck-location', getAllTruckLocations);
-truckLocationRouter.post('/truck-location', createTruckLocation);
-truckLocationRouter.put('/truck-location/:truckId', updateTruckLocationByTruckId);
-truckLocationRouter.delete('/truck-location/:truckId', deleteTruckLocationByTruckId);
+truckLocationRouter.get('/:truckId', getTruckLocationByTruckId);
+truckLocationRouter.get('/', getAllTruckLocations);
+truckLocationRouter.post('/', createTruckLocation);
+truckLocationRouter.put('/:truckId', updateTruckLocationByTruckId);
+truckLocationRouter.delete('/:truckId', deleteTruckLocationByTruckId);
 
 export default truckLocationRouter;

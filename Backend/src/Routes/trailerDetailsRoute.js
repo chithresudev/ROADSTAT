@@ -9,10 +9,10 @@ import {
 
 const trailerDetailsRouter = express.Router();
 
-trailerDetailsRouter.get('/trailers', getAllTrailers);
-trailerDetailsRouter.get('/trailers/:id', getTrailerById);
-trailerDetailsRouter.post('/trailers', createTrailer);
-trailerDetailsRouter.put('/trailers/:id', updateTrailerById);
-trailerDetailsRouter.delete('/trailers/:id', deleteTrailerById);
+trailerDetailsRouter.get('/', getAllTrailers);
+trailerDetailsRouter.get('/:id', getTrailerById);
+trailerDetailsRouter.post('/', createTrailer);
+trailerDetailsRouter.put('/:id', updateTrailerById);
+trailerDetailsRouter.delete('/:id', deleteTrailerById);
 
 export default trailerDetailsRouter;

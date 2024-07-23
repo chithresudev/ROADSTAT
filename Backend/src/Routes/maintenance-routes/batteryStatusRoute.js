@@ -9,10 +9,10 @@ import {
 
 const batteryStatusRouter = express.Router();
 
-batteryStatusRouter.get('/battery-status', getAllBatteryStatuses);
-batteryStatusRouter.get('/battery-status/:id', getBatteryStatusById);
-batteryStatusRouter.post('/battery-status', addBatteryStatus);
-batteryStatusRouter.put('/battery-status/:id', updateBatteryStatus);
-batteryStatusRouter.delete('/battery-status/:id', deleteBatteryStatus);
+batteryStatusRouter.get('/', getAllBatteryStatuses);
+batteryStatusRouter.get('/:id', getBatteryStatusById);
+batteryStatusRouter.post('/', addBatteryStatus);
+batteryStatusRouter.put('/:id', updateBatteryStatus);
+batteryStatusRouter.delete('/:id', deleteBatteryStatus);
 
 export default batteryStatusRouter;

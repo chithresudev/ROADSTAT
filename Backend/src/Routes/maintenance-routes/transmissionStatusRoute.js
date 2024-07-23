@@ -10,18 +10,18 @@ import {
 const transmissionRouter = express.Router();
 
 // GET route handler to fetch all transmission details
-transmissionRouter.get('/transmission', getAllTransmissions);
+transmissionRouter.get('/', getAllTransmissions);
 
 // GET route handler to fetch transmission details by truck ID
-transmissionRouter.get('/transmission/:id', getTransmissionById);
+transmissionRouter.get('/:id', getTransmissionById);
 
 // POST route handler to add new transmission details
-transmissionRouter.post('/transmission', addTransmission);
+transmissionRouter.post('/', addTransmission);
 
 // PUT route handler to update transmission details by ID
-transmissionRouter.put('/transmission/:id', updateTransmission);
+transmissionRouter.put('/:id', updateTransmission);
 
 // DELETE route handler to delete transmission details by ID
-transmissionRouter.delete('/transmission/:id', deleteTransmission);
+transmissionRouter.delete('/:id', deleteTransmission);
 
 export default transmissionRouter;

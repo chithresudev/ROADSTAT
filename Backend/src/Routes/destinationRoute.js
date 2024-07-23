@@ -9,10 +9,10 @@ import {
 
 const destinationRouter = express.Router();
 
-destinationRouter.get('/destinations', getAllDestinations);
-destinationRouter.get('/destinations/:truckId', getDestinationByTruckId);
-destinationRouter.post('/destinations', addDestination);
-destinationRouter.put('/destinations/:id', updateDestinationById);
-destinationRouter.delete('/destinations/:id', deleteDestinationById);
+destinationRouter.get('/', getAllDestinations);
+destinationRouter.get('/:truckId', getDestinationByTruckId);
+destinationRouter.post('/', addDestination);
+destinationRouter.put('/:id', updateDestinationById);
+destinationRouter.delete('/:id', deleteDestinationById);
 
 export default destinationRouter;

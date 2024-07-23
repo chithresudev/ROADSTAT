@@ -10,18 +10,18 @@ import {
 const brakeSystemRouter = express.Router();
 
 // GET route handler to fetch all brake system details
-brakeSystemRouter.get('/brake-system', getAllBrakeSystems);
+brakeSystemRouter.get('/', getAllBrakeSystems);
 
 // GET route handler to fetch brake system details by ID
-brakeSystemRouter.get('/brake-system/:id', getBrakeSystemById);
+brakeSystemRouter.get('/:id', getBrakeSystemById);
 
 // POST route handler to add a new brake system detail
-brakeSystemRouter.post('/brake-system', addBrakeSystem);
+brakeSystemRouter.post('/', addBrakeSystem);
 
 // PUT route handler to update brake system details by ID
-brakeSystemRouter.put('/brake-system/:id', updateBrakeSystem);
+brakeSystemRouter.put('/:id', updateBrakeSystem);
 
 // DELETE route handler to delete brake system details by ID
-brakeSystemRouter.delete('/brake-system/:id', deleteBrakeSystem);
+brakeSystemRouter.delete('/:id', deleteBrakeSystem);
 
 export default brakeSystemRouter;

@@ -9,10 +9,10 @@ import {
 
 const roleRouter = express.Router();
 
-roleRouter.get('/roles', getAllRoles);
-roleRouter.get('/roles/:id', getRoleById);
-roleRouter.post('/roles', createRole);
-roleRouter.put('/roles/:id', updateRoleById);
-roleRouter.delete('/roles/:id', deleteRoleById);
+roleRouter.get('/', getAllRoles);
+roleRouter.get('/:id', getRoleById);
+roleRouter.post('/', createRole);
+roleRouter.put('/:id', updateRoleById);
+roleRouter.delete('/:id', deleteRoleById);
 
 export default roleRouter;

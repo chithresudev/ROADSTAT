@@ -9,10 +9,10 @@ import {
 
 const trailerLocationRouter = express.Router();
 
-trailerLocationRouter.get('/trailer-location', getAllTrailerLocations);
-trailerLocationRouter.get('/trailer-location/:trailerId', getTrailerLocationById);
-trailerLocationRouter.post('/trailer-location', addTrailerLocation);
-trailerLocationRouter.put('/trailer-location/:trailerId', updateTrailerLocation);
-trailerLocationRouter.delete('/trailer-location/:trailerId', deleteTrailerLocation);
+trailerLocationRouter.get('/', getAllTrailerLocations);
+trailerLocationRouter.get('/:trailerId', getTrailerLocationById);
+trailerLocationRouter.post('/', addTrailerLocation);
+trailerLocationRouter.put('/:trailerId', updateTrailerLocation);
+trailerLocationRouter.delete('/:trailerId', deleteTrailerLocation);
 
 export default trailerLocationRouter;

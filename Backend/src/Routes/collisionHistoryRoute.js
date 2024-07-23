@@ -9,10 +9,10 @@ import {
 
 const collisionHistoryRouter = express.Router();
 
-collisionHistoryRouter.get('/collision-history', getAllCollisionHistory);
-collisionHistoryRouter.get('/collision-history/:id', getCollisionHistoryById);
-collisionHistoryRouter.post('/collision-history', addCollisionHistory);
-collisionHistoryRouter.put('/collision-history/:id', updateCollisionHistoryById);
-collisionHistoryRouter.delete('/collision-history/:id', deleteCollisionHistoryById);
+collisionHistoryRouter.get('/', getAllCollisionHistory);
+collisionHistoryRouter.get('/:id', getCollisionHistoryById);
+collisionHistoryRouter.post('/', addCollisionHistory);
+collisionHistoryRouter.put('/:id', updateCollisionHistoryById);
+collisionHistoryRouter.delete('/:id', deleteCollisionHistoryById);
 
 export default collisionHistoryRouter;

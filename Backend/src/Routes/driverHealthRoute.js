@@ -9,10 +9,10 @@ import {
 
 const driverHealthRouter = express.Router();
 
-driverHealthRouter.get('/driver-health', getAllDriverHealthDetails);
-driverHealthRouter.get('/driver-health/:driverId', getDriverHealthDetailsById);
-driverHealthRouter.post('/driver-health', addDriverHealthDetails);
-driverHealthRouter.put('/driver-health/:driverNo', updateDriverHealthDetailsById);
-driverHealthRouter.delete('/driver-health/:driverId', deleteDriverHealthDetailsById);
+driverHealthRouter.get('/', getAllDriverHealthDetails);
+driverHealthRouter.get('/:driverId', getDriverHealthDetailsById);
+driverHealthRouter.post('/', addDriverHealthDetails);
+driverHealthRouter.put('/:driverNo', updateDriverHealthDetailsById);
+driverHealthRouter.delete('/:driverId', deleteDriverHealthDetailsById);
 
 export default driverHealthRouter;

@@ -9,10 +9,10 @@ import {
 
 const truckDetailsRouter = express.Router();
 
-truckDetailsRouter.get('/trucks', getAllTrucks);
-truckDetailsRouter.get('/trucks/:id', getTruckById);
+truckDetailsRouter.get('/', getAllTrucks);
+truckDetailsRouter.get('/:id', getTruckById);
 truckDetailsRouter.post('/trucks', createTruck);
-truckDetailsRouter.put('/trucks/:id', updateTruckById);
-truckDetailsRouter.delete('/trucks/:id', deleteTruckById);
+truckDetailsRouter.put('/:id', updateTruckById);
+truckDetailsRouter.delete('/:id', deleteTruckById);
 
 export default truckDetailsRouter;

@@ -9,10 +9,10 @@ import {
 
 const trackLocationRouter = express.Router();
 
-trackLocationRouter.get('/track-location', getAllTrackLocations);
-trackLocationRouter.get('/track-location/:trailerNo', getTrackLocationByTrailerNo);
-trackLocationRouter.post('/track-location', createTrackLocation);
-trackLocationRouter.put('/track-location/:trailerNo', updateTrackLocationByTrailerNo);
-trackLocationRouter.delete('/track-location/:trailerNo', deleteTrackLocationByTrailerNo);
+trackLocationRouter.get('/', getAllTrackLocations);
+trackLocationRouter.get('/:trailerNo', getTrackLocationByTrailerNo);
+trackLocationRouter.post('/', createTrackLocation);
+trackLocationRouter.put('/:trailerNo', updateTrackLocationByTrailerNo);
+trackLocationRouter.delete('/:trailerNo', deleteTrackLocationByTrailerNo);
 
 export default trackLocationRouter;

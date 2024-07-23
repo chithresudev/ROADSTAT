@@ -1,4 +1,3 @@
-// server.js
 import express from 'express';
 import path from 'path';
 import dotenv from 'dotenv';
@@ -15,7 +14,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 
 import userRouter from './src/Routes/userRoute.js';
-import authRouter from './src/Routes/authRoute.js'
+import authRouter from './src/Routes/authRoute.js';
+import roleRouter from './src/Routes/roleRoute.js';
 import collisionHistoryRouter from './src/Routes/collisionHistoryRoute.js';
 import destinationRouter from './src/Routes/destinationRoute.js';
 import driverRouter from './src/Routes/driverRoute.js';
@@ -43,17 +43,18 @@ app.get('/api', (req, res) => {
 
 app.use('/api/auth', authRouter)
 app.use('/api/user', userRouter);
+app.use('/api/roles', roleRouter);
 app.use('/api/collision-history', collisionHistoryRouter);
-app.use('/api/destination', destinationRouter); 
+app.use('/api/destinations', destinationRouter); 
 app.use('/api/driver-health', driverHealthRouter); 
-app.use('/api/driver', driverRouter);
+app.use('/api/drivers', driverRouter);
 app.use('/api/truck-location', truckLocationRouter);
 app.use('/api/track-location', trackLocationRouter);
-app.use('/api/truck-info', truckInformationRouter);
+app.use('/api/truck-information', truckInformationRouter);
 app.use('/api/truck-control', truckControlRouter);
-app.use('/api/trailer-details', trailerDetailsRouter);
+app.use('/api/trailers', trailerDetailsRouter);
 app.use('/api/truck-efficiency', truckEfficiencyRouter);
-app.use('/api/truck-details', truckDetailsRouter);
+app.use('/api/trucks', truckDetailsRouter);
 app.use('/api/truck-metrics', trucksMetricsRouter);
 app.use('/api/trailer-location', trailerLocationRouter);
 app.use('/api/battery-status', batteryStatusRouter);
@@ -61,7 +62,7 @@ app.use('/api/brake-system', brakeSystemRouter);
 app.use('/api/engine-health', EngineHealthRouter);
 app.use('/api/fuel-system', fuelSystemRouter);
 app.use('/api/tire-health', tireHealthRouter);
-app.use('/api/transmission-status', transmissionRouter);
+app.use('/api/transmission', transmissionRouter);
 
 // Start the server
 app.listen(PORT, () => {

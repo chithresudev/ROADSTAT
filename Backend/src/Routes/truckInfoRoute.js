@@ -9,10 +9,10 @@ import {
 
 const truckInformationRouter = express.Router();
 
-truckInformationRouter.get('/truck-information', getAllTruckInformation);
-truckInformationRouter.get('/truck-information/:truckId', getTruckInformationById);
-truckInformationRouter.post('/truck-information', createTruckInformation);
-truckInformationRouter.put('/truck-information/:truckNo', updateTruckInformationById);
-truckInformationRouter.delete('/truck-information/:truckId', deleteTruckInformationById);
+truckInformationRouter.get('/', getAllTruckInformation);
+truckInformationRouter.get('/:truckId', getTruckInformationById);
+truckInformationRouter.post('/', createTruckInformation);
+truckInformationRouter.put('/:truckNo', updateTruckInformationById);
+truckInformationRouter.delete('/:truckId', deleteTruckInformationById);
 
 export default truckInformationRouter;

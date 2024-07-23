@@ -9,10 +9,10 @@ import {
 
 const truckEfficiencyRouter = express.Router();
 
-truckEfficiencyRouter.get('/truck-efficiency', getAllTruckEfficiency);
-truckEfficiencyRouter.get('/truck-efficiency/:id', getTruckEfficiencyById);
-truckEfficiencyRouter.post('/truck-efficiency', createTruckEfficiency);
-truckEfficiencyRouter.put('/truck-efficiency/:id', updateTruckEfficiencyById);
-truckEfficiencyRouter.delete('/truck-efficiency/:id', deleteTruckEfficiencyById);
+truckEfficiencyRouter.get('/', getAllTruckEfficiency);
+truckEfficiencyRouter.get('/:id', getTruckEfficiencyById);
+truckEfficiencyRouter.post('/', createTruckEfficiency);
+truckEfficiencyRouter.put('/:id', updateTruckEfficiencyById);
+truckEfficiencyRouter.delete('/:id', deleteTruckEfficiencyById);
 
 export default truckEfficiencyRouter;

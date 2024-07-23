@@ -9,10 +9,10 @@ import {
 
 const driverRouter = express.Router();
 
-driverRouter.get('/drivers', getAllDrivers);
-driverRouter.get('/drivers/:driverId', getDriverById);
-driverRouter.post('/drivers', addDriver);
-driverRouter.put('/drivers/:driverId', updateDriverById);
-driverRouter.delete('/drivers/:driverId', deleteDriverById);
+driverRouter.get('/', getAllDrivers);
+driverRouter.get('/:driverId', getDriverById);
+driverRouter.post('/', addDriver);
+driverRouter.put('/:driverId', updateDriverById);
+driverRouter.delete('/:driverId', deleteDriverById);
 
 export default driverRouter;
