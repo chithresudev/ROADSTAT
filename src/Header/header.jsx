@@ -1,18 +1,33 @@
 import React, { useState, useEffect, useRef } from 'react';
 import '../Header/header.css';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Header({ currentUser, logout, headerContent, activeButtonC }) {
-
-    const [activeButton, setActiveButton] = useState('Home');
+    const navigate = useNavigate();
+    // const [activeButton, setActiveButton] = useState('Home');
     const [popupVisible, setPopupVisible] = useState(false);
     const popupRef = useRef(null);
 
     const handleButtonClick = (buttonName) => {
-        setActiveButton(buttonName);
+        if (buttonName === 'Home') {
+            navigate('/home');
+        } else if (buttonName === 'Track') {
+            navigate('/track');
+        } else if (buttonName === 'Vehicle Control') {
+            navigate('/truckcontrol/usage');
+        } else if (buttonName === 'Maintenance') {
+            navigate('/maintenance');
+        } else if (buttonName === 'Driver') {
+            navigate('/driver');
+        } else {
+            navigate('/');
+        }
     };
+
     const togglePopup = () => {
         setPopupVisible(!popupVisible);
     };
+
     const handleClickOutside = (event) => {
         if (popupRef.current && !popupRef.current.contains(event.target)) {
             setPopupVisible(false);
@@ -51,31 +66,31 @@ function Header({ currentUser, logout, headerContent, activeButtonC }) {
 
                 <div className='nav_container'>
                     <div
-                        className={activeButton === 'Home' ? 'active' : ''}
+                        className={activeButtonC === 'Home' ? 'active' : ''}
                         onClick={() => handleButtonClick('Home')}
                     >
                         Home
                     </div>
                     <div
-                        className={activeButton === 'Track' ? 'active' : ''}
+                        className={activeButtonC === 'Track' ? 'active' : ''}
                         onClick={() => handleButtonClick('Track')}
                     >
                         Track
                     </div>
                     <div
-                        className={activeButton === 'Vehicle Control' ? 'active' : ''}
+                        className={activeButtonC === 'Vehicle Control' ? 'active' : ''}
                         onClick={() => handleButtonClick('Vehicle Control')}
                     >
                         Vehicle Control
                     </div>
                     <div
-                        className={activeButton === 'Maintenance' ? 'active' : ''}
+                        className={activeButtonC === 'Maintenance' ? 'active' : ''}
                         onClick={() => handleButtonClick('Maintenance')}
                     >
                         Maintenance
                     </div>
                     <div
-                        className={activeButton === 'Driver' ? 'active' : ''}
+                        className={activeButtonC === 'Driver' ? 'active' : ''}
                         onClick={() => handleButtonClick('Driver')}
                     >
                         Driver

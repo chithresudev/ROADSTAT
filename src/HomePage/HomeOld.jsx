@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { GoogleMap, Marker, LoadScript } from '@react-google-maps/api';
+import './Home.css';
 import MapComponent from './MapComponent';
-import './home.css';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -10,9 +11,10 @@ function HomePage({ updateHeader, updateButton }) {
     const [weather, setWeather] = useState('');
     const [weatherIcon, setWeatherIcon] = useState('');
     const [truckData, setTruckData] = useState([]);
-    const [activeButton, setActiveButton] = useState('Vehicles');
+    const [activeButton, setActiveButton] = useState('trucks');
     const [truckLocations, setTruckLocations] = useState([]);
     const [filteredTruckData, setFilteredTruckData] = useState([]);
+    const [mapKey, setMapKey] = useState(0);
     const [selectedTruckNo, setSelectedTruckNo] = useState(null);
     const [showPopup, setShowPopup] = useState(false);
     const [popupContent, setPopupContent] = useState('');
@@ -23,6 +25,7 @@ function HomePage({ updateHeader, updateButton }) {
     const truckNo = queryParams.get('truckNo');
     const [searchedTruckNo, setSearchedTruckNo] = useState(truckNo || '');
 
+    const open_weather_api = process.env.OPEN_WEATHER_API;
     const [alertData, setAlertData] = useState([]);
 
     useEffect(() => {
@@ -30,89 +33,6 @@ function HomePage({ updateHeader, updateButton }) {
         updateButton('Home');
     }, [updateHeader, updateButton]);
 
-    const fetchAlertData = async () => {
-        try {
-            const response = await fetch(`${apiUrl}/alerts`);
-            const data = await response.json();
-            setAlertData(data);
-        } catch (error) {
-            console.error('Error fetching alert data:', error);
-            setAlertData([]);
-        }
-    };
-
-
-    const handleButtonClick = async (buttonName) => {
-        setActiveButton(buttonName);
-        if (buttonName === "Locations") {
-            await fetchTruckLocations();
-        }
-        else if (buttonName === "Alerts") {
-            await fetchAlertData();
-        }
-    };
-
-    const handleMapButtonClick = async (truckNo) => {
-        setActiveButton('Locations');
-        if (truckNo) {
-            await fetchTruckLocations();
-            setSelectedTruckNo(truckNo);
-        }
-    };
-
-    const fetchTruckLocations = async () => {
-        try {
-            const response = await fetch(`${apiUrl}/truck-location`);
-            const data = await response.json();
-            setTruckLocations(data);
-        } catch (error) {
-            console.error('Error fetching truck locations:', error);
-            setTruckLocations([]);
-        }
-    };
-
-    useEffect(() => {
-        setFilteredTruckData(truckData);
-    }, [truckData]);
-
-    const handleStatusFilter = (status) => {
-        const filteredData = truckData.filter(truck => truck.status === status);
-        const otherData = truckData.filter(truck => truck.status !== status);
-        setFilteredTruckData([...filteredData, ...otherData]);
-    };
-
-    useEffect(() => {
-        setFilteredTruckData(truckData);
-        const searchedTruckIndex = truckData.findIndex(truck => truck.truckId === searchedTruckNo);
-        let sortedTruckData = [...truckData];
-        if (searchedTruckIndex !== -1) {
-            const searchedTruck = sortedTruckData.splice(searchedTruckIndex, 1)[0];
-            sortedTruckData = [searchedTruck, ...sortedTruckData];
-        }
-        setFilteredTruckData(sortedTruckData);
-    }, [truckData, searchedTruckNo]);
-
-
-    const handleIconClick = (description, event) => {
-        const iconRect = event.target.getBoundingClientRect();
-        const popupX = iconRect.left + window.pageXOffset + 15;
-        const popupY = iconRect.top + window.pageYOffset;
-        const contentAfterIs = description.split('is')[1].trim();
-        setShowPopup(true);
-        setPopupContent(contentAfterIs);
-        setPopupPosition({ x: popupX, y: popupY });
-    };
-
-
-    const handleClosePopup = () => {
-        setShowPopup(false);
-        setPopupContent('');
-    };
-
-    const handleRowClick = (index, truckId) => {
-
-        window.location.href = `/truckcontrol/usage?truckNo=${truckId}`;
-    };
 
     useEffect(() => {
         const fetchWeather = async () => {
@@ -163,46 +83,131 @@ function HomePage({ updateHeader, updateButton }) {
         return () => clearInterval(interval);
     }, []);
 
+    const fetchAlertData = async () => {
+        try {
+            const response = await fetch(`${apiUrl}/alerts`);
+            const data = await response.json();
+            setAlertData(data);
+        } catch (error) {
+            console.error('Error fetching alert data:', error);
+            setAlertData([]);
+        }
+    };
 
+
+    const handleButtonClick = async (buttonName) => {
+        setActiveButton(buttonName);
+        if (buttonName === "warnings") {
+            await fetchTruckLocations();
+        }
+        else if (buttonName === "alerts") {
+            await fetchAlertData(); // Fetch alert data when "Alerts" button is clicked
+        }
+    };
+
+    const handleMapButtonClick = async (truckNo) => {
+        setActiveButton('warnings');
+        if (truckNo) {
+            await fetchTruckLocations();
+            setSelectedTruckNo(truckNo);
+        }
+    };
+
+    const fetchTruckLocations = async () => {
+        try {
+            const response = await fetch(`${apiUrl}/truck-location`);
+            const data = await response.json();
+            setTruckLocations(data);
+        } catch (error) {
+            console.error('Error fetching truck locations:', error);
+            setTruckLocations([]);
+        }
+    };
+
+    useEffect(() => {
+        setFilteredTruckData(truckData);
+    }, [truckData]);
+
+    const handleStatusFilter = (status) => {
+        const filteredData = truckData.filter(truck => truck.status === status);
+        const otherData = truckData.filter(truck => truck.status !== status);
+        setFilteredTruckData([...filteredData, ...otherData]);
+    };
+
+    useEffect(() => {
+        setFilteredTruckData(truckData);
+        const searchedTruckIndex = truckData.findIndex(truck => truck.truckId === searchedTruckNo);
+        let sortedTruckData = [...truckData];
+        if (searchedTruckIndex !== -1) {
+            const searchedTruck = sortedTruckData.splice(searchedTruckIndex, 1)[0];
+            sortedTruckData = [searchedTruck, ...sortedTruckData];
+        }
+        setFilteredTruckData(sortedTruckData);
+    }, [truckData, searchedTruckNo]);
+
+ 
+    const handleIconClick = (description, event) => {
+        const iconRect = event.target.getBoundingClientRect();
+        const popupX = iconRect.left + window.pageXOffset + 15;
+        const popupY = iconRect.top + window.pageYOffset;
+        const contentAfterIs = description.split('is')[1].trim();
+        setShowPopup(true);
+        setPopupContent(contentAfterIs);
+        setPopupPosition({ x: popupX, y: popupY });
+    };
+
+
+    const handleClosePopup = () => {
+        setShowPopup(false);
+        setPopupContent('');
+    };
+
+    const handleRowClick = (index, truckId) => {
+
+        window.location.href = `/truckcontrol/usage?truckNo=${truckId}`;
+    };
 
     return (
-        <div className='home_page'>
-            <div className='info_bar'>
+        <div className='main'>
+            <div className='info-bar'>
                 <div className='info'>
                     <img src="/images/clock.png" alt="Home" className="info-icon" />
-                    <span className="info_text">{currentTime}</span>
+                    <span className="info-text">{currentTime}</span>
                 </div>
                 <div className='info'>
                     {weatherIcon && <img src={weatherIcon} alt="Weather Icon" className="info-icon" />}
-                    <span className="info_text">{weather}</span>
+                    <span className="info-text">{weather}</span>
                 </div>
             </div>
-
-            <div className='cards_bar'>
-                <div className='cards_text'>
-                    <div className={activeButton === 'Vehicles' ? 'active' : ''}
-                        onClick={() => handleButtonClick('Vehicles')}>
-                        Vehicles
-                    </div>
+            <div className='topcards'>
+                <div className={`scard ${activeButton === 'trucks' ? 'active' : ''}`}>
+                    <button className='scard-button' onClick={() => handleButtonClick('trucks')}>
+                        <Link className='scard-link'>
+                            <img src="/images/truck.png" alt="Home" className="scard-icon" />
+                            <span className="scard-text">Vehicles</span>
+                        </Link>
+                    </button>
                 </div>
-                <hr></hr>
-                <div className='cards_text'>
-                    <div className={activeButton === 'Locations' ? 'active' : ''}
-                        onClick={() => handleButtonClick('Locations')}>
-                        Locations
-                    </div>
+                <div className={`scard ${activeButton === 'warnings' ? 'active' : ''}`}>
+                    <button className='scard-button' onClick={() => handleButtonClick('warnings')}>
+                        <Link className='scard-link'>
+                            <img src="/images/map.png" alt="Home" className="scard-icon" />
+                            <span className="scard-text">Locations</span>
+                        </Link>
+                    </button>
                 </div>
-                <hr></hr>
-                <div className='cards_text'>
-                    <div className={activeButton === 'Alerts' ? 'active' : ''}
-                        onClick={() => handleButtonClick('Alerts')}>
-                        Alerts
-                    </div>
+                <div className={`scard ${activeButton === 'alerts' ? 'active' : ''}`}>
+                    <button className='scard-button' onClick={() => handleButtonClick('alerts')}>
+                        <Link className='scard-link'>
+                            <img src="/images/warning.png" alt="Home" className="scard-icon" />
+                            <span className="scard-text">Alerts</span>
+                        </Link>
+                    </button>
                 </div>
-            </div >
-            {activeButton === 'Vehicles' && (
-                <div className='card_details'>
-                    <table className='table_content'>
+            </div>
+            {activeButton === 'trucks' && (
+                <div className='card'>
+                    <table className='table'>
                         <thead>
                             <tr>
                                 <th>S No</th>
@@ -212,7 +217,7 @@ function HomePage({ updateHeader, updateButton }) {
                                 <th>Incidents</th>
                                 <th>
                                     Status
-                                    <img src="/images/sort.png" onClick={() => handleStatusFilter('Yes')} className='filter_button' />
+                                    <img src="/images/sort.png" onClick={() => handleStatusFilter('Yes')} className='filter-button' />
                                 </th>
                                 <th>Note</th>
                             </tr>
@@ -225,7 +230,7 @@ function HomePage({ updateHeader, updateButton }) {
                                     <td>{truck.driverId}</td>
                                     <td><Link to="#" onClick={() => handleMapButtonClick(truck.truckId)} className='click'>Click Here</Link></td>
                                     <td>{truck.incidents}</td>
-                                    <td>{truck.status === 'Yes' ? <img src="/images/yes.png" alt="Yes" className="status_image" /> : <img src="/images/no.png" alt="No" className="status_image" />}</td>
+                                    <td>{truck.status === 'Yes' ? <img src="/images/yes.png" alt="Yes" className="status-image" /> : <img src="/images/no.png" alt="No" className="status-image" />}</td>
                                     <td>{truck.note}</td>
                                 </tr>
                             ))}
@@ -234,9 +239,9 @@ function HomePage({ updateHeader, updateButton }) {
                 </div>
             )}
 
-            {activeButton === 'Alerts' && (
-                <div className='card_details'>
-                    <table className='table_content'>
+            {activeButton === 'alerts' && (
+                <div className='card'>
+                    <table className='table'>
                         <thead>
                             <tr>
                                 <th>Vehicle No</th>
@@ -276,11 +281,14 @@ function HomePage({ updateHeader, updateButton }) {
                 </div>
             )}
 
-            {activeButton === 'Locations' && (
-                <div className='card_details' style={{ height: "50vh", overflow: "hidden" }}>
+
+
+            {activeButton === 'warnings' && (
+                <div className='card' style={{ paddingLeft: "0px", paddingRight: "0px", overflow: "hidden" }}>
                     <MapComponent truckLocations={truckLocations} selectedTruckNo={selectedTruckNo} />
                 </div>
             )}
+
         </div>
     );
 }
