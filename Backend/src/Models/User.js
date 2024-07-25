@@ -27,10 +27,10 @@ const UserSchema = new Schema({
     type: String,
     required: [true, 'Please choose a password'],
   },
-  /**verificationCode: {
+  verificationCode: {
     type: String,
     trim: true,
-  },**/
+  },
   isVerified: { 
     type: Boolean, 
     default: false 
