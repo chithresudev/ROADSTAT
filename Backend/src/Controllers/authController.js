@@ -47,7 +47,8 @@ const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Generate a random verification code
-    const verificationCode = Math.floor(1000 + Math.random() * 9000).toString(); // Generate a 4-digit code
+    const verificationCode = Math.floor(100000 + Math.random() * 900000).toString(); // Generate a 6-digit code
+
 
     const user = new User({
       firstName,
@@ -69,16 +70,16 @@ const register = async (req, res) => {
       subject: 'Verify your Email Address',
       html: `
         <html>
-        <body style="font-family: Arial, sans-serif; color: #333; padding: 20px;">
-          <h2>Welcome to ROADSTAT!</h2>
-          <p>Hi ${user.firstName} ${user.lastName},</p>
-          <p>Thank you for registering with us. To complete your registration process, please verify your email address using the code below:</p>
-          <h3>${verificationCode}</h3>
-          <p>Please enter this code on the verification page to activate your account. If you didn't request this email, please ignore it.</p>
-          <p>If you have any questions or need assistance, feel free to contact our support team.</p>
-          <p>Best regards,<br/>The Roadstat Team</p>
-          <p style="font-size: 12px; color: #777;">&copy; 2024. ROADSTAT. All rights reserved.</p>
-        </body>
+          <body style="font-family: Arial, sans-serif; color: #333; padding: 20px;">
+            <h2>Welcome to ROADSTAT!</h2>
+            <p>Hi ${user.firstName} ${user.lastName},</p>
+            <p>Thank you for registering with us. To complete your registration process, please verify your email address using the 6-digit code below:</p>
+            <h3>${verificationCode}</h3>
+            <p>Please enter this code on the verification page to activate your account. If you didn't request this email, please ignore it.</p>
+            <p>If you have any questions or need assistance, feel free to contact our support team.</p><br/>
+            <p>Best regards,<br/>The Roadstat Team</p><br/>
+            <p style="font-size: 12px; color: #777;">&copy; 2024. ROADSTAT. All rights reserved.</p>
+          </body>
         </html>
       `,
     }; 
@@ -95,6 +96,9 @@ const register = async (req, res) => {
 
 const verifyEmail = async (req, res) => {
   try {
+    if(!(req.body.email && req.body.verificationCode)){ 
+      return res.status(409).json({message: "Some fields are empty"})
+    }
     const user = await User.findOne({ email: req.body.email });
 
     if (!user) {
@@ -114,7 +118,19 @@ const verifyEmail = async (req, res) => {
       from: EMAIL_USER,
       to: user.email,
       subject: 'Email Verification Successful',
-      text: 'Your email has been successfully verified.',
+      html: `
+        <html>
+          <body style="font-family: Arial, sans-serif; color: #333; padding: 20px;">
+            <h2>Email Verification Successful</h2>
+            <p>Hi ${user.firstName},</p>
+            <p>We are pleased to inform you that your email address has been successfully verified. You can now enjoy full access to all the features and benefits of Roadstat.</p>
+            <p>If you have any questions or need further assistance, please do not hesitate to contact our support team.</p>
+            <p>Thank you for choosing Roadstat. We are excited to have you on board!</p><br/>
+            <p>Best regards,<br/>The Roadstat Team</p><br/>
+            <p style="font-size: 12px; color: #777;">&copy; 2024. ROADSTAT. All rights reserved.</p>
+          </body>
+        </html>
+      `,
     };
 
     await transporter.sendMail(mailOptions);
@@ -127,6 +143,9 @@ const verifyEmail = async (req, res) => {
 
 const login = async (req, res) => {
   try {
+    if(!(req.body.email && req.body.password)){ 
+      return res.status(409).json({message: "Some fields are empty"})
+    }
     const { email, username, password } = req.body;
 
     // Check if user exists
