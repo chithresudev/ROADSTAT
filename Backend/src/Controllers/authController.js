@@ -77,7 +77,7 @@ const register = async (req, res) => {
             <h3>${verificationCode}</h3>
             <p>Please enter this code on the verification page to activate your account. If you didn't request this email, please ignore it.</p>
             <p>If you have any questions or need assistance, feel free to contact our support team.</p><br/>
-            <p>Best regards,<br/>The Roadstat Team</p><br/>
+            <p>Best regards,<br/>The Roadstat Team.</p><br/>
             <p style="font-size: 12px; color: #777;">&copy; 2024. ROADSTAT. All rights reserved.</p>
           </body>
         </html>
