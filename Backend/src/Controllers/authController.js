@@ -143,7 +143,7 @@ const verifyEmail = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    if(!(req.body.email && req.body.password)){ 
+    if(!(req.body.email || req.body.username) || !req.body.password){ 
       return res.status(409).json({message: "Some fields are empty"})
     }
     const { email, username, password } = req.body;
