@@ -1,0 +1,442 @@
+.u-main{
+    padding-top: 95px;
+}
+.u-topcards{
+    display: grid;
+    grid-template-columns: repeat(2, 0fr);
+    margin-bottom: 30px;
+    border-radius: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.u-scard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+    background-color: white;
+    border-radius: 0px;
+    text-align: center;
+    border: 1px solid rgba(44, 43, 43, 0.5);
+}
+
+.u-scard.active {
+    background-color: #242F40;
+}
+.u-scard.active .u-scard-text {
+    color: white;
+}
+.u-scard.active .u-scard-icon {
+    filter: none;
+}
+.table tr.selected {
+    background-color: #CFCFCF; 
+}
+.u-scard-button{
+    background: none;
+    padding: 12px;
+}
+
+.u-scard-button:hover{
+    background: none;
+}
+.u-scard-link{
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.u-scard-icon{
+    width: 25px;
+    height: 20px;
+    margin-right: 10px;
+    filter: grayscale(100%) invert(100%);
+}
+
+.u-scard-text{
+    font-size: 16px;
+    font-weight: 500;
+    color: black;
+}
+
+.u-card {
+    height: 200px;
+    padding: 0px 20px 20px 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    border: 1px solid rgba(139, 139, 139, 0.5);
+    overflow: auto; 
+}
+
+.u-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 5px;
+}
+
+.u-table thead {
+    position: sticky;
+    background-color: white;
+    z-index: 0; 
+    top: 0;
+}
+
+
+.u-table th,
+.u-table td {
+    padding: 15px 0px 15px 0px;
+    border-bottom: 1px solid #8B8B8B;
+    text-align: left;
+    text-align: center; 
+}
+
+.u-table td{
+    font-size: 15px;
+    font-weight: 100;
+    padding: 18px 0px 18px 0px;
+}
+
+.u-table th {
+    font-weight:700;
+}
+.u-mainprofile{
+    width: 100%;
+    margin-top: 20px;
+}
+.u-content {
+    padding: 10px 0px 10px 0px;
+    background-color: #d6ddf2;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    border: 1px solid white;
+}
+.u-access{
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 10px;
+}
+
+.ut-scard {
+    padding: 0px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(139, 139, 139, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ut-scard.active {
+    background-color: white;
+    transform: scale(1.1) translateZ(10px);
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.7);
+}
+
+.ut-scard-button{
+    background: none;
+    padding: 8px 4px;
+    width: 150px;
+}
+
+.ut-scard-button:hover{
+    background: none;
+}
+
+.ut-scard-text{
+    font-size: 14px;
+    font-weight: 600;
+    color: #2D3142;
+}
+.ut-scard-stext{
+    font-size: 10px;
+    font-weight: lighter;
+    color: #4C5980;
+}
+.ut-scard-mt{
+    font-size: 12px;
+    font-weight: 300;
+    color: black;
+}
+.raisealert{
+    padding: 8px;
+    width: 125px;
+    background-color: #BC4E61;
+    border: 1px solid white;
+    border-radius: 10px;
+}
+
+.popup {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    z-index: 1;
+}
+
+.popup-content {
+    font-size: 14px;
+}
+
+.close {
+    float: right;
+    cursor: pointer;
+}
+
+
+
+/* Media Queries for Tablet */
+@media only screen and (max-width: 1024px) {
+    .u-main {
+        margin-top: 325px; /* Adjusted padding */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .u-mainprofile {
+        width: 100%; /* Adjusted width */
+        margin-top: 20px;
+    }
+
+    .u-topcards {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px; /* Added gap between cards */
+    }
+
+    .u-scard {
+        width: 200px; /* Adjusted card width */
+        padding: 20px; /* Increased padding */
+        border-radius: 10px; /* Added border-radius */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+        border: 1px solid rgba(44, 43, 43, 0.5);
+    }
+
+    .u-scard.active {
+        background-color: #242F40;
+    }
+
+    .u-scard.active .u-scard-text {
+        color: white;
+    }
+
+    .u-scard.active .u-scard-icon {
+        filter: none;
+    }
+
+    .u-scard-button {
+        background: none;
+        padding: 12px;
+        width: 150px;
+    }
+
+    .u-scard-link {
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .u-scard-icon {
+        width: 25px;
+        height: 20px;
+        margin-right: 10px;
+        filter: grayscale(100%) invert(100%);
+    }
+
+    .u-scard-text {
+        font-size: 16px;
+        font-weight: 500;
+        color: black;
+    }
+
+    .u-card {
+        height: auto; 
+        padding: 20px; 
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+        border: 1px solid rgba(139, 139, 139, 0.5);
+        overflow: auto; 
+    }
+
+    .u-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 5px;
+    }
+
+    .u-table th,
+    .u-table td {
+        padding: 8px;
+        border-bottom: 1px solid #8B8B8B;
+        text-align: center; 
+    }
+
+    .u-table td {
+        font-size: 15px;
+        font-weight: 100;
+    }
+
+    .u-table th {
+        font-weight: 700;
+    }
+}
+
+/* Media Queries for Mobile */
+@media only screen and (max-width: 480px) {
+    .u-main {
+        margin-top: 325px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .u-mainprofile {
+        width: 90%; /* Adjusted width */
+        margin-top: 20px;
+    }
+
+    .u-topcards {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px; /* Added gap between cards */
+    }
+
+    .u-scard {
+        width: calc(50% - 20px); /* Adjusted card width */
+        padding: 20px; /* Increased padding */
+        border-radius: 10px; /* Added border-radius */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+        border: 1px solid rgba(44, 43, 43, 0.5);
+    }
+
+    .u-scard.active {
+        background-color: #242F40;
+    }
+
+    .u-scard.active .u-scard-text {
+        color: white;
+    }
+
+    .u-scard.active .u-scard-icon {
+        filter: none;
+    }
+
+    .u-scard-button {
+        background: none;
+        padding: 12px;
+        width: 150px;
+    }
+
+    .u-scard-link {
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .u-scard-icon {
+        width: 25px;
+        height: 20px;
+        margin-right: 10px;
+        filter: grayscale(100%) invert(100%);
+    }
+
+    .u-scard-text {
+        font-size: 16px;
+        font-weight: 500;
+        color: black;
+    }
+
+    .u-card {
+        width: calc(100% - 40px); /* Adjusted card width */
+        margin: 20px; /* Added margin around the card */
+        padding: 20px; 
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+        border: 1px solid rgba(139, 139, 139, 0.5);
+        overflow: auto; 
+    }
+
+    .u-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 5px;
+    }
+
+    .u-table th,
+    .u-table td {
+        padding: 8px;
+        border-bottom: 1px solid #8B8B8B;
+        text-align: center; 
+    }
+
+    .u-table td {
+        font-size: 15px;
+        font-weight: 100;
+    }
+
+    .u-table th {
+        font-weight: 700;
+    }
+}
+
+.usa-card {
+    height: 350px;
+    padding: 0px 20px 20px 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    border: 1px solid rgba(139, 139, 139, 0.5);
+    overflow: auto; 
+    margin-bottom: 15px;
+}
+
+.usa-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 5px;
+}
+
+.usa-table thead {
+    position: sticky;
+    background-color: white;
+    z-index: 0; 
+    top: 0;
+}
+
+
+.usa-table th,
+.usa-table td {
+    padding: 10px 0px 10px 0px;
+    border-bottom: 1px solid #8B8B8B;
+    text-align: left;
+    text-align: center; 
+}
+
+.usa-table td{
+    font-size: 15px;
+    font-weight: 100;
+    padding: 18px 0px 18px 0px;
+}
+
+.usa-table th {
+    font-weight:700;
+}
+.note-ic{
+    height: 13px;
+    width: 13px;
+    font-weight: bolder;
+}
+.pp{
+    font-weight: 500;
+}
+

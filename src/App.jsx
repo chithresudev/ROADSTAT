@@ -54,7 +54,7 @@ function App() {
             <div className='app_bg'>
                 <div className='top_page'>
                     {currentUser && <Header currentUser={currentUser} logout={logout} headerContent={headerContent} activeButtonC={activeButtonC}/>}
-                    {currentUser && <Sidebar isAdmin={isAdmin} logout={logout} activeButtonC={activeButtonC}/>}
+                    {/* {currentUser && <Sidebar isAdmin={isAdmin} logout={logout} activeButtonC={activeButtonC}/>} */}
                 </div>
                 
                 <div className="jumbotrons">
