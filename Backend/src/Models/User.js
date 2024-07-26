@@ -27,6 +27,11 @@ const UserSchema = new Schema({
     type: String,
     required: [true, 'Please choose a password'],
   },
+  phoneNumber: {
+    type: String,
+    trim: true,
+    required: [true, 'Please enter your phone number'],
+  },
   verificationCode: {
     type: String,
     trim: true,

@@ -27,9 +27,9 @@ transporter.verify(function(error, success) {
 
 const register = async (req, res) => {
   try {
-    const { firstName, lastName, email, password, username, userType } = req.body;
+    const { firstName, lastName, email, password, username, userType, phoneNumber } = req.body;
 
-    if(!(firstName && lastName && email && username && password && userType)){
+    if(!(firstName && lastName && email && username && password && userType && phoneNumber)){
       return res.status(409).json({message: "Some fields are empty"})
     }
 
@@ -56,6 +56,7 @@ const register = async (req, res) => {
       email: lowerCaseEmail,
       username: lowerCaseUsername,
       password: hashedPassword,
+      phoneNumber,
       userType: userType,
       verificationCode,
     });
