@@ -59,13 +59,14 @@
 
 .card_details {
     position: absolute;
+    overflow: auto;
     left: 25%;
     right: 6%;
     /* top:1px; */
     /* top: 110%; */
     width: 70%;
     /* bottom: 2%; */
-    height: 60vh;
+    height: 70%;
     background: #D9D9D9;
     mix-blend-mode: hard-light;
     border-radius: 30px;
@@ -80,7 +81,6 @@
 
 .table_content thead {
     color: black;
-
     z-index: 0;
     top: 0;
 }

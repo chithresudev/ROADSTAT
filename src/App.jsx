@@ -10,7 +10,6 @@ import { PrivateRoute } from '@/_components';
 import { AdminPage } from '@/AdminPage';
 import { LoginPage } from '@/LoginPage';
 import { SignUpPage } from '@/SignUpPage';
-import Sidebar from './Sidebar/sidebar';
 import Header from './Header/header';
 import Profile from '@/ProfilePage/profile';
 import HomePage from '@/HomePage/Home';
@@ -54,7 +53,6 @@ function App() {
             <div className='app_bg'>
                 <div className='top_page'>
                     {currentUser && <Header currentUser={currentUser} logout={logout} headerContent={headerContent} activeButtonC={activeButtonC}/>}
-                    {/* {currentUser && <Sidebar isAdmin={isAdmin} logout={logout} activeButtonC={activeButtonC}/>} */}
                 </div>
                 
                 <div className="jumbotrons">
