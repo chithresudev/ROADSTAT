@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import './efficiency.css';
 
 function Efficiency({ updateHeader, updateButton }) {
+    const [activeButton, setActiveButton] = useState('Efficiency');
     const [selectedTruckNo, setSelectedTruckNo] = useState(null);
     const [truckData, setTruckData] = useState([]);
 
@@ -14,8 +16,8 @@ function Efficiency({ updateHeader, updateButton }) {
     }, [truckData]);
 
     useEffect(() => {
-        updateHeader('Truck Control / Efficiency');
-        updateButton('Efficiency');
+        updateHeader('Truck Control/Efficiency');
+        updateButton('Vehicle Control');
     }, [updateHeader, updateButton]);
 
     const handleButtonClick = (button) => {
@@ -23,17 +25,17 @@ function Efficiency({ updateHeader, updateButton }) {
     }
 
     return (
-        <div className='usage_page'>
+        <div className='efficiency_page'>
             <div className='vehicle_cards_bar'>
                 <div className='vehicle_cards_text'>
-                    <Link to="/truckcontrol/usage" className=" vehicle_link {activeButton === 'Usage' ? 'active' : ''}"
+                    <Link to="/truckcontrol/usage" className="vehicle_link {activeButton === 'Usage' ? 'active' : ''}"
                         onClick={() => handleButtonClick('Usage')}>
                         Usage
                     </Link>
                 </div>
                 <hr></hr>
                 <div className='vehicle_cards_text'>
-                    <div className="vehicle_link {activeButton === 'Efficiency' ? 'active' : ''}"
+                    <div className={activeButton === 'Efficiency' ? 'active' : ''}
                         onClick={() => handleButtonClick('Efficiency')}>
                         Efficiency
                     </div>

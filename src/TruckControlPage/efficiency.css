@@ -1,0 +1,42 @@
+.efficiency_page {
+    top: 20%;
+    height: 80%;
+    position: absolute;
+    width: 100%;
+    /* background-color: beige; */
+}
+
+.vehicle_cards_bar {
+    position: absolute;
+    padding-top: 6%;
+    left: 3%;
+    right: 83%;
+    align-items: center;
+}
+
+.vehicle_cards_text {
+    padding-top: 20%;
+    text-align: center;
+    padding-bottom: 20%;
+    justify-content: center;
+    font-family: 'Judson';
+    font-style: normal;
+    font-size: 48px;
+    display: flex;
+    color: white;
+}
+
+.vehicle_cards_text :hover {
+    cursor: pointer;
+}
+
+.vehicle_cards_text div.active {
+    font-size: 60px;
+    -webkit-text-fill-color: white;
+    -webkit-text-stroke-width: 2.00px;
+}
+
+.vehicle_link {
+    text-decoration: none;
+    color: white;
+}
