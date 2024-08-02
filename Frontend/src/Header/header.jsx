@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect  } from 'react';
+import { useState, useEffect  } from 'react';
 import '../Header/header.css';
 import { Link, useLocation} from 'react-router-dom';
 
@@ -23,8 +23,14 @@ function Header({ currentUser, logout, headerContent}) {
         } else if (query === 'track') {
             setCurrentPath('/track');
         }
-        else if (query === 'track') {
-            setCurrentPath('/track');
+        else if (query === 'driver') {
+            setCurrentPath('/driver');
+        }
+        else if (query === 'efficiency') {
+            setCurrentPath('/efficiency');
+        }
+        else if (query === 'usage') {
+            setCurrentPath('/usage');
         }
         else if (query === 'brake') {
             setCurrentPath('/maintenance');
