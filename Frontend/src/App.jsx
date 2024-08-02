@@ -1,44 +1,34 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import './App.css'
-// import React from 'react';
-// import { Router, Route, Link } from 'react-router-dom';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-
+import { Routes, Route } from 'react-router-dom';
 import { history, Role } from '../../Backend/src/_helpers';
-import { authenticationService } from '../../Backend/src/_services';
-import { PrivateRoute } from '@/_components';
-import { AdminPage } from '@/AdminPage';
-import { LoginPage } from '@/LoginPage';
-import { SignUpPage } from '@/SignUpPage';
+import { useAuth } from './context/authContext';
+import PrivateRoute from './_components/PrivateRoute'
+import AdminPage from './AdminPage/AdminPage';
+import LoginPage from './LoginPage/LoginPage';
+import SignUpPage from './SignUpPage/SignUpPage';
 import Sidebar from './Sidebar/sidebar';
 import Header from './Header/header';
-import Profile from '@/ProfilePage/profile';
-import HomePage from '@/HomePage/Home';
-import TrackPage from '@/TrackPage/Track';
-import TruckUsage from '@/TruckControlPage/Usage';
-import TruckEfficiency from '@/TruckControlPage/Efficiency';
-import Maintenance from '@/MaintenancePage/Maintenance';
-import Driver from '@/DriverPage/Driver';
+import Profile from './ProfilePage/profile';
+import HomePage from './HomePage/Home';
+import TrackPage from './TrackPage/Track';
+import EfficiencyPage from './TruckControlPage/Efficiency';
+import MaintenancePage from './MaintenancePage/Maintenance';
+import DriverPage from './DriverPage/Driver';
+import UsagePage from './TruckControlPage/Usage';
+
 
 function App() {
-  const [currentUser, setCurrentUser] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [headerContent, setHeaderContent] = useState('Home');
-  const [activeButtonC, setActiveButtonC] = useState('Home');
+    const { user, logout } = useAuth();
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [headerContent, setHeaderContent] = useState('Home');
+    const [activeButtonC, setActiveButtonC] = useState('Home');
 
     useEffect(() => {
-        const subscription = authenticationService.currentUser.subscribe(user => {
-            setCurrentUser(user);
-            setIsAdmin(user && user.role === Role.Admin);
-        });
-        
-        return () => subscription.unsubscribe();
-    }, []);
-
-    const logout = () => {
-        authenticationService.logout();
-        history.push('/login');
-    };
+        if (user) {
+            setIsAdmin(user.role === Role.Admin);
+        }
+    }, [user]);
 
     const updateHeader = (content) => {
         setHeaderContent(content);
@@ -49,42 +39,61 @@ function App() {
     };
 
   return (
-
-    <Router history={history}>
+        // <Router history={history}>
             <div>
-            {currentUser && <Header currentUser={currentUser} logout={logout} headerContent={headerContent}/>}
-            {currentUser && <Sidebar isAdmin={isAdmin} logout={logout} activeButtonC={activeButtonC}/>}
+            {user && <Header currentUser={user} logout={logout} headerContent={headerContent}/>}
+            {user && <Sidebar isAdmin={isAdmin} logout={logout} activeButtonC={activeButtonC}/>}
                 <div className="jumbotrons">
                     <div className="container">
                         <div className="row">
                             <div className="col-md-6 offset-md-3">
-                                <PrivateRoute path="/" element={<HomePage updateHeader={updateHeader} updateButton={updateButton}/>} />
-                                <PrivateRoute path="/admin" element={<AdminPage updateHeader={updateHeader} updateButton={updateButton}/>} roles={[Role.Admin]}/>
-                                <PrivateRoute path="/profile" element={<Profile updateHeader={updateHeader} updateButton={updateButton}/>} />
-                                <PrivateRoute path="/home" element={<HomePage updateHeader={updateHeader} updateButton={updateButton}/>} />
-                                <PrivateRoute path="/track" element={<TrackPage updateHeader={updateHeader} updateButton={updateButton}/>} />
-                                <PrivateRoute path="/truckcontrol/usage" element={<TruckUsage updateHeader={updateHeader} updateButton={updateButton}/>} />
-                                <PrivateRoute path="/truckcontrol/efficiency" element={<TruckEfficiency updateHeader={updateHeader} updateButton={updateButton}/>} />
-                                <PrivateRoute path="/maintenance" element={<Maintenance updateHeader={updateHeader} updateButton={updateButton}/>} />
-                                <PrivateRoute path="/driver" element={<Driver updateHeader={updateHeader} updateButton={updateButton}/>} />
                                 <Routes>
-                                    {/* <Route path="/" element={<HomePage updateHeader={updateHeader} updateButton={updateButton}/> } /> */}
-                                    <Route path="/login" element={<LoginPage updateHeader={updateHeader} updateButton={updateButton}/>}/>
-                                    <Route path="/signup" element={<SignUpPage updateHeader={updateHeader} updateButton={updateButton}/>}/>
-                                    {/* <Route path="/profile" element={<Profile updateHeader={updateHeader} updateButton={updateButton}/>} />
-                                    <Route path="/home" element={<HomePage updateHeader={updateHeader} updateButton={updateButton}/>} />
-                                    <Route path="/track" element={<TrackPage updateHeader={updateHeader} updateButton={updateButton}/>} />
-                                    <Route path="/truckcontrol/usage" element={<TruckUsage updateHeader={updateHeader} updateButton={updateButton}/>} />
-                                    <Route path="/truckcontrol/efficiency" element={<TruckEfficiency updateHeader={updateHeader} updateButton={updateButton}/>} />
-                                    <Route path="/maintenance" element={<Maintenance updateHeader={updateHeader} updateButton={updateButton}/>} />
-                                    <Route path="/driver" element={<Driver updateHeader={updateHeader} updateButton={updateButton}/>} /> */}
+                                    <Route path="/login" element={<LoginPage />} />
+                                    <Route path="/signup" element={<SignUpPage />} />
+                                    <Route 
+                                        path="/" 
+                                        element={<PrivateRoute element={HomePage} updateHeader={updateHeader} updateButton={updateButton} />}
+                                        />
+                                    <Route 
+                                        path="/home" 
+                                        element={<PrivateRoute element={HomePage} updateHeader={updateHeader} updateButton={updateButton} />}
+                                        />
+                                    <Route
+                                        path="/admin"
+                                        element={<PrivateRoute element={AdminPage} roles={[Role.Admin]} updateHeader={updateHeader} updateButton={updateButton} />}
+                                    />
+                                    <Route
+                                        path="/profile"
+                                        element={<PrivateRoute element={Profile} updateHeader={updateHeader} updateButton={updateButton} />}
+                                    />
+                                    <Route
+                                        path="/track"
+                                        element={<PrivateRoute element={TrackPage} updateHeader={updateHeader} updateButton={updateButton} />}
+                                    />
+                                    <Route
+                                        path="/truckcontrol/usage"
+                                        element={<PrivateRoute element={UsagePage} updateHeader={updateHeader} updateButton={updateButton} />}
+                                    />
+                                    <Route
+                                        path="/truckcontrol/efficiency"
+                                        element={<PrivateRoute element={EfficiencyPage} updateHeader={updateHeader} updateButton={updateButton} />}
+                                    />
+                                    <Route
+                                        path="/maintenance"
+                                        element={<PrivateRoute element={MaintenancePage} updateHeader={updateHeader} updateButton={updateButton} />}
+                                    />
+                                    <Route
+                                        path="/driver"
+                                        element={<PrivateRoute element={DriverPage} updateHeader={updateHeader} updateButton={updateButton} />}
+                                    />
+                                    <Route path="*" element={<div>404 Not Found</div>} />
                                 </Routes>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </Router>
+        // </Router>
   )
 }
 

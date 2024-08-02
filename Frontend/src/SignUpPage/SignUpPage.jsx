@@ -58,4 +58,4 @@ function SignUpPage() {
     </div>);
 }
 
-export { SignUpPage };
+export default SignUpPage;

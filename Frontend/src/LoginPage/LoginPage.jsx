@@ -1,36 +1,43 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate, Link } from 'react-router-dom';
-import { authenticationService } from '../../../Backend/src/_services';
+import { useAuth } from '../context/authContext';
+//import { authenticationService } from '../../../Backend/src/_services';
 import './loginPage.css';
 
 function LoginPage() {
     const navigate = useNavigate();
-    const [initialValues, setInitialValues] = useState({
+    const { user, login, message, clearMessage } = useAuth();
+    const initialValues = {
         username: '',
         password: ''
-    });
+    };
 
     useEffect(() => {
-        if (authenticationService.currentUserValue) {
+        if (user) {
             navigate('/');
         }
-    }, [navigate]);
+    }, [user, navigate]);
 
-    const onSubmit = ({ username, password }, { setStatus, setSubmitting }) => {
-        setStatus();
-        authenticationService.login(username, password)
-            .then(
-                user => {
-                    const { from } = navigate.location?.state?.from || { from: { pathname: "/" } };
-                    navigate(from);
-                },
-                error => {
-                    setSubmitting(false);
-                    setStatus(error);
-                }
-            );
+    useEffect(() => {
+        if (message.text) {
+            // Optionally show or handle message text
+            clearMessage();
+        }
+    }, [message, clearMessage]);
+
+    const onSubmit = async ({ username, password }, { setStatus, setSubmitting }) => {
+        setStatus(null);
+        try{
+            await login(username, password);
+            const { from } = navigate.location?.state?.from || { from: { pathname: "/" } };
+            navigate(from);
+        }
+        catch(error) {
+            setSubmitting(false);
+            setStatus(error);
+        }
     };
 
     return (
@@ -84,4 +91,4 @@ function LoginPage() {
     );
 }
 
-export { LoginPage };
+export default LoginPage;
