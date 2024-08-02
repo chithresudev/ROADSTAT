@@ -3,16 +3,32 @@ import { BiSolidHide, BiSolidShow } from "react-icons/bi";
 import { AiOutlineClose } from 'react-icons/ai';
 import './signUpPage.css';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from "../context/authContext";
 
 
 function SignUpPage() {
+    const { user, register, message, setVerificationEmail } = useAuth();
     const navigate = useNavigate();
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [showPass, setShowPass] = useState(false);
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // setIsSubmitted(true);
+        const firstName = event.target[0].value;
+        const lastName = event.target[1].value;
+        const email = event.target[2].value;
+        const phoneNumber = event.target[3].value;
+        const password = event.target[4].value;
+        const userType = event.target[5].value;
+        try {
+            register(firstName, lastName, email, password, email, userType, phoneNumber);
+            setIsSubmitted(true);
+            setVerificationEmail(email);
+        }
+        catch (error) {
+            setSubmitted(false);
+            setStatus(error);
+        }
     }
 
     const handleClose = () => {
@@ -53,7 +69,7 @@ function SignUpPage() {
                 </div>
                 <button type="submit" className="create_btn">Create Account</button>
             </form>
-            {isSubmitted && <p class="success_message">Account created Successfully! Please go back to login Page</p>}
+            {isSubmitted && <p className="success_message">{message.text}</p>}
         </div>
     </div>);
 }

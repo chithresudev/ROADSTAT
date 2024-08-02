@@ -30,7 +30,7 @@ function LoginPage() {
     const onSubmit = async ({ username, password }, { setStatus, setSubmitting }) => {
         setStatus(null);
         try{
-            await login(username, password);
+            login(username, password);
             const { from } = navigate.location?.state?.from || { from: { pathname: "/" } };
             navigate(from);
         }

@@ -7,6 +7,7 @@ import PrivateRoute from './_components/PrivateRoute'
 import AdminPage from './AdminPage/AdminPage';
 import LoginPage from './LoginPage/LoginPage';
 import SignUpPage from './SignUpPage/SignUpPage';
+import VerifyPage from './SignUpPage/VerifyPage';
 import Sidebar from './Sidebar/sidebar';
 import Header from './Header/header';
 import Profile from './ProfilePage/profile';
@@ -50,6 +51,7 @@ function App() {
                                 <Routes>
                                     <Route path="/login" element={<LoginPage />} />
                                     <Route path="/signup" element={<SignUpPage />} />
+                                    <Route path="/verify" element={<VerifyPage />} />
                                     <Route 
                                         path="/" 
                                         element={<PrivateRoute element={HomePage} updateHeader={updateHeader} updateButton={updateButton} />}

@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
         children: PropTypes.node.isRequired,
     };
     const [user, setUser] = useState(null);
+    const [currentEmail, setCurrentEmail] = useState('');
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState({ text: null, type: null });
     const navigate = useNavigate();
@@ -50,7 +51,7 @@ export const AuthProvider = ({ children }) => {
             });
             const { message } = response.data;
             setMessage({ text: message, type: 'success' });
-            navigate('/verify-email');
+            navigate('/verify');
         } catch (error) {
             setMessage({ text: error.response.data.message || 'Registration failed', type: 'error' });
         }
@@ -62,9 +63,14 @@ export const AuthProvider = ({ children }) => {
             const { message } = response.data;
             setMessage({ text: message, type: 'success' });
             navigate('/login');
+            setCurrentEmail('');
         } catch (error) {
             setMessage({ text: error.response.data.message || 'Email verification failed', type: 'error' });
         }
+    };
+
+    const setVerificationEmail = (email) => {
+        setCurrentEmail(email);
     };
 
     const logout = () => {
@@ -79,7 +85,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, loading, message, login, register, verifyEmail, logout, clearMessage }}>
+        <AuthContext.Provider value={{ user, loading, currentEmail, message, login, register, verifyEmail, logout, clearMessage, setVerificationEmail }}>
             {children}
         </AuthContext.Provider>
     );
