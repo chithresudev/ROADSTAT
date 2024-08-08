@@ -1,95 +1,85 @@
-/* html, body {
-    height: 100%;
-    margin: 0;
-}
-
-body {
-    background-color: #EFF3F6;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    overflow-y: auto;
-} */
-
 .login_bg {
     background: #FFFFFF;
-    position: fixed;
-    top: 0;
-    left: 0;
+    position: absolute;
+    top: 0px;
+    left: 0px;
     width: 100%;
-    min-height: 100vh;
-    background-image: url(/images/road.png);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    background-position:  0px 130px;
+    height: 100%;
     overflow-y: auto;
+}
+
+.logos {
+    height: 20%;
 }
 
 .company_logo {
-    width: 350px;
-    height: 100px;
-    position: absolute;
-    right: 2%;
-    top: 2%;
+    width: 24%;
+    height: 70%;
+    float: right;
+    padding-right: 2%;
+    margin-top: 2%;
 }
 
 .road_logo {
-    width: 320px;
-    height: 90px;
-    position: absolute;
-    left: 2%;
-    top: 2%;
+    width: 22%;
+    height: 70%;
+    float: left;
+    padding-left: 2%;
+    margin-top: 2%;
+}
+
+.half_login {
+    background-image: url(/images/road.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 0 0;
+    top: 0;
+    width: 100%;
+    height: 80%;
 }
 
 .login_page {
+    position: absolute;
     border: 1px solid #8B8B8B;
-    position: fixed;
-    width: 400px;
-    max-height: 80vh;
-    overflow-y: auto;
-    transform: translateX(-50%);
-    left: 50%;
-    padding: 40px;
-    top: 54%;
-    transform: translate(-50%, -50%);
+    width: 24%;
+    max-height: 80%;
+    margin: 5% auto;
+    padding: 0px 10px;
     background: #D9D9D9;
     mix-blend-mode: hard-light;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
     border-radius: 30px;
-    z-index: 2; 
+    z-index: 2;
+    left:38%;
+ 
 }
 
 .login {
-    position: absolute;
-    width: 120px;
+    width: 100%;
     font-family: 'Judson';
     font-style: normal;
     font-weight: 100;
     font-size: 50px;
-    line-height: 78px;
     color: #000000;
     text-align: center;
-    top: -45px;
-    left: 50%;
-    transform: translateX(-50%);
 }
+
 
 .text_bar {
     font-family: 'Judson';
     font-style: normal;
     width: 70%;
-    height: 55px;
+    height: 29%;
     font-size: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: #000000;
-    margin: 30px 0px;
+    margin: 8% 15%;
     border: 10px;
     border-bottom: 1px solid #000000;
-    padding: 10px 0px;
+    padding: 15px 0px;
     box-sizing: border-box;
-    transition: color 0.3s;
     background-color: transparent;
 }
 
@@ -108,13 +98,17 @@ input:focus {
     color: red;
     font-size: small;
     display: block;
+    margin: 8% 15%;
     font-family: 'Judson';
     font-style: normal;
     font-size: 18px;
 }
 
 .alert {
-    padding: 8px 18px;
+    margin: 8% 15%;
+    font-family: 'Judson';
+    font-style: normal;
+    font-size: 18px;
     border-radius: 4px;
     margin-bottom: 20px;
     background-color: red;
@@ -123,10 +117,11 @@ input:focus {
 
 .login_btn {
     width: 70%;
-    height: 40px;
-    margin: 20px 0;
+    align-items: center;
+    margin: 2% 15%;
     padding: 10px 0;
     cursor: pointer;
+    color: #FFFFFF;
     background: #1B08F9;
     border-radius: 11px;
     border: none;
@@ -138,11 +133,11 @@ input:focus {
 .signup {
     font-family: 'Judson';
     width: 100%;
-    height: 55px;
+    margin: 2%;
+    text-align: center;
     font-size: 20px;
     color: #000000;
-    margin: 10px 0px;
-    padding: 10px 0px;
+    padding: 12px 0px;
 }
 
 .login_btn:hover {
@@ -150,24 +145,9 @@ input:focus {
 }
 
 .alert_danger {
+    padding: 10px 0px;
+    text-align: center;
     color: #f20b0b;
     font-size: 18px;
     font-family: 'Judson';
-}   
-
-@media (max-width: 700px) {
-    .login_page {
-        width: 50%;
-        max-height: 80vh;
-        padding: 20px;
-    }
-
-    .text_bar {
-        width: 70%;
-    }
-
-    .login {
-        font-size: 35px;
-        top: -50px;
-    }
 }

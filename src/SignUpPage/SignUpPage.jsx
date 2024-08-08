@@ -34,9 +34,10 @@ function SignUpPage() {
                 <input type="number" className="signUp_text" placeholder="Phone Number" />
                 <div className="password_container">
                     <input type={showPass ? "text" : "password"} id="pwd" className="signUp_text" placeholder="Password" />
-                </div>
-                {showPass ? (<BiSolidShow className="pass_icon" onClick={togglePasswordVisibility} />) :
+                    {showPass ? (<BiSolidShow className="pass_icon" onClick={togglePasswordVisibility} />) :
                     (<BiSolidHide className="pass_icon" onClick={togglePasswordVisibility} />)}
+                </div>
+                
                 <select name="userType" className="signUp_text">
                     <option value="" selected disabled>User Type</option>
                     <option value="Individual" >Individual</option>

@@ -52,7 +52,7 @@ function App() {
     <Router history={history}>
             <div className='app_bg'>
                 <div className='top_page'>
-                    {currentUser && <Header currentUser={currentUser} logout={logout} headerContent={headerContent} activeButtonC={activeButtonC}/>}
+                    {currentUser && <Header currentUser={currentUser} logout={logout} activeButtonC={activeButtonC}/>}
                 </div>
                 
                 <div className="jumbotrons">

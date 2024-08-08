@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import '../Header/header.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-function Header({ currentUser, logout, headerContent, activeButtonC }) {
+function Header({ currentUser, logout, activeButtonC }) {
     const navigate = useNavigate();
-    // const [activeButton, setActiveButton] = useState('Home');
     const [popupVisible, setPopupVisible] = useState(false);
     const popupRef = useRef(null);
 
@@ -81,7 +80,7 @@ function Header({ currentUser, logout, headerContent, activeButtonC }) {
                         className={activeButtonC === 'Vehicle Control' ? 'active' : ''}
                         onClick={() => handleButtonClick('Vehicle Control')}
                     >
-                        Vehicle Control
+                        Assets Control
                     </div>
                     <div
                         className={activeButtonC === 'Maintenance' ? 'active' : ''}
@@ -97,9 +96,8 @@ function Header({ currentUser, logout, headerContent, activeButtonC }) {
                     </div>
                 </div>
             </div>
+            <div className='half_bg'></div>
         </header>
-
-
     );
 
 }

@@ -35,52 +35,57 @@ function LoginPage() {
 
     return (
         <div className='login_bg'>
-            <div>
+            <div className='logos'>
                 <img src="/images/companyLogo.png" alt="Logo" className="company_logo" />
                 <img src="/images/roadstatLogo.png" alt="Logo" className="road_logo" />
             </div>
-            <div className='login_page'>
-                <h2 className='login'>Login</h2>
-                <Formik
-                    initialValues={initialValues}
-                    validationSchema={Yup.object().shape({
-                        username: Yup.string().required('Username is required'),
-                        password: Yup.string().required('Password is required')
-                    })}
-                    onSubmit={onSubmit}>
+            <div className='half_login'>
+                <div className='login_page'>
+                    <h2 className='login'>Login</h2>
+                    <Formik
+                        initialValues={initialValues}
+                        validationSchema={Yup.object().shape({
+                            username: Yup.string().required('Username is required'),
+                            password: Yup.string().required('Password is required')
+                        })}
+                        onSubmit={onSubmit}>
 
-                    {({ errors, status, touched, isSubmitting }) => (
-                        <Form>
-                            <div>
-                                <Field type="text" name="username" className={'text_bar' + (errors.username && touched.username ? ' is-invalid' : '')} placeholder="Username" />
-                                <div className="error_message">
-                                    <ErrorMessage name="username" />
+                        {({ errors, status, touched, isSubmitting }) => (
+                            <Form>
+                                <div className='login_forms'>
+                                    <Field type="text" name="username" className={'text_bar' + (errors.username && touched.username ? ' is-invalid' : '')} placeholder="Username" />
+                                    <div className="error_message">
+                                        <ErrorMessage name="username" />
+                                    </div>
                                 </div>
-                            </div>
-
-                            <Field type='password' name="password" className={'text_bar' + (errors.password && touched.password ? ' is-invalid' : '')} placeholder="Password" />
-                            <div className="error_message">
-                                <ErrorMessage name="password" />
-                            </div>
-                            <div>
-                                <button type="submit" className="login_btn" disabled={isSubmitting}>Login</button>
-                                {isSubmitting &&
-                                    <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                                <div className='login_forms'>
+                                    <Field type='password' name="password" className={'text_bar' + (errors.password && touched.password ? ' is-invalid' : '')} placeholder="Password" />
+                                    <div className="error_message">
+                                        <ErrorMessage name="password" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <button type="submit" className="login_btn" disabled={isSubmitting}>Login</button>
+                                    {isSubmitting &&
+                                        <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                                    }
+                                </div>
+                                {status &&
+                                    <div className="alert_danger">{status}</div>
                                 }
-                            </div>
-                            {status &&
-                                <div className="alert_danger">{status}</div>
-                            }
-                            <div>
-                                <p className='signup'>Don't have an account? <Link to="/signup">Sign up</Link></p>
-                            </div>
+                                <div>
+                                    <p className='signup'>Don't have an account? <Link to="/signup">Sign up</Link></p>
+                                </div>
 
-                        </Form>
-                    )}
+                            </Form>
+                        )}
 
-                </Formik>
+                    </Formik>
+                </div>
             </div>
         </div>
+
+        // replace vehicle with asset
     );
 }
 

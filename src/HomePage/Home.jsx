@@ -10,7 +10,7 @@ function HomePage({ updateHeader, updateButton }) {
     const [weather, setWeather] = useState('');
     const [weatherIcon, setWeatherIcon] = useState('');
     const [truckData, setTruckData] = useState([]);
-    const [activeButton, setActiveButton] = useState('Vehicles');
+    const [activeButton, setActiveButton] = useState('Assets');
     const [truckLocations, setTruckLocations] = useState([]);
     const [filteredTruckData, setFilteredTruckData] = useState([]);
     const [selectedTruckNo, setSelectedTruckNo] = useState(null);
@@ -180,9 +180,9 @@ function HomePage({ updateHeader, updateButton }) {
 
             <div className='cards_bar'>
                 <div className='cards_text'>
-                    <div className={activeButton === 'Vehicles' ? 'active' : ''}
-                        onClick={() => handleButtonClick('Vehicles')}>
-                        Vehicles
+                    <div className={activeButton === 'Assets' ? 'active' : ''}
+                        onClick={() => handleButtonClick('Assets')}>
+                        Assets
                     </div>
                 </div>
                 <hr></hr>
@@ -200,7 +200,7 @@ function HomePage({ updateHeader, updateButton }) {
                     </div>
                 </div>
             </div >
-            {activeButton === 'Vehicles' && (
+            {activeButton === 'Assets' && (
                 <div className='card_details'>
                     <table className='table_content'>
                         <thead>

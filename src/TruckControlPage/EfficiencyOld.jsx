@@ -75,14 +75,14 @@ function EfficiencyPage({ updateHeader, updateButton }) {
             console.error('Error fetching truck control data:', error);
         }
     };
-    
+
 
     const handleTruckClick = async (index, truckId) => {
         setSelectedRowIndex(index);
         setSelectedTruckNo(truckId);
         fetchTruckControlData(truckId);
     };
-    
+
 
     const handleAlertButtonClick = () => {
         setPopupVisible(true);
@@ -110,16 +110,17 @@ function EfficiencyPage({ updateHeader, updateButton }) {
                     </thead>
                     <tbody>
                         {sortedTruckData.map((truck, index) => (
-                            
+
                             <tr key={index} className={selectedRowIndex === index ? 'selected-row' : ''} onClick={() => handleTruckClick(index, truck.truckId)}>
                                 <td>{index + 1}</td>
                                 <td>{truck.truckId}</td>
                                 <td><Link to={`/maintenance?truckNo=${truck.truckId}`} className='click'>Click Here</Link></td>
                                 <td>{truck.level}</td>
-                                <td style={{ color: 
-                                    truck.status === 'Good' ? 'yellow' :
-                                    truck.status === 'Fair' ? 'orange' :
-                                    truck.status === 'Excellent' ? 'green' : 'black'
+                                <td style={{
+                                    color:
+                                        truck.status === 'Good' ? 'yellow' :
+                                            truck.status === 'Fair' ? 'orange' :
+                                                truck.status === 'Excellent' ? 'green' : 'black'
                                 }}>
                                     {truck.status}
                                 </td>
@@ -151,7 +152,7 @@ function EfficiencyPage({ updateHeader, updateButton }) {
                             <Link to="#" className='click'>Click here for More</Link>
                         </div>
                         <div className='r-details'>
-                            <span className='maint'>Mark for Maintenance 
+                            <span className='maint'>Mark for Maintenance
                                 <label className="switch">
                                     <input type="checkbox" />
                                     <span className="slider round"></span>
@@ -164,8 +165,8 @@ function EfficiencyPage({ updateHeader, updateButton }) {
                 <div className='t-mainprofile'>
                     <div className="t-content">
                         <span className='tv'>Threshold Values</span>
-                            <div className='t-access'>
-                                <div className='t-details'>
+                        <div className='t-access'>
+                            <div className='t-details'>
                                 <div className='table-container'>
                                     <table className='t-table'>
                                         <tbody>
@@ -186,21 +187,21 @@ function EfficiencyPage({ updateHeader, updateButton }) {
                                                 <td>Fuel Pressure</td>
                                                 <td>30 - 80 PSI</td>
                                             </tr>
-                                            
+
                                             <tr>
                                                 <td>Engine Temperature</td>
                                                 <td>195°F to 220°F</td>
-                                            </tr> 
-                                            
+                                            </tr>
+
                                             <tr>
                                                 <td>Intake Air</td>
                                                 <td>-40°F to 212°F</td>
-                                            </tr>  
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
-                                </div>
                             </div>
+                        </div>
                     </div>
                 </div>
             </div>

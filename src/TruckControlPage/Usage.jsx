@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import './Usage.css';
+import './usage.css';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 function UsagePage({ updateHeader, updateButton }) {
 
     const [activeButton, setActiveButton] = useState('Usage');
-    const [toggledButtonName, setToggledButtonName] = useState("Truck Information");
+    const [toggledButtonName, setToggledButtonName] = useState("Asset Information");
     const [truckData, setTruckData] = useState([]);
     const [selectedTruckNo, setSelectedTruckNo] = useState(null);
     const [tirePressure, setTirePressure] = useState(null);
@@ -85,6 +85,7 @@ function UsagePage({ updateHeader, updateButton }) {
         const popupY = iconRect.top + window.pageYOffset; // Adjust as needed
         setShowPopup(true);
         setPopupContent(description);
+        // setPopupPosition({ x: popupX, y: popupY });
         setPopupPosition({
             top: `${event.clientY}px`,
             left: `${event.clientX}px`,
@@ -161,11 +162,11 @@ function UsagePage({ updateHeader, updateButton }) {
             {activeButton === "Usage" && (
                 <div className='usage_details'>
                     <div className='u_topcards'>
-                        <div className={`u_scard ${toggledButtonName === "Truck Information" ? 'active' : ''}`}>
-                            <button className='u_scard_button' onClick={() => toggleButton("Truck Information")}>
+                        <div className={`u_scard ${toggledButtonName === "Asset Information" ? 'active' : ''}`}>
+                            <button className='u_scard_button' onClick={() => toggleButton("Asset Information")}>
                                 <Link className='u_scard_link'>
                                     <img src="/images/trin.png" alt="Home" className="u_scard_icon" />
-                                    <span className="u_scard_text">Truck Information</span>
+                                    <span className="u_scard_text">Asset Information</span>
                                 </Link>
                             </button>
                         </div>
@@ -179,7 +180,7 @@ function UsagePage({ updateHeader, updateButton }) {
                         </div>
                     </div>
 
-                    {toggledButtonName === "Truck Information" && (
+                    {toggledButtonName === "Asset Information" && (
                         <div className='u_card_details'>
                             <div className='u_truck_details'>
                                 <table className='u_table_content'>
