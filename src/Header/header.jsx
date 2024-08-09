@@ -80,7 +80,7 @@ function Header({ currentUser, logout, activeButtonC }) {
                         className={activeButtonC === 'Vehicle Control' ? 'active' : ''}
                         onClick={() => handleButtonClick('Vehicle Control')}
                     >
-                        Assets Control
+                        Asset Control
                     </div>
                     <div
                         className={activeButtonC === 'Maintenance' ? 'active' : ''}
