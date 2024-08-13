@@ -10,7 +10,7 @@ function LoginPage() {
     const navigate = useNavigate();
     const { user, login, message, clearMessage } = useAuth();
     const initialValues = {
-        username: '',
+        identifier: '', // Can be username or email
         password: ''
     };
 
@@ -27,10 +27,18 @@ function LoginPage() {
         }
     }, [message, clearMessage]);
 
-    const onSubmit = async ({ username, password }, { setStatus, setSubmitting }) => {
+    const onSubmit = async ({ identifier, password }, { setStatus, setSubmitting }) => {
         setStatus(null);
         try{
-            login(username, password);
+            const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(identifier);
+
+            // Dynamically construct payload
+            const payload = {
+                ...(isEmail ? { email: identifier } : { username: identifier }),
+                password
+            };
+
+            await login(payload);
             const { from } = navigate.location?.state?.from || { from: { pathname: "/" } };
             navigate(from);
         }
@@ -51,7 +59,7 @@ function LoginPage() {
                 <Formik
                     initialValues={initialValues}
                     validationSchema={Yup.object().shape({
-                        username: Yup.string().required('Username is required'),
+                        identifier: Yup.string().required('Username or Email is required'),
                         password: Yup.string().required('Password is required')
                     })}
                     onSubmit={onSubmit}>
@@ -59,13 +67,23 @@ function LoginPage() {
                     {({ errors, status, touched, isSubmitting }) => (
                         <Form>
                             <div>
-                                <Field type="text" name="username" className={'text_bar' + (errors.username && touched.username ? ' is-invalid' : '')} placeholder="Username" />
+                                <Field 
+                                    type="text" 
+                                    name="identifier" 
+                                    className={'text_bar' + (errors.identifier && touched.identifier ? ' is-invalid' : '')} 
+                                    placeholder="Username or Email"
+                                />
                                 <div className="error_message">
-                                    <ErrorMessage name="username" />
+                                    <ErrorMessage name="identifier" />
                                 </div>
                             </div>
 
-                            <Field type='password' name="password" className={'text_bar' + (errors.password && touched.password ? ' is-invalid' : '')} placeholder="Password" />
+                            <Field 
+                                type='password' 
+                                name="password" 
+                                className={'text_bar' + (errors.password && touched.password ? ' is-invalid' : '')} 
+                                placeholder="Password"
+                            />
                             <div className="error_message">
                                 <ErrorMessage name="password" />
                             </div>

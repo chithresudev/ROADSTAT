@@ -30,9 +30,10 @@ export const AuthProvider = ({ children }) => {
         setLoading(false);
     }, []);
 
-    const login = async (username, password) => {
+    const login = async (credentials) => {
+        console.log(credentials);
         try {
-            const response = await axiosInstance.post('/auth/login', { username, password });
+            const response = await axiosInstance.post('/auth/login', credentials);
             const { token, message } = response.data;
             localStorage.setItem('token', token);
             const decoded = jwtDecode(token);
