@@ -5,7 +5,7 @@ FROM node:20.9.0
 WORKDIR /app
 COPY package.json ./
 # COPY --chown=app:node package*.json .
-RUN npm install --legacy-peer-deps
+RUN npm install
 # RUN mkdir node_modules/.cache && chmod -R 777 node_modules/.cache
 COPY . .
 EXPOSE 3000
