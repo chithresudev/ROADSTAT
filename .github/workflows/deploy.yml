@@ -19,10 +19,16 @@ jobs:
                 echo VITE_API_URL = ${{ secrets.BACKEND_API }} >> .env
                 echo VITE_GOOGLE_MAP_API=${{ secrets.GOOGLE_MAP_API_KEY }} >> .env
                 echo VITE_OPEN_WEATHER_API=${{ secrets.OPEN_WEATHER }} >> .env
+                echo JWT_SECRET=${{secrets.JWT_SECRET}} >> .env
+                echo EMAIL_USER=${{secrets.EMAIL_USER}} >> .env
+                echo EMAIL_PASSWORD=${{secrets.EMAIL_PASSWORD}} >> .env
+                echo SMTP_HOST= ${{secrets.SMTP_HOST}} >> .env
+                echo SMTP_PORT=465 >> .env
+                echo SMTP_SECURE=true >> .env
                 cat .env
             - name: Build
               run: |
-                npm install --legacy-peer-deps
+                npm install
             - uses: aws-actions/configure-aws-credentials@v4
               name: Configure aws credentials
               with:
