@@ -3,7 +3,7 @@ FROM node:20.9.0
 # USER app
 
 WORKDIR /app
-COPY package.json ./
+COPY . ./
 RUN ls
 # WORKDIR /app/Backend
 # COPY --chown=app:node package*.json .
