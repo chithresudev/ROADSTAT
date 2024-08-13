@@ -4,9 +4,14 @@ FROM node:20.9.0
 
 WORKDIR /app
 COPY package.json ./
+WORKDIR /app/Backend
 # COPY --chown=app:node package*.json .
 RUN npm install
 # RUN mkdir node_modules/.cache && chmod -R 777 node_modules/.cache
+WORKDIR /app/Frontend
+RUN npm install
+WORKDIR /app
+
 COPY . .
 EXPOSE 3000
 EXPOSE 5173
