@@ -46,9 +46,10 @@ function SignUpPage() {
             <form onSubmit={handleSubmit}>
                 <input type="text" className="signUp_text" placeholder="First Name" />
                 <input type="text" className="signUp_text" placeholder="Last Name" />
+                {/* <input type="text" className="signUp_text" placeholder="Username" /> */}
                 <input type="text" className="signUp_text" placeholder="Email Address" />
                 <input type="number" className="signUp_text" placeholder="Phone Number" />
-                <div classname="password_container">
+                <div className="password_container">
                     <input type={showPass ? "text" : "password"} id="pwd" className="signUp_text" placeholder="Password" />
                 </div>
                 {showPass ? (<BiSolidShow className="pass_icon" onClick={togglePasswordVisibility} />) :
