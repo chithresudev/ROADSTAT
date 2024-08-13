@@ -1,4 +1,4 @@
-import { TrailerLocation } from '../models/TrailerLocation.js'; // Import TrailerLocation model
+import { TrailerLocation } from '../Models/TrailerLocation.js'; // Import TrailerLocation model
 
 /**
  * GET route handler to fetch all trailer locations
