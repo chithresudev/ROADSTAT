@@ -28,6 +28,7 @@ jobs:
                 cat .env
                 sudo cp .env /Backend
                 sudo cp .env /Frontend
+                ls
                 ls Backend
                 ls Frontend
             - name: Build
