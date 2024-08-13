@@ -22,7 +22,7 @@ export default defineConfig({
     proxy: {
       // Proxy requests to your backend server
       '/api': {
-        target: 'http://localhost:5000/api', // Change this to backend server's URL
+        target: 'http://localhost:3000/api', // Change this to backend server's URL
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''), // Remove '/api' prefix
       },

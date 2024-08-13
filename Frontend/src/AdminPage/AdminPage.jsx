@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { userService } from '../../../Backend/src/_services';
 
 function AdminPage() {
@@ -28,4 +28,4 @@ function AdminPage() {
     );
 }
 
-export { AdminPage };
+export default AdminPage;
