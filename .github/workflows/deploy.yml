@@ -26,8 +26,8 @@ jobs:
                 echo SMTP_PORT=465 >> .env
                 echo SMTP_SECURE=true >> .env
                 cat .env
-                cp .env Backend
-                cp .env Frontend
+                cp .env /Backend
+                cp .env /Frontend
                 ls Backend
                 ls Frontend
             - name: Build
