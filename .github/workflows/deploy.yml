@@ -28,9 +28,9 @@ jobs:
                 cat .env
                 sudo cp .env /Backend
                 sudo cp .env /Frontend
-                ls
-                ls Backend
-                ls Frontend
+                ls -a
+                ls -a Backend
+                ls -a Frontend
             - name: Build
               run: |
                 npm install
