@@ -1,7 +1,7 @@
 name: Deploy to AWS
 on:
     push:
-        branches: header
+        branches: main
     pull_request:
 
 jobs:
@@ -36,12 +36,12 @@ jobs:
               run: |  
                 docker build -t roadstat .
             - name: Push Docker Image
-              if: github.ref == 'refs/heads/header'
+              if: github.ref == 'refs/heads/main'
               run: |
                 docker tag roadstat:latest ${{ secrets.ECR_PASS }}/${{ secrets.ECR_REPO }}:latest
                 docker push ${{ secrets.ECR_PASS }}/${{ secrets.ECR_REPO }}:latest
             - name: Deploy to AWS ECS
-              if: github.ref == 'refs/heads/header'
+              if: github.ref == 'refs/heads/main'
               run: |
                 aws ecs update-service --cluster ${{ secrets.ROADSTAT_CLUSTER_NAME }} --service ${{ secrets.ROADSTAT_SERVICE_NAME }} --force-new-deployment
 
