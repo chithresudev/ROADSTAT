@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "server": "cd Backend && nodemon server.js",
-    "client": "cd Frontend && npx vite",
+    "client": "cd Frontend && npx vite --host",
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "(cd Backend && npm install) && (cd Frontend && npm install)"
   },
