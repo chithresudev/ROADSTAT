@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Line } from 'react-chartjs-2';
-import './driver.css'
+import './Driver.css'
 import annotationPlugin from 'chartjs-plugin-annotation';
 import Chart from "chart.js/auto";
 import { LinearScale, TimeScale } from "chart.js";
@@ -12,9 +12,9 @@ Chart.register(annotationPlugin);
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
-function DriverPage({ updateHeader, updateButton, driverId }) {
-    const [popupVisible, setPopupVisible] = useState(false);
-
+function DriverPage({updateHeader, updateButton,driverId}) {
+    const [popupVisible, setPopupVisible] = useState(false); 
+    
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const driverNo = queryParams.get('driverId');
@@ -26,7 +26,7 @@ function DriverPage({ updateHeader, updateButton, driverId }) {
     const [bodyTemps, setBodyTemps] = useState([]);
     const [hydrationLevels, setHydrationLevels] = useState([]);
     const [stressLevels, setStressLevels] = useState([]);
-    const [selectedRowIndex, setSelectedRowIndex] = useState(0);
+    const [selectedRowIndex, setSelectedRowIndex] = useState(0); 
     const [selectedDriverId, setSelectedDriverId] = useState('');
     const [graphData, setGraphData] = useState([]);
     const [min, setMin] = useState(50);
@@ -84,7 +84,7 @@ function DriverPage({ updateHeader, updateButton, driverId }) {
         setSelectedDriverId(driverId);
         setSearchedDriverNo(null);
         fetchDriverHealthData(driverId);
-        setGraphData([]);
+        setGraphData([ ]);
         console.log(graphData);
     };
 
@@ -96,7 +96,7 @@ function DriverPage({ updateHeader, updateButton, driverId }) {
         }
     }, [drivers, selectedRowIndex]);
 
-    useEffect(() => {
+   useEffect(() => {
         setGraphData([]);
         setHeartRates([]);
         setFatigueLevels([]);
@@ -105,7 +105,7 @@ function DriverPage({ updateHeader, updateButton, driverId }) {
         setStressLevels([]);
         setAnnotation([]);
         setPrintedHealthData(null);
-
+    
         if (selectedDriverId) {
             fetchDriverHealthData(selectedDriverId);
         }
@@ -113,7 +113,8 @@ function DriverPage({ updateHeader, updateButton, driverId }) {
 
 
     const handleAlertButtonClick = () => {
-        setPopupVisible(true);
+        setPopupVisible(true); // Set popupVisible to true
+        // Fetch additional data or perform any necessary actions here
         const alertMessage = `Driver ID: ${selectedDriverId}`;
         alert(alertMessage);
     };
@@ -124,7 +125,7 @@ function DriverPage({ updateHeader, updateButton, driverId }) {
             if (!response.ok) {
                 throw new Error('Failed to fetch drivers data');
             }
-
+            
             const driversData = await response.json();
 
             let filteredDrivers = [...driversData];
@@ -155,7 +156,7 @@ function DriverPage({ updateHeader, updateButton, driverId }) {
                 throw new Error('Failed to fetch driver health');
             }
             const driverHealthData = await response.json();
-
+           
             setPrintedHealthData(driverHealthData); // Set the state with the fetched data
         } catch (error) {
             console.error('Error fetching driver health:', error);
@@ -163,7 +164,7 @@ function DriverPage({ updateHeader, updateButton, driverId }) {
     };
 
     const handleHeartRateClick = async () => {
-
+        
         setFlag(1)
         try {
             const response = await fetch(`${apiUrl}/driver-health/${selectedDriverId}`);
@@ -180,7 +181,7 @@ function DriverPage({ updateHeader, updateButton, driverId }) {
                 setMin(newMin > 50 ? 50 : newMin); // Ensure min is at least 50
                 setMax(newMax < 120 ? 120 : newMax); // Ensure max is at most 120
                 setStepSize(10);
-                setYLabel('Heart Rate');
+                setYLabel('Heart Rate');                
                 setAnnotation([
                     {
                         type: 'line',
@@ -208,8 +209,8 @@ function DriverPage({ updateHeader, updateButton, driverId }) {
                             position: 'right'
                         }
                     }
-                ])
-                return updatedHeartRates;
+                ])            
+                return updatedHeartRates;                
             });
         } catch (error) {
             console.error('Error fetching driver health:', error);
@@ -268,9 +269,9 @@ function DriverPage({ updateHeader, updateButton, driverId }) {
                         }
                     }
                 ])
-                return updatedFatigueLevels;
+                return updatedFatigueLevels;                
             });
-
+            
         } catch (error) {
             console.error('Error fetching driver health:', error);
         }
@@ -325,7 +326,7 @@ function DriverPage({ updateHeader, updateButton, driverId }) {
                             enabled: true,
                             position: 'right'
                         }
-                    }, {
+                    },{
                         type: 'line',
                         mode: 'horizontal',
                         scaleID: 'y',
@@ -339,7 +340,7 @@ function DriverPage({ updateHeader, updateButton, driverId }) {
                         }
                     }
                 ])
-                return updatedBodyTemps;
+                return updatedBodyTemps;                
             });
         } catch (error) {
             console.error('Error fetching driver health:', error);
@@ -397,12 +398,12 @@ function DriverPage({ updateHeader, updateButton, driverId }) {
                         }
                     }
                 ])
-                return updatedHydrationLevels;
+                return updatedHydrationLevels;                
             });
-
+            
         } catch (error) {
             console.error('Error fetching driver health:', error);
-        }
+        }        
     };
 
     const handleStressLevelClick = async () => {
@@ -456,7 +457,7 @@ function DriverPage({ updateHeader, updateButton, driverId }) {
                         }
                     }
                 ])
-                return updatedStressLevels;
+                return updatedStressLevels;                
             });
         } catch (error) {
             console.error('Error fetching driver health:', error);
@@ -530,7 +531,7 @@ function DriverPage({ updateHeader, updateButton, driverId }) {
                 return '-';
         }
     };
-
+    
     const getHydrationLevelDescription = (level) => {
         if (level >= 60 && level <= 65) {
             return 'Not hydrated';
@@ -542,7 +543,7 @@ function DriverPage({ updateHeader, updateButton, driverId }) {
             return '-';
         }
     };
-
+    
     const getStressLevelDescription = (level) => {
         switch (level) {
             case 1:
@@ -559,92 +560,93 @@ function DriverPage({ updateHeader, updateButton, driverId }) {
                 return '-';
         }
     };
+    
 
     return (
-        <div className='driver_page'>
-            <div className='driver_cards_bar'>
-                <div className='d_details'>
-                    <table className='d_table_content'>
-                        <thead>
-                            <tr>
-                                <th>S No</th>
-                                <th>Driver No</th>
-                                <th>Driver Name</th>
-                                <th>Known Health Issues</th>
-                                <th>Experience</th>
-                                <th>Status</th>
+        <div className='d-main'>
+            <div className='d-card'>
+                <table className='d-table'>
+                    <thead>
+                        <tr>
+                            <th>S No</th>
+                            <th>Driver No</th>
+                            <th>Driver Name</th>
+                            <th>Known Health Issues</th>
+                            <th>Experience</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {drivers.map((driver, index) => (
+                            <tr key={index} 
+                                className={selectedRowIndex === index ? 'selected' : ''}
+                                onClick={() => handleRowClick(index, driver.driverId)}
+                            >
+                                <td>{index + 1}</td>
+                                <td> {driver.driverId}</td>
+                                <td>{driver.driverName}</td>
+                                <td>{driver.knownHealthIssues}</td>
+                                <td>{driver.experience}</td>
+                                <td>{driver.status}</td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            {drivers.map((driver, index) => (
-                                <tr key={index}
-                                    className={selectedRowIndex === index ? 'selected' : ''}
-                                    onClick={() => handleRowClick(index, driver.driverId)}
-                                >
-                                    <td>{index + 1}</td>
-                                    <td> {driver.driverId}</td>
-                                    <td>{driver.driverName}</td>
-                                    <td>{driver.knownHealthIssues}</td>
-                                    <td>{driver.experience}</td>
-                                    <td>{driver.status}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-                <div className='d_below'>
-                    <div className='d_mainprofile'>
-                        <span className='d_health'>Health Parameters</span>
-                        <div className='d_access'>
-                            <table className='dr_table'>
-                                <tbody>
-                                    <tr>
-                                        <td className='hp_head'><span className='test'><img src="/images/hr.png" className="dh_icon" /><Link onClick={() => handleHeartRateClick()} className='dclick'>HEART RATE</Link></span></td>
-                                        <td className='hp_text'>{printedHealthData ? `${printedHealthData.heartRate} BPM` : '-'}</td>
-                                    </tr>
-                                    <tr>
-                                        <td className='hp_head'><span className='test'><img src="/images/fl.png" className="dh_icon" /><Link onClick={() => handleFatigueLevelClick()} className='dclick'>FATIGUE LEVEL</Link></span></td>
-                                        <td className='hp_text'>{printedHealthData ? getFatigueLevelDescription(printedHealthData.fatigueLevel) : '-'}</td>
-                                    </tr>
-                                    <tr>
-                                        <td className='hp_head'><span className='test'><img src="/images/bt.png" className="dh_icon" /><Link onClick={() => handleBodyTempClick()} className='dclick'>BODY TEMP</Link></span></td>
-                                        <td className='hp_text'> {printedHealthData ? `${printedHealthData.bodyTemp} F` : '-'}</td>
-                                    </tr>
-                                    <tr>
-                                        <td className='hp_head'><span className='test'><img src="/images/hl.png" className="dh_icon" /><Link onClick={() => handleHydrationLevelClick()} className='dclick'>HYDRATION LEVEL</Link></span></td>
-                                        <td className='hp_text'>{printedHealthData ? getHydrationLevelDescription(printedHealthData.hydrationLevel) : '-'}</td>
-                                    </tr>
-                                    <tr>
-                                        <td className='hp_head'><span className='test'><img src="/images/sl.png" className="dh_icon" /><Link onClick={() => handleStressLevelClick()} className='dclick'>STRESS LEVEL</Link></span></td>
-                                        <td className='hp_text'>{printedHealthData ? getStressLevelDescription(printedHealthData.stressLevel) : '-'}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                            <div className='driver_alert_btn'>
-                                <button className='driver_alert' onClick={handleAlertButtonClick}>Alert Driver !</button>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div className='graph_below'>
-                    <div className="dr2_content">
-                        <div className='dr2_access'>
-                            <div className='dr2_details'>
-                                <div className='dr2_table_containers'>
-                                    <Line ref={chartRef} data={data} options={options} />
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+            <div className='d-below'>
+            <div className='d-mainprofile'>
+                    <div className="d-content">
+                        <span className='d-tv'>Health Parameters</span>
+                            <div className='d-access'>
+                                <div className='d-details'>
+                                <div className='table-container'>
+                                    <table className='dr-table'>
+                                        <tbody>
+                                            <tr>
+                                                <td className='hp-head'><span className='test'><img src="/images/hr.png" className="dh-icon" /><Link onClick={() => handleHeartRateClick()} className='dclick'>HEART RATE</Link></span></td>
+                                                <td className='hp-text'>{printedHealthData ? `${printedHealthData.heartRate} BPM` : '-'}</td>
+                                            </tr>
+                                            <tr>
+                                                <td className='hp-head'><span className='test'><img src="/images/fl.png" className="dh-icon" /><Link onClick={() => handleFatigueLevelClick()}className='dclick'>FATIGUE LEVEL</Link></span></td>
+                                                <td className='hp-text'>{printedHealthData ? getFatigueLevelDescription(printedHealthData.fatigueLevel) : '-'}</td>
+                                            </tr>
+                                            <tr>
+                                                <td className='hp-head'><span className='test'><img src="/images/bt.png" className="dh-icon" /><Link onClick={() => handleBodyTempClick()} className='dclick'>BODY TEMP</Link></span></td>
+                                                <td className='hp-text'> {printedHealthData ? `${printedHealthData.bodyTemp} F` : '-'}</td>
+                                            </tr>
+                                            <tr>
+                                                <td className='hp-head'><span className='test'><img src="/images/hl.png" className="dh-icon" /><Link onClick={() => handleHydrationLevelClick()}className='dclick'>HYDRATION LEVEL</Link></span></td>
+                                                <td className='hp-text'>{printedHealthData ? getHydrationLevelDescription(printedHealthData.hydrationLevel) : '-'}</td>
+                                            </tr>
+                                            <tr>
+                                                <td className='hp-head'><span className='test'><img src="/images/sl.png" className="dh-icon" /><Link onClick={() => handleStressLevelClick()} className='dclick'>STRESS LEVEL</Link></span></td>
+                                                <td className='hp-text'>{printedHealthData ? getStressLevelDescription(printedHealthData.stressLevel) : '-'}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                </div>
+                                <div className='dtr-details'>
+                                    <button className='dtr-map' onClick={handleAlertButtonClick}>Alert Driver !</button>
                                 </div>
                             </div>
+                    </div>
+                    
+                </div>
+                <div className='dr2-mainprofile'>
+                    <div className="dr2-content">
+                        <div className='dr2-access'>
+                            <div className='dr2-details'>
+                            <div className='dr2-table-containers'>
+                                <Line ref={chartRef} data={data} options={options} />
+                            </div>
+                            </div>
                         </div>
                     </div>
-
                 </div>
-            </div>
-
+                </div>
         </div>
     );
-
 }
 
 export default DriverPage;
