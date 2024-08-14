@@ -1,5 +1,7 @@
 import { TruckControl } from '../Models/TruckControl.js';
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export const getAllTruckControlDetails = async (req, res) => {
   try {
     const allTruckControlDetails = await TruckControl.find();
@@ -30,7 +32,7 @@ export const createTruckControlDetails = async (req, res) => {
     const truckControlDetail = await TruckControl.create({ _id, truckId, status, speed, fuelLevel, fuelPressure, engineTemp, COLevel, NOXLevel, HCLevel, tirePressure, brakeHealth, batteryHealth });
 
     // Now, call /metrics/:truckId endpoint
-    const metricsResponse = await fetch(`http://localhost:3000/api/metrics/${truckId}`, {
+    const metricsResponse = await fetch(`${apiUrl}/metrics/${truckId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
