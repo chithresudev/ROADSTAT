@@ -185,59 +185,59 @@ function MaintenancePage({updateHeader, updateButton}) {
     };
 
     return (
-    <div className='maintenance-main'>
-        <div className='maintenance-topcards'> 
-            <div className={`maintenance-scard ${activeButton === 'Engine Health' ? 'active' : ''}`}>
-                <button className='maintenance-scard-button' onClick={() => handleButtonClick('Engine Health')}>
-                    <Link className='maintenance-scard-link'>
-                        <img src="/images/eh.png" alt="Home" className="maintenance-scard-icon" />
-                        <span className="maintenance-scard-text">Engine Health</span>
+    <div className='ma-main'>
+        <div className='m-topcards'> 
+            <div className={`m-scard ${activeButton === 'Engine Health' ? 'active' : ''}`}>
+                <button className='m-scard-button' onClick={() => handleButtonClick('Engine Health')}>
+                    <Link className='m-scard-link'>
+                        <img src="/images/eh.png" alt="Home" className="m-scard-icon" />
+                        <span className="m-scard-text">Engine Health</span>
                     </Link>
                 </button>
             </div>
-            <div className={`maintenance-scard ${activeButton === 'Brake System' ? 'active' : ''}`}>
-                <button className='maintenance-scard-button' onClick={() => handleButtonClick('Brake System')}>
-                    <Link className='maintenance-scard-link'>
-                        <img src="/images/bs.png" alt="Home" className="maintenance-scard-icon" />
-                        <span className="maintenance-scard-text">Brake System</span>
+            <div className={`m-scard ${activeButton === 'Brake System' ? 'active' : ''}`}>
+                <button className='m-scard-button' onClick={() => handleButtonClick('Brake System')}>
+                    <Link className='m-scard-link'>
+                        <img src="/images/bs.png" alt="Home" className="m-scard-icon" />
+                        <span className="m-scard-text">Brake System</span>
                     </Link>
                 </button>
             </div>
-            <div className={`maintenance-scard ${activeButton === 'Fuel System' ? 'active' : ''}`}>
-                <button className='maintenance-scard-button' onClick={() => handleButtonClick('Fuel System')}>
-                    <Link className='maintenance-scard-link'>
-                        <img src="/images/fs.png" alt="Home" className="maintenance-scard-icon" />
-                        <span className="maintenance-scard-text">Fuel System</span>
+            <div className={`m-scard ${activeButton === 'Fuel System' ? 'active' : ''}`}>
+                <button className='m-scard-button' onClick={() => handleButtonClick('Fuel System')}>
+                    <Link className='m-scard-link'>
+                        <img src="/images/fs.png" alt="Home" className="m-scard-icon" />
+                        <span className="m-scard-text">Fuel System</span>
                     </Link>
                 </button>
             </div>
-            <div className={`maintenance-scard ${activeButton === 'Tire Health' ? 'active' : ''}`}>
-                <button className='maintenance-scard-button' onClick={() => handleButtonClick('Tire Health')}>
-                    <Link className='maintenance-scard-link'>
-                        <img src="/images/th.png" alt="Home" className="maintenance-scard-icon" />
-                        <span className="maintenance-scard-text">Tire Health</span>
+            <div className={`m-scard ${activeButton === 'Tire Health' ? 'active' : ''}`}>
+                <button className='m-scard-button' onClick={() => handleButtonClick('Tire Health')}>
+                    <Link className='m-scard-link'>
+                        <img src="/images/th.png" alt="Home" className="m-scard-icon" />
+                        <span className="m-scard-text">Tire Health</span>
                     </Link>
                 </button>
             </div>
-            <div className={`maintenance-scard ${activeButton === 'Battery Status' ? 'active' : ''}`}>
-                <button className='maintenance-scard-button' onClick={() => handleButtonClick('Battery Status')}>
-                    <Link className='maintenance-scard-link'>
-                        <img src="/images/bts.png" alt="Home" className="maintenance-scard-icon" />
-                        <span className="maintenance-scard-text">Battery Status</span>
+            <div className={`m-scard ${activeButton === 'Battery Status' ? 'active' : ''}`}>
+                <button className='m-scard-button' onClick={() => handleButtonClick('Battery Status')}>
+                    <Link className='m-scard-link'>
+                        <img src="/images/bts.png" alt="Home" className="m-scard-icon" />
+                        <span className="m-scard-text">Battery Status</span>
                     </Link>
                 </button>
             </div>
-            <div className={`maintenance-scard ${activeButton === 'Transmission' ? 'active' : ''}`}>
-                <button className='maintenance-scard-button' onClick={() => handleButtonClick('Transmission')}>
-                    <Link className='maintenance-scard-link'>
-                        <img src="/images/tr.png" alt="Home" className="maintenance-scard-icon" />
-                        <span className="maintenance-scard-text">Transmission</span>
+            <div className={`m-scard ${activeButton === 'Transmission' ? 'active' : ''}`}>
+                <button className='m-scard-button' onClick={() => handleButtonClick('Transmission')}>
+                    <Link className='m-scard-link'>
+                        <img src="/images/tr.png" alt="Home" className="m-scard-icon" />
+                        <span className="m-scard-text">Transmission</span>
                     </Link>
                 </button>
             </div>
         </div>
         {activeButton === 'Engine Health' && (
-        <div className='maintenance-card'>
+        <div className='ma-card'>
             <table className='table'>
                 <thead>
                     <tr>
@@ -265,7 +265,7 @@ function MaintenancePage({updateHeader, updateButton}) {
         </div>
          )}
          {activeButton === 'Brake System' && (
-        <div className='maintenance-card'>
+        <div className='ma-card'>
             <table className='table'>
                 <thead>
                     <tr>
@@ -293,7 +293,7 @@ function MaintenancePage({updateHeader, updateButton}) {
         </div>
          )}
          {activeButton === 'Fuel System' && (
-        <div className='maintenance-card'>
+        <div className='ma-card'>
             <table className='table'>
                 <thead>
                     <tr>
@@ -319,7 +319,7 @@ function MaintenancePage({updateHeader, updateButton}) {
         </div>
          )}
          {activeButton === 'Tire Health' && (
-        <div className='maintenance-card'>
+        <div className='ma-card'>
             <table className='table'>
                 <thead>
                     <tr>
@@ -347,7 +347,7 @@ function MaintenancePage({updateHeader, updateButton}) {
         </div>
          )}
          {activeButton === 'Battery Status' && (
-        <div className='maintenance-card'>
+        <div className='ma-card'>
             <table className='table'>
                 <thead>
                     <tr>
@@ -375,7 +375,7 @@ function MaintenancePage({updateHeader, updateButton}) {
         </div>
          )}
          {activeButton === 'Transmission' && (
-        <div className='maintenance-card'>
+        <div className='ma-card'>
            <table className='table'>
                <thead>
                    <tr>

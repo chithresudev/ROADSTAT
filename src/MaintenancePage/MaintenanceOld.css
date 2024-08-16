@@ -1,53 +1,46 @@
-.maintenance-main{
-    top: 20%;
-    height: 80%;
-    position: absolute;
-    width: 100%;
+.ma-main{
+    padding-top: 95px;
 }
-.maintenance-topcards{
+.m-topcards{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    margin-bottom: 30px;
+    margin-bottom: 35px;
     border-radius: 10px;
-    align-self: auto;
     flex-wrap: wrap;
     justify-content: center;
-    margin-left: 25%;
-    margin-right: 25%;
-    margin-bottom: 2%;
 }
-.maintenance-scard {
+.m-scard {
     display: flex;
     flex-direction: column;
-    background-color: #d9d9d9;
-    mix-blend-mode: hard-light;
+    align-items: center;
+    padding: 0px;
+    background-color: white;
     border-radius: 0px;
     text-align: center;
-    border: 0px solid rgba(44, 43, 43, 0.5);
+    border: 1px solid rgba(44, 43, 43, 0.5);
 }
 
-.maintenance-scard.active {
-    background-color: #CFCFCF;
-    
+.m-scard.active {
+    background-color: #242F40;
 }
-.maintenance-scard.active .m-scard-text {
+.m-scard.active .m-scard-text {
     color: white;
 }
-.maintenance-scard.active .m-scard-icon {
+.m-scard.active .m-scard-icon {
     filter: none;
 }
 .table tr.selected {
     background-color: #CFCFCF; 
 }
-.maintenance-scard-button{
+.m-scard-button{
     background: none;
     padding: 10px;
 }
 
-.maintenance-scard-button:hover{
+.m-scard-button:hover{
     background: none;
 }
-.maintenance-scard-link{
+.m-scard-link{
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -55,14 +48,14 @@
     justify-content: center;
 }
 
-.maintenance-scard-icon{
+.m-scard-icon{
     width: 25px;
     height: 20px;
     margin-right: 10px;
     filter: grayscale(100%) invert(100%);
 }
 
-.maintenance-scard-text{
+.m-scard-text{
     font-size: 16px;
     font-weight: 500;
     color: black;
@@ -77,17 +70,14 @@
     overflow: auto; 
 } */
 
-.maintenance-card {
-    height: 500px;
+.ma-card {
+    height: 325px;
     padding: 0px 20px 20px 20px;
-    background-color: #d9d9d9;
-    mix-blend-mode: hard-light;
+    background-color: white;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
     border: 1px solid rgba(139, 139, 139, 0.5);
     overflow: auto; 
-    margin-left:15%;
-    margin-right: 15%;
 }
 
 .table {
@@ -98,7 +88,7 @@
 
 .table thead {
     position: sticky;
-    background-color: #d9d9d9;
+    background-color: white;
     z-index: 0; 
     top: 0;
 }
@@ -138,11 +128,11 @@
 
 /* Media Queries for Tablet */
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
-    .maintenance-main {
+    .ma-main {
         margin-top: 325px;
     }
 
-    .maintenance-topcards {
+    .m-topcards {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         margin-bottom: 55px;
@@ -151,7 +141,7 @@
         justify-content: center;
     }
 
-    .maintenance-scard {
+    .m-scard {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -162,15 +152,15 @@
         border: 1px solid rgba(44, 43, 43, 0.5);
     }
 
-    .maintenance-scard.active {
+    .m-scard.active {
         background-color: #242F40;
     }
 
-    .maintenance-scard.active .m-scard-text {
+    .m-scard.active .m-scard-text {
         color: white;
     }
 
-    .maintenance-scard.active .m-scard-icon {
+    .m-scard.active .m-scard-icon {
         filter: none;
     }
 
@@ -178,16 +168,16 @@
         background-color: #CFCFCF; 
     }
 
-    .maintenance-scard-button {
+    .m-scard-button {
         background: none;
         padding: 10px;
     }
 
-    .maintenance-scard-button:hover {
+    .m-scard-button:hover {
         background: none;
     }
 
-    .maintenance-scard-link {
+    .m-scard-link {
         text-decoration: none;
         display: flex;
         align-items: center;
@@ -195,14 +185,14 @@
         justify-content: center;
     }
 
-    .maintenance-scard-icon {
+    .m-scard-icon {
         width: 25px;
         height: 20px;
         margin-right: 10px;
         filter: grayscale(100%) invert(100%);
     }
 
-    .maintenance-scard-text {
+    .m-scard-text {
         font-size: 16px;
         font-weight: 500;
         color: black;

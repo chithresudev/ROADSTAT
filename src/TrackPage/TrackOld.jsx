@@ -132,9 +132,9 @@ function TrackPage({updateHeader, updateButton}) {
     
 
     return (
-        <div className='track_page'>
-            <div className='track-card'>
-                <table className='track-table'>
+        <div className='tr-main'>
+            <div className='tr-card'>
+                <table className='tr-table'>
                     <thead>
                         <tr>
                             <th>S No</th>
@@ -143,7 +143,7 @@ function TrackPage({updateHeader, updateButton}) {
                             <th>GPS</th>
                             <th>Strength</th>
                             <th>Location Status
-                                <input type="checkbox" className='chkbox'
+                                <input type="checkbox" className='ckbox'
                                     checked={showRunningOnly}
                                     onChange={(e) => setShowRunningOnly(e.target.checked)}/>
                             </th>
@@ -169,10 +169,10 @@ function TrackPage({updateHeader, updateButton}) {
                     </tbody>
                 </table>
             </div>
-            <div className='track-below'>
-                <div className='track-mainprofile'>
-                    <div className="track-content">
-                        <div className='track-access'>
+            <div className='tr-below'>
+                <div className='tr-mainprofile'>
+                    <div className="tr-content">
+                        <div className='tr-access'>
                             <div className='e-details' id="map" style={{paddingLeft:"0px",paddingRight:"0px",overflow: "hidden"}}>
                                 {(truckLocations && truckDestinations) && (
                                     <DMapComponent truckLocations={truckLocations} truckDestinations={truckDestinations} />
@@ -180,15 +180,15 @@ function TrackPage({updateHeader, updateButton}) {
                             </div>
                         </div>
                     </div>
-                    <div className='track-details'>
-                        <button className='track-map' onClick={handleOpenMaps}>Open with Maps</button>
+                    <div className='tr-details'>
+                        <button className='tr-map' onClick={handleOpenMaps}>Open with Maps</button>
                     </div>
                 </div>
-                <div className='track-mainprofile'>
-                    <div className="track-content">
-                        <div className='track-access'>
-                            <div className='track-details'>
-                            <table className='track-table'>
+                <div className='tra-mainprofile'>
+                    <div className="tra-content">
+                        <div className='tra-access'>
+                            <div className='tra-details'>
+                            <table className='tra-table'>
                             <tbody>
                                     <tr>
                                         <td><strong>Source</strong></td>
@@ -222,7 +222,7 @@ function TrackPage({updateHeader, updateButton}) {
                                     <tr>
                                         <td></td>
                                         <td></td>
-                                        <td><button className='track-al-button' onClick={handleAlertButtonClick}>Alert ?</button></td>
+                                        <td><button className='tra-al-button' onClick={handleAlertButtonClick}>Alert ?</button></td>
                                     </tr>
                                 </tbody>
 

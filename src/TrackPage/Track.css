@@ -1,141 +1,136 @@
-.tr-main{
-    padding-top: 95px;
+.track_page {
+    top: 20%;
+    position: absolute;
+    height: 80vh;
+    width: 100%;
 }
-.tr-card {
-    height: 200px;
-    padding: 0px 20px 20px 20px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-    border: 1px solid rgba(139, 139, 139, 0.5);
-    overflow: auto; 
-    margin-bottom: 20px;
+.track-card {
+
+    height: 45%;
+    left: 10%;
+    right: 6%;
+    top: 1%;
+    width: 80%;
+    padding: 1% 1% 1% 1%;
+    background-color: #d9d9d9;
+    mix-blend-mode: hard-light;
+    border-radius: 30px; 
+    margin: auto;
+    margin-top: 60px;
+    margin-bottom: 30px;
 }
 
-.tr-table {
+.track-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 5px;
+    margin-top: 2%;
+
 }
 
-.tr-table thead {
+.track-table thead {
     position: sticky;
-    background-color: white;
     z-index: 0; 
     top: 0;
 }
 
 
-.tr-table th,
-.tr-table td {
-    border-bottom: 1px solid #8B8B8B;
+.track-table th,
+.track-table td {
+    border-bottom: 1px solid #000000;
     text-align: left;
     text-align: center; 
 }
 
-.tr-table td{
+.track-table td{
     font-size: 15px;
     font-weight: 100;
     padding: 18px 0px 18px 0px;
 }
 
-.tr-table th {
+.track-table th {
     font-weight:700;
 }
 
-.tr-card th{
+/*.track-card th{
     padding: 18px 20px !important;
-}
-.tr-below{
+}*/
+.track-below{
     display: flex;    
     justify-content: space-between;
 }
 
 
-.tr-mainprofile{
+.track-mainprofile{
     width: calc(100% - 475px);
 }
-.tr-content {
-    /* padding: 20px 20px 0px 20px; */
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+.track-content {
+    mix-blend-mode: hard-light;
+    margin: auto;
+    left: 60%;
+    right: 6%;
+    top: 50%;
+    width: 64%;
+    border-radius: 20px;
     border: 1px solid rgba(139, 139, 139, 0.5);
+    padding: 1px;
+    box-sizing: border-box;
+    align-items: center;
+    ;
 }
-.tr-access{
-    background-color: #f5f5f5;
-    border-radius: 10px;
-    /* padding:  20px 45px; */
-    font-size: 14px;
-    height: 175px;
-}
-.tr-details{
+.track-details{
     display: flex;
     justify-content: center;
-    padding-top: 20px;
+    padding-top: 1px;
 }
-.tr-map{
-    background-color: #5E8EA3;
+.track-map{
+    background-color: #81C0DC;
+    margin-top: 1%;
     width: 150px;
     padding: 8px;
     border-radius: 10px;
 }
-
-
-.tra-mainprofile{
-    width: calc(100% - 600px);
-}
-.tra-content {
-    /* padding: 20px 20px 0px 20px; */
-    background-color: white;
+.track-access{
+    background-color:#d9d9d9;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-    border: 3px solid #8B8B8B;
-}
-.tra-access{
-    background-color: white;
-    border-radius: 10px;
-    padding:  0px 0px 5px 40px;
+    padding:  1px 1px 1px 1px;
     font-size: 14px;
-    margin-top: 5px;
     overflow-y: auto;
-    height: 232px;
-    max-height: 232px;
+    height: 250px;
+    max-height: 250px;
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
-.tra-access::-webkit-scrollbar {
+.track-access::-webkit-scrollbar {
     display: none;
 }
-.tra-details{
+.track-details{
     text-align: left;
 }
-.tra-table {
+.track-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 5px;
 }
 
-.tra-table th,
-.tra-table td {
+.track-table th,
+.track-table td {
     padding: 10px;
-    text-align: left;
     /* border: 1px solid #B9B9B9; */
 }
 
-.tra-table td{
+.track-table td{
     font-size: 15px;
     font-weight: 100;
 }
 
-.tra-table th {
+.track-table th {
     font-weight:700;
 }
-.tra-al-button{
+.track-al-button{
     padding:8px;
-    width: 100px;
+    width: 75px;
     background-color: #BC4E61;
-    border-radius: 10px;
+    border-radius: 1px;
 }
 .selected {
     background-color: #CFCFCF;
@@ -145,12 +140,12 @@
     color: black;
     font-weight: 400;
 }
-.ckbox{
+.chkbox{
     padding-top: 10px;
     background-color: red;
 }
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
-    .tr-main {
+    .track-main {
        margin-top: 325px;
     }
 }
