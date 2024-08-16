@@ -1,6 +1,6 @@
 import { TruckControl } from '../Models/TruckControl.js';
 
-const apiUrl = import.meta.env.VITE_API_URL;
+const apiUrl = process.env.VITE_API_URL;
 
 export const getAllTruckControlDetails = async (req, res) => {
   try {

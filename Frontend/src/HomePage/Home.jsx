@@ -22,7 +22,7 @@ function HomePage({updateHeader,updateButton}) {
     const truckNo = queryParams.get('truckNo');
     const [searchedTruckNo, setSearchedTruckNo] = useState(truckNo || '');
 
-    const open_weather_api = process.env.OPEN_WEATHER_API;
+    const open_weather_api = import.meta.env.OPEN_WEATHER_API;
     const [alertData, setAlertData] = useState([]); 
 
     useEffect(() => {

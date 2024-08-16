@@ -9,7 +9,9 @@ const __dirname = path.resolve();
 dotenv.config({path: __dirname + '/.env'}); // Load environment variables from .env file
 db.connect(); // Connect to the database
 
-app.use(cors());
+app.use(cors({
+  //origin: '*', Adjust this for security in production
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 
