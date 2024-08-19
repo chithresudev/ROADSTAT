@@ -5,9 +5,9 @@
     width: 100%;
 }
 .maintenance-topcards{
+    margin-top: 2%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    margin-bottom: 30px;
     border-radius: 10px;
     align-self: auto;
     flex-wrap: wrap;
@@ -27,7 +27,7 @@
 }
 
 .maintenance-scard.active {
-    background-color: #CFCFCF;
+    background-color: black;
     
 }
 .maintenance-scard.active .m-scard-text {
@@ -45,8 +45,10 @@
 }
 
 .maintenance-scard-button:hover{
-    background: none;
+    cursor: pointer;
+    filter: grayscale(100%) invert(0%);
 }
+
 .maintenance-scard-link{
     text-decoration: none;
     display: flex;
@@ -62,32 +64,35 @@
     filter: grayscale(100%) invert(100%);
 }
 
+.maintenance-scard.active .maintenance-scard-icon{
+    filter: none;
+}
+
 .maintenance-scard-text{
     font-size: 16px;
     font-weight: 500;
     color: black;
+    font-family: 'Judson';
+    font-style: normal;
 }
 
-/* .card{
-    padding: 20px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-    border: 1px solid rgba(139, 139, 139, 0.5);
-    overflow: auto; 
-} */
-
 .maintenance-card {
-    height: 500px;
+    height: 60%;
     padding: 0px 20px 20px 20px;
     background-color: #d9d9d9;
     mix-blend-mode: hard-light;
-    border-radius: 10px;
+    border-radius: 30px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
     border: 1px solid rgba(139, 139, 139, 0.5);
     overflow: auto; 
     margin-left:15%;
     margin-right: 15%;
+   
+}
+
+.maintenance-card::-webkit-scrollbar {
+    width: 0; 
+    background: transparent; 
 }
 
 .table {
@@ -101,15 +106,19 @@
     background-color: #d9d9d9;
     z-index: 0; 
     top: 0;
+    font-family: 'Judson';
+    font-style: normal;
 }
 
 
 .table th,
 .table td {
-    padding: 18px;
+    padding: 10px;
     border-bottom: 1px solid #8B8B8B;
     text-align: left;
     text-align: center; 
+    font-family: 'Judson';
+    font-style: normal;
 }
 
 .table td{
@@ -134,6 +143,10 @@
 
 .hoverrow tr:hover{
     background-color: #f1f1f1;
+    cursor: pointer;
+}
+.maintenance-scard.active .maintenance-scard-text{
+    color: white;
 }
 
 /* Media Queries for Tablet */
@@ -185,14 +198,6 @@
 
     .maintenance-scard-button:hover {
         background: none;
-    }
-
-    .maintenance-scard-link {
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-        text-align: center;
-        justify-content: center;
     }
 
     .maintenance-scard-icon {
