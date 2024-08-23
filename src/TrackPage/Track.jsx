@@ -173,7 +173,7 @@ function TrackPage({updateHeader, updateButton}) {
                 <div className='track-mainprofile'>
                     <div className="track-content">
                         <div className='track-access'>
-                            <div className='e-details' id="map" style={{paddingLeft:"0px",paddingRight:"0px",overflow: "hidden"}}>
+                            <div className='e-details' id="map">
                                 {(truckLocations && truckDestinations) && (
                                     <DMapComponent truckLocations={truckLocations} truckDestinations={truckDestinations} />
                                 )}

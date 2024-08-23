@@ -1,17 +1,15 @@
 .track_page {
     top: 20%;
     position: absolute;
-    height: 80vh;
+    height: 80%;
     width: 100%;
-    overflow: auto;
 }
 .track-card {
-
-    height: 45%;
+    height: 40%;
     left: 10%;
     right: 6%;
     top: 1%;
-    width: 80%;
+    width: 73%;
     padding: 1% 1% 1% 1%;
     background-color: #d9d9d9;
     mix-blend-mode: hard-light;
@@ -20,6 +18,12 @@
     margin-top: 2%;
     margin-bottom: 1%;
 }
+
+.track-card::-webkit-scrollbar {
+    width: 0; 
+    background: transparent; 
+}
+
 
 .track-table {
     width: 100%;
@@ -60,27 +64,26 @@
 
 
 .track-mainprofile{
-    width: calc(100% - 475px);
+    width: 100%;
 }
 .track-content {
     mix-blend-mode: hard-light;
     margin: auto;
-    left: 60%;
     right: 6%;
     top: 50%;
-    width: 64%;
-    border-radius: 20px;
+    width: 50%;
     border: 1px solid rgba(139, 139, 139, 0.5);
     padding: 1px;
     box-sizing: border-box;
     align-items: center;
-    ;
+    
 }
 .track-details{
     display: flex;
     justify-content: center;
     padding-top: 1px;
 }
+
 .track-map{
     background-color: #81C0DC;
     margin-top: 1%;
@@ -91,7 +94,7 @@
 }
 .track-access{
     background-color:#d9d9d9;
-    border-radius: 10px;
+    border-radius: 30px;
     padding:  1px 1px 1px 1px;
     font-size: 14px;
     overflow-y: auto;
