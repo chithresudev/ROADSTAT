@@ -40,6 +40,14 @@
     color: white;
 }
 
+.eff_card_details {
+    position: absolute;
+    width: 98%;
+    top: 2%;
+    height: 95%;
+    left: 2%;
+    right: 5%;
+}
 .efficiency_details {
     position: absolute;
     width: 80%;
@@ -53,8 +61,8 @@
     overflow: auto;
     left: 5%;
     right: 6%;
-    top: 1%;
-    width: 90%;
+    top: 3%;
+    width: 85%;
     height: 40%;
     background: #D9D9D9;
     mix-blend-mode: hard-light;
@@ -62,8 +70,8 @@
 }
 
 .eff_details::-webkit-scrollbar {
-    width: 0; 
-    background: transparent; 
+    width: 0;
+    background: transparent;
 }
 
 .e_table_content {
@@ -101,11 +109,10 @@
     display: flex;
     position: absolute;
     justify-content: space-between;
-    left: 5%;
-    right: 6%;
-    top: 50%;
+    /* right: 6%; */
+    top: 2%;
     width: 50%;
-    height: 55%;
+    height: 90%;
     background: #D9D9D9;
     mix-blend-mode: hard-light;
     border-radius: 20px;
@@ -250,11 +257,8 @@ input:checked+.slider:before {
 .alerts {
     background-color: #BC4E61;
     color: white;
-    /* width: 20%; */
     font-size: 16px;
     padding: 8px 13px;
-    /* padding: 8px; */
-    /* height: 58%; */
     border: none;
     border-radius: 10px;
     font-family: 'Judson';
@@ -270,101 +274,69 @@ input:checked+.slider:before {
     min-width: 120px;
     max-width: 140px;
     font-weight: bold;
-    /* width: 15%; */
     font-size: 19px;
+    cursor: pointer;
     background-color: #A33E54;
-    /* height: 10%; */
 }
 
 .threshold_below {
     position: absolute;
-    left: 60%;
+    /* left: 60%; */
     right: 6%;
-    top: 50%;
+    top: 2%;
     width: 30%;
-    height: 55%;
+    height: 90%;
     background: #D9D9D9;
     mix-blend-mode: hard-light;
     border-radius: 20px;
     box-sizing: border-box;
     align-items: center;
-    padding:10px;
+    padding: 10px;
 }
-
+.below_card_details {
+    position: absolute;
+    left: 5%;
+    right: 6%;
+    top: 45%;
+    width: 90%;
+    height: 68%;
+}
 .tv {
-    /* text-align: center; */
     font-family: 'Judson';
     font-style: normal;
-    /* align-items: center; */
-    /* height: 10%; */
     font-weight: 600;
     font-size: 18px;
     margin: 0px auto;
-    /* background-color: aqua; */
-    /* margin: 0px auto; */
-    /* background-color: #A33E54; */
     white-space: nowrap;
-    /* padding: 0px auto;  */
-    /* margin-bottom: 20px;  */
-    /* align-items: center;  */
-    /* width: 100%; */
-    /* box-sizing: border-box; */
 }
-.threshold_value{
-    /* text-align: center; */
-    /* display: inline; */
+
+.threshold_value {
     height: 10%;
-    /* background-color: #A33E54; */
     display: flex;
     flex-wrap: wrap;
-    /* gap: 10px; */
-    /* padding: 0px 20px; */
     padding: 0px 60px 0px 80px;
     width: 100%;
     box-sizing: border-box;
 }
 
 .t_content {
-    /* display: flex; */
-    /* align-items: center;
-    justify-content: center; */
+    box-sizing: border-box;
     width: 100%;
-    height: 100%;
+    /* margin-top:28%; */
+    height: 80%;
     margin-bottom: 20px;
     padding-bottom: 100px;
-    /* background-color: #A33E54; */
 }
 
-.thresh_access{
-    /* border-radius: 10px; */
-    /* width:100%; */
+.thresh_access {
     display: flex;
     justify-content: center;
-    align-items: center; 
-    /* position: absolute; */
+    align-items: center;
     font-size: 14px;
     height: 90%;
     margin: 0px auto;
-    /* background-color: #14131326;
-    mix-blend-mode: hard-light; */
-    /* border: 1px solid rgb(9, 9, 9); */
-    /* display: flex; */
-    /* gap: 10px; */
-    /* padding: 0px 20px; */
-    /* justify-content: space-between; */
-    /* padding: 0px 0px 0px 80px; */
     width: 80%;
-    /* box-sizing: border-box; */
-    /* margin-top: 38px; */
-    /* overflow-y: auto; */
-    /* max-height: 80%; */
-    /* scrollbar-width: none; */
-    /* -ms-overflow-style: none; */
-
-}
-
-.t_access::-webkit-scrollbar {
-    display: none;
+    margin-top: 28%;
 }
 
 t_table {
@@ -379,16 +351,15 @@ t_table {
     background-color: #14131326;
     mix-blend-mode: hard-light;
     text-align: left;
-    text-align: center; 
+    text-align: center;
     border: 1px solid #080101;
 }
 
-.table td{
+.table td {
     font-size: 15px;
-   
     font-weight: 100;
 }
 
 .table th {
-    font-weight:700;
+    font-weight: 700;
 }

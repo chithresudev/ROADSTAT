@@ -118,114 +118,117 @@ function Efficiency({ updateHeader, updateButton }) {
             </div >
             {activeButton === 'Efficiency' && (
                 <div className='efficiency_details'>
-                    <div className='eff_details'>
-                        <table className='e_table_content'>
-                            <thead>
-                                <tr>
-                                    <th>S No</th>
-                                    <th>Vehicle No</th>
-                                    <th>Service History</th>
-                                    <th>Level</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {sortedTruckData.map((truck, index) => (
-                                    <tr key={index} className={selectedRowIndex === index ? 'selected-row' : ''} onClick={() => handleTruckClick(index, truck.truckId)}>
-                                        <td>{index + 1}</td>
-                                        <td>{truck.truckId}</td>
-                                        <td><Link to={`/maintenance?truckNo=${truck.truckId}`} className='click'>Click Here</Link></td>
-                                        <td>{truck.level}</td>
-                                        <td style={{
-                                            color:
-                                                truck.status === 'Good' ? 'yellow' :
-                                                    truck.status === 'Fair' ? 'orange' :
-                                                        truck.status === 'Excellent' ? 'green' : 'black'
-                                        }}>
-                                            {truck.status}
-                                        </td>
+                    <div className='eff_card_details'>
+                        <div className='eff_details'>
+                            <table className='e_table_content'>
+                                <thead>
+                                    <tr>
+                                        <th>S No</th>
+                                        <th>Vehicle No</th>
+                                        <th>Service History</th>
+                                        <th>Level</th>
+                                        <th>Status</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                    <div className='e_below'>
-                        <div className='e_mainprofile'>
-                            <div className='e_access'>
-                                <div className='e_details'>
-                                    <p><strong>Vehicle Number : <span className='ef_td_col'>{truckId}</span></strong></p>
-                                    <p className="flex_container">
-                                        <span><strong>Speed : <span className='ef_td_col'>{speed}</span></strong> </span>
-                                        <span className="align_right"><strong>Fuel Level : <span className='ef_td_col'>{fuelLevel}</span></strong></span>
-                                    </p>
-                                    <p className="flex_container">
-                                        <span><strong>Fuel Pressure : <span className='ef_td_col'>{fuelPressure}</span></strong> </span>
-                                        <span className="align_right"><strong>CO Level : <span className='ef_td_col'>{COLevel}</span></strong></span>
-                                    </p>
-                                    <p className="flex_container">
-                                        <span><strong>NOX Level : <span className='ef_td_col'>{NOXLevel}</span></strong> </span>
-                                        <span className="align_right"><strong>HC Level : <span className='ef_td_col'>{HCLevel}</span></strong></span>
-                                    </p>
+                                </thead>
+                                <tbody>
+                                    {sortedTruckData.map((truck, index) => (
+                                        <tr key={index} className={selectedRowIndex === index ? 'selected-row' : ''} onClick={() => handleTruckClick(index, truck.truckId)}>
+                                            <td>{index + 1}</td>
+                                            <td>{truck.truckId}</td>
+                                            <td><Link to={`/maintenance?truckNo=${truck.truckId}`} className='click'>Click Here</Link></td>
+                                            <td>{truck.level}</td>
+                                            <td style={{
+                                                color:
+                                                    truck.status === 'Good' ? 'yellow' :
+                                                        truck.status === 'Fair' ? 'orange' :
+                                                            truck.status === 'Excellent' ? 'green' : 'black'
+                                            }}>
+                                                {truck.status}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div className='below_card_details'>
+                            <div className='e_below'>
+                                <div className='e_mainprofile'>
+                                    <div className='e_access'>
+                                        <div className='e_details'>
+                                            <p><strong>Vehicle Number : <span className='ef_td_col'>{truckId}</span></strong></p>
+                                            <p className="flex_container">
+                                                <span><strong>Speed : <span className='ef_td_col'>{speed}</span></strong> </span>
+                                                <span className="align_right"><strong>Fuel Level : <span className='ef_td_col'>{fuelLevel}</span></strong></span>
+                                            </p>
+                                            <p className="flex_container">
+                                                <span><strong>Fuel Pressure : <span className='ef_td_col'>{fuelPressure}</span></strong> </span>
+                                                <span className="align_right"><strong>CO Level : <span className='ef_td_col'>{COLevel}</span></strong></span>
+                                            </p>
+                                            <p className="flex_container">
+                                                <span><strong>NOX Level : <span className='ef_td_col'>{NOXLevel}</span></strong> </span>
+                                                <span className="align_right"><strong>HC Level : <span className='ef_td_col'>{HCLevel}</span></strong></span>
+                                            </p>
+                                        </div>
+                                        <Link to="#" className='click_link'>Click here for more</Link>
+                                    </div>
+                                    <div className='r_details'>
+                                        <span className='maint'>Mark for Maintenance
+                                            <label className="switch">
+                                                <input type="checkbox" />
+                                                <span className="slider round"></span>
+                                            </label>
+                                        </span>
+                                        <button className='alerts' onClick={handleAlertButtonClick}>Alert Driver</button> {/* Implementing alert box */}
+                                    </div>
                                 </div>
-                                <Link to="#" className='click_link'>Click here for more</Link>
                             </div>
-                            <div className='r_details'>
-                                <span className='maint'>Mark for Maintenance
-                                    <label className="switch">
-                                        <input type="checkbox" />
-                                        <span className="slider round"></span>
-                                    </label>
-                                </span>
-                                <button className='alerts' onClick={handleAlertButtonClick}>Alert Driver</button> {/* Implementing alert box */}
+                            <div className='threshold_below'>
+                                <div className='t_content'>
+                                    <div className='threshold_value'>
+                                        <span className='tv'>Threshold Values</span>
+                                    </div>
+                                    <div className='thresh_access'>
+                                        <table className='t_table'>
+                                            <tbody>
+                                                <tr>
+                                                    <td>CO</td>
+                                                    <td>20.7 g / bhp - hr</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>N0x</td>
+                                                    <td>0.2  g / bhp - hr</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>HC</td>
+                                                    <td>1.3 g / bhp - hr</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Fuel Pressure</td>
+                                                    <td>30 - 80 PSI</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Engine Temperature</td>
+                                                    <td>195°F to 220°F</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Intake Air</td>
+                                                    <td>-40°F to 212°F</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div className='threshold_below'>
-                        <div className='t_content'>
-                            <div className='threshold_value'>
-                                <span className='tv'>Threshold Values</span>
-                            </div>
-                            <div className='thresh_access'>
-                            <table className='t_table'>
-                                        <tbody>
-                                            <tr>
-                                                <td>CO</td>
-                                                <td>20.7 g / bhp - hr</td>
-                                            </tr>
-                                            <tr>
-                                                <td>N0x</td>
-                                                <td>0.2  g / bhp - hr</td>
-                                            </tr>
-                                            <tr>
-                                                <td>HC</td>
-                                                <td>1.3 g / bhp - hr</td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>Fuel Pressure</td>
-                                                <td>30 - 80 PSI</td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>Engine Temperature</td>
-                                                <td>195°F to 220°F</td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>Intake Air</td>
-                                                <td>-40°F to 212°F</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
-
-                        </div>
-                    </div>
-
                 </div>
             )}
-
         </div>
+
     );
 
 }

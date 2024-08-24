@@ -97,7 +97,7 @@
     border-radius: 30px;
     padding:  1px 1px 1px 1px;
     font-size: 14px;
-    overflow-y: auto;
+    overflow-y: auto;   
     height: 250px;
     max-height: 250px;
     scrollbar-width: none;
