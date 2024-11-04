@@ -5,7 +5,7 @@ on:
     pull_request:
 
 jobs:
-    deploy:
+    build:  # Add a build job if not already defined
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
@@ -15,14 +15,14 @@ jobs:
             - name: Create .env file
               run: |
                 touch .env
-                echo VITE_MONGO_URL = 'mongodb+srv://${{ secrets.MONGODB_USER }}:${{ secrets.MONGODB_PASS }}@gokaddal.qicnveb.mongodb.net/${{ secrets.DB_NAME }}?retryWrites=true&w=majority&appName=${{ secrets.MONGODB_NAME }}' >> .env
-                echo VITE_API_URL = ${{ secrets.BACKEND_API }} >> .env
+                echo VITE_MONGO_URL='mongodb+srv://${{ secrets.MONGODB_USER }}:${{ secrets.MONGODB_PASS }}@gokaddal.qicnveb.mongodb.net/${{ secrets.DB_NAME }}?retryWrites=true&w=majority&appName=${{ secrets.MONGODB_NAME }}' >> .env
+                echo VITE_API_URL=${{ secrets.BACKEND_API }} >> .env
                 echo VITE_GOOGLE_MAP_API=${{ secrets.GOOGLE_MAP_API_KEY }} >> .env
                 echo VITE_OPEN_WEATHER_API=${{ secrets.OPEN_WEATHER }} >> .env
-                echo JWT_SECRET=${{secrets.JWT_SECRET}} >> .env
-                echo EMAIL_USER=${{secrets.EMAIL_USER}} >> .env
-                echo EMAIL_PASSWORD=${{secrets.EMAIL_PASSWORD}} >> .env
-                echo SMTP_HOST= ${{secrets.SMTP_HOST}} >> .env
+                echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
+                echo EMAIL_USER=${{ secrets.EMAIL_USER }} >> .env
+                echo EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }} >> .env
+                echo SMTP_HOST=${{ secrets.SMTP_HOST }} >> .env
                 echo SMTP_PORT=465 >> .env
                 echo SMTP_SECURE=true >> .env
                 cat .env
@@ -31,6 +31,12 @@ jobs:
             - name: Build
               run: |
                 npm install
+
+    deploy:
+        needs: build  # Specify that this job depends on the build job
+        runs-on: self-hosted  # Use a self-hosted runner
+        steps:
+            - uses: actions/checkout@v4
             - uses: aws-actions/configure-aws-credentials@v4
               name: Configure aws credentials
               with:
@@ -52,4 +58,3 @@ jobs:
               if: github.ref == 'refs/heads/main'
               run: |
                   aws ecs update-service --cluster ${{ secrets.ROADSTAT_CLUSTER_NAME }} --service ${{ secrets.ROADSTAT_SERVICE_NAME }} --force-new-deployment
-  
