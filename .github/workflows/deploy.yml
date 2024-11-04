@@ -44,12 +44,10 @@ jobs:
                 aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_A }}
                 aws-region: 'ca-central-1'
             - name: Install AWS CLI
-				run: |
-				sudo apt-get update
-				sudo apt-get install -y unzip
-				curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-				unzip awscliv2.zip
-				sudo ./aws/install
+              run: |
+                curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+                unzip awscliv2.zip
+                sudo ./aws/install
             - name: Login to AWS ECR
               run: |
                 aws ecr get-login-password --region ca-central-1 | docker login --username ${{ secrets.ECR_USER }} --password-stdin ${{ secrets.ECR_PASS }}
