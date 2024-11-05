@@ -37,6 +37,12 @@ jobs:
     needs: deploy  # Specify that this job depends on the deploy job
     runs-on: self-hosted  # Use a self-hosted runner
     steps:
+      - uses: actions/checkout@v4
+      - name: Install AWS CLI
+        run: |
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install
       - uses: aws-actions/configure-aws-credentials@v4
         name: Configure AWS credentials
         with:
