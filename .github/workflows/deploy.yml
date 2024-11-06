@@ -16,8 +16,8 @@ jobs:
       - name: Create .env file
         run: |
           touch .env
-          echo VITE_MONGO_URL = 'mongodb+srv://${{ secrets.MONGODB_USER }}:${{ secrets.MONGODB_PASS }}@gokaddal.qicnveb.mongodb.net/${{ secrets.DB_NAME }}?retryWrites=true&w=majority&appName=${{ secrets.MONGODB_NAME }}' >> .env
-          echo VITE_API_URL = ${{ secrets.BACKEND_API }} >> .env
+          echo VITE_MONGO_URL='mongodb+srv://${{ secrets.MONGODB_USER }}:${{ secrets.MONGODB_PASS }}@gokaddal.qicnveb.mongodb.net/${{ secrets.DB_NAME }}?retryWrites=true&w=majority&appName=${{ secrets.MONGODB_NAME }}' >> .env
+          echo VITE_API_URL=${{ secrets.BACKEND_API }} >> .env
           echo VITE_GOOGLE_MAP_API=${{ secrets.GOOGLE_MAP_API_KEY }} >> .env
           echo VITE_OPEN_WEATHER_API=${{ secrets.OPEN_WEATHER }} >> .env
           echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
@@ -27,15 +27,15 @@ jobs:
           echo SMTP_PORT=465 >> .env
           echo SMTP_SECURE=true >> .env
           cat .env
-          cp -r .env Backend/
-          cp -r .env Frontend/
+          cp .env Backend/
+          cp .env Frontend/
       - name: Build
         run: |
           npm install
 
   deploy-to-aws:
-    needs: deploy  # Specify that this job depends on the deploy job
-    runs-on: self-hosted  # Use a self-hosted runner
+    needs: deploy
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -54,15 +54,15 @@ jobs:
           aws-region: 'us-east-1'
       - name: Login to AWS ECR
         run: |
-          aws ecr get-login-password --region us-east-1 | docker login --username ${{ secrets.ECR_USER }} --password-stdin ${{ secrets.ECR_PASS }}
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.ECR_REPO }}
       - name: Build Docker Image
         run: |
           docker build -t roadstat .
-      - name: Push Docker Image
+      - name: Tag and Push Docker Image
         if: github.ref == 'refs/heads/main'
         run: |
-          docker tag roadstat:latest ${{ secrets.ECR_PASS }}/${{ secrets.ECR_REPO }}:latest
-          docker push ${{ secrets.ECR_PASS }}/${{ secrets.ECR_REPO }}:latest
+          docker tag roadstat:latest ${{ secrets.ECR_REPO }}:latest
+          docker push ${{ secrets.ECR_REPO }}:latest
       - name: Deploy to AWS ECS
         if: github.ref == 'refs/heads/main'
         run: |
