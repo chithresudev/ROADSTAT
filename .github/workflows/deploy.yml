@@ -69,4 +69,4 @@ jobs:
       - name: Deploy to AWS ECS
         if: github.ref == 'refs/heads/main'
         run: |
-          aws ecs update-service --cluster ${{ secrets.ROADSTAT_CLUSTER_NAME }} --service ${{ secrets.ROADSTAT_SERVICE_NAME }} --force-new-deployment
+          aws ecs update-service --cluster ${{ secrets.ROADSTAT_CLUSTER_NAME_A }} --service ${{ secrets.ROADSTAT_SERVICE_NAME_A }} --force-new-deployment
