@@ -64,8 +64,8 @@ jobs:
       - name: Tag and Push Docker Image
         if: github.ref == 'refs/heads/main'
         run: |
-          docker tag roadstat:latest ${{ secrets.ECR_REPO }}:latest
-          docker push ${{ secrets.ECR_REPO }}:latest
+          docker tag roadstat:latest ${{ secrets.MY_ECR_REPO }}:latest
+          docker push ${{ secrets.MY_ECR_REPO }}:latest
       - name: Deploy to AWS ECS
         if: github.ref == 'refs/heads/main'
         run: |
