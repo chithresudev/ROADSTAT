@@ -16,30 +16,30 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Build Docker image
-        run: |
-          docker build -t roadstat .
-          # Save Docker image as a .tar file in the home directory
-          docker save roadstat -o $HOME/roadstat.tar
+      # - name: Build Docker image
+      #   run: |
+      #     docker build -t roadstat .
+      #     # Save Docker image as a .tar file in the home directory
+      #     docker save roadstat -o $HOME/roadstat.tar
 
-      - name: Verify .tar file
-        run: |
-          if [ -f "$HOME/roadstat.tar" ]; then
-            echo "File exists and is ready for transfer."
-          else
-            echo "File does not exist or was not created correctly."
-            exit 1
-          fi
+      # - name: Verify .tar file
+      #   run: |
+      #     if [ -f "$HOME/roadstat.tar" ]; then
+      #       echo "File exists and is ready for transfer."
+      #     else
+      #       echo "File does not exist or was not created correctly."
+      #       exit 1
+      #     fi
 
-      - name: Transfer image to server
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.AWS_HOST }}
-          username: ${{ secrets.AWS_USERNAME }}
-          key: ${{ secrets.AWS_SSH_KEY }}
-          source: "$HOME/roadstat.tar"
-          target: "~/roadstat.tar"
-          debug: true
+      # - name: Transfer image to server
+      #   uses: appleboy/scp-action@v0.1.7
+      #   with:
+      #     host: ${{ secrets.AWS_HOST }}
+      #     username: ${{ secrets.AWS_USERNAME }}
+      #     key: ${{ secrets.AWS_SSH_KEY }}
+      #     source: "$HOME/roadstat.tar"
+      #     target: "~/roadstat.tar"
+      #     debug: true
 
       - name: Deploy on Server
         env:
