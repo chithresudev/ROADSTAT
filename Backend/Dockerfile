@@ -4,11 +4,13 @@ FROM node:14-alpine
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy package.json and install dependencies
+# Copy package.json and package-lock.json to install dependencies
 COPY Backend/package*.json ./
+
+# Install dependencies
 RUN npm install
 
-# Copy the rest of the application files
+# Copy the rest of the application files to the container
 COPY Backend/ .
 
 # Expose the port the app will run on
