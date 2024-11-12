@@ -26,15 +26,20 @@ jobs:
           cd ../node-backend
           docker build -t node-backend:latest .
 
-      # Step 4: Save React Docker image as .tar file
+      # Step 4: Add permissions for tar operation (ensure the directory is writable)
+      - name: Ensure permissions for tar file
+        run: |
+          chmod -R 777 .  # Give write permission to all files in the current directory
+
+      # Step 5: Save React Docker image as .tar file
       - name: Save React Docker image to file
         run: docker save react-app:latest -o react-app.tar
 
-      # Step 5: Save Node.js Docker image as .tar file
+      # Step 6: Save Node.js Docker image as .tar file
       - name: Save Node.js Docker image to file
         run: docker save node-backend:latest -o node-backend.tar
 
-      # Step 6: Upload Docker images to EC2
+      # Step 7: Upload Docker images to EC2
       - name: Transfer Docker images to EC2
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -46,7 +51,7 @@ jobs:
             node-backend.tar
           target: /home/ubuntu/
 
-      # Step 7: SSH to EC2 and deploy both containers
+      # Step 8: SSH to EC2 and deploy both containers
       - name: SSH to EC2 and deploy both containers
         uses: appleboy/ssh-action@v0.1.7
         with:
