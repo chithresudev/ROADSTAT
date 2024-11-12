@@ -29,13 +29,12 @@ jobs:
       - name: Build Docker image
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/roadstat .
-          docker tag ${{ secrets.DOCKER_USERNAME }}/roadstat:latest ${{ secrets.DOCKER_USERNAME }}/roadstat:$GITHUB_SHA
+          docker tag ${{ secrets.DOCKER_USERNAME }}/roadstat
 
       # Push Docker image to Docker Hub
       - name: Push Docker image to Docker Hub
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/roadstat:latest
-          docker push ${{ secrets.DOCKER_USERNAME }}/roadstat:$GITHUB_SHA
+          docker push ${{ secrets.DOCKER_USERNAME }}/roadstat
 
       # Transfer image to AWS and Deploy
       - name: Deploy on AWS Server
@@ -47,11 +46,11 @@ jobs:
           # SSH into the AWS server and deploy the Docker image
           ssh -i /tmp/aws_key -o StrictHostKeyChecking=no $USER@$HOST << 'EOF'
             # Pull the Docker image from Docker Hub
-            docker pull ${{ secrets.DOCKER_USERNAME }}/roadstat:latest
+            docker pull ${{ secrets.DOCKER_USERNAME }}/roadstat
             
             # Stop and remove any existing container
             docker rm -f roadstat || true
 
             # Run the new Docker container
-            docker run -d --name roadstat -p 3000:3000 -p 5173:5173 ${{ secrets.DOCKER_USERNAME }}/roadstat:latest
+            docker run -d --name roadstat -p 3000:3000 -p 5173:5173 ${{ secrets.DOCKER_USERNAME }}/roadstat
           EOF
