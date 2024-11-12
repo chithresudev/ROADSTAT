@@ -20,7 +20,7 @@ jobs:
         run: |
           docker build -t roadstat .
           docker save roadstat -o roadstat.tar
-          
+
       - name: Transfer image to server
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -39,10 +39,10 @@ jobs:
           ssh -o StrictHostKeyChecking=no $USER@$HOST << 'EOF'
             # Load Docker images
             docker load -i ~/roadstat.tar
-            # Stop any existing containers
-            docker rm -f roadstat || true
+
+            # Stop any existing container with the same name
             docker rm -f roadstat || true
 
-            # Run container
-            docker run -p 3000:3000 -p 5173:5173 roadstat
+            # Run the container
+            docker run -d --name roadstat -p 3000:3000 -p 5173:5173 roadstat
           EOF
