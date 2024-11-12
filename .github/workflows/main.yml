@@ -17,13 +17,13 @@ jobs:
       # Step 2: Build Docker image for React frontend
       - name: Build Docker image for React frontend
         run: |
-          cd react-app
+          cd Frontend
           docker build -t react-app:latest .
 
       # Step 3: Build Docker image for Node.js backend
       - name: Build Docker image for Node.js backend
         run: |
-          cd ../node-backend
+          cd ../Backend
           docker build -t node-backend:latest .
 
       # Step 4: Add permissions for tar operation (ensure the directory is writable)
@@ -58,15 +58,3 @@ jobs:
           host: ${{ secrets.AWS_HOST }}
           username: ${{ secrets.AWS_USERNAME }}
           key: ${{ secrets.AWS_SSH_KEY }}
-          script: |
-            # Load and run React container
-            docker load -i /home/ubuntu/react-app.tar
-            docker stop react-app || true
-            docker rm react-app || true
-            docker run -d -p 80:80 --name react-app react-app:latest
-
-            # Load and run Node.js container
-            docker load -i /home/ubuntu/node-backend.tar
-            docker stop node-backend || true
-            docker rm node-backend || true
-            docker run -d -p 5000:5000 --name node-backend node-backend:latest
