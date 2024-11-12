@@ -8,11 +8,12 @@
     "server": "cd Backend && nodemon server.js",
     "client": "cd Frontend && npx vite --host",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "(cd Backend && npm install) && (cd Frontend && npm install)"
+    "build": "cd Frontend && vite build"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "concurrently": "^8.2.2"
+  "devDependencies": {
+    "concurrently": "^9.1.0",
+    "vite": "^5.4.11"
   }
 }
