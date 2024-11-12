@@ -17,14 +17,12 @@ jobs:
       # Step 2: Build Docker image for React frontend
       - name: Build Docker image for React frontend
         run: |
-          cd Frontend
-          docker build -t react-app:latest -f Frontend/Dockerfile .
+          docker build -t react-app:latest -f Frontend/Dockerfile Frontend
 
       # Step 3: Build Docker image for Node.js backend
       - name: Build Docker image for Node.js backend
         run: |
-          cd Backend
-          docker build -t node-backend:latest -f Frontend/Dockerfile .
+          docker build -t node-backend:latest -f Backend/Dockerfile Backend
 
       # Step 4: Save React Docker image as .tar file
       - name: Save React Docker image to file
