@@ -1,22 +1,25 @@
-# Use the official Node.js image to build the React app
+# Stage 1: Build the React application
 FROM node:14-alpine as build
 
 # Set the working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json (no 'Frontend/' prefix needed)
-COPY package*.json ./
+# Copy package.json and package-lock.json
+COPY Frontend/package*.json ./
 
 # Install dependencies
 RUN npm install
 
-# Copy the rest of the application files
-COPY . .
+# Copy the rest of the React app files
+COPY Frontend/ .
 
 # Build the React app for production
 RUN CI=false npm run build
 
-# Use Nginx to serve the React app
+# Debug: List the contents to check if the build folder is created
+RUN echo "Build contents:" && ls -la /app/build
+
+# Stage 2: Serve with Nginx
 FROM nginx:alpine
 
 # Copy the build folder from the previous stage
