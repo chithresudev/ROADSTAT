@@ -5,11 +5,11 @@ FROM node:14-alpine
 WORKDIR /app
 
 # Copy package.json and install dependencies
-COPY react-app/package*.json ./
+COPY Frontend/package*.json ./
 RUN npm install
 
 # Copy the rest of the application files
-COPY react-app/ .
+COPY Frontend/ .
 
 # Build the application
 RUN npm run build
