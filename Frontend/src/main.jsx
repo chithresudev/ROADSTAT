@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom';
 import App from './App.jsx'
-import { history } from '../../Backend/src/_helpers';
+// import { history } from '../../Backend/src/_helpers';
 import { AuthProvider } from './context/authContext';
 
 
@@ -12,7 +12,8 @@ import { AuthProvider } from './context/authContext';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter history={history}>
+    <BrowserRouter>
+{/*       <BrowserRouter history={history}> */}
       <AuthProvider>
         <App />
       </AuthProvider>
