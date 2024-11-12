@@ -19,8 +19,17 @@ jobs:
       - name: Build Docker image
         run: |
           docker build -t roadstat .
-          # Save Docker image as a .tar file in the home directory to avoid permission issues
-          docker save roadstat -o ~/roadstat.tar
+          # Save Docker image as a .tar file in the home directory
+          docker save roadstat -o $HOME/roadstat.tar
+
+      - name: Verify .tar file
+        run: |
+          if [ -f "$HOME/roadstat.tar" ]; then
+            echo "File exists and is ready for transfer."
+          else
+            echo "File does not exist or was not created correctly."
+            exit 1
+          fi
 
       - name: Transfer image to server
         uses: appleboy/scp-action@v0.1.7
@@ -28,8 +37,9 @@ jobs:
           host: ${{ secrets.AWS_HOST }}
           username: ${{ secrets.AWS_USERNAME }}
           key: ${{ secrets.AWS_SSH_KEY }}
-          source: "~/roadstat.tar"
+          source: "$HOME/roadstat.tar"
           target: "~/roadstat.tar"
+          debug: true
 
       - name: Deploy on Server
         env:
