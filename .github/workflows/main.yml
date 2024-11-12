@@ -1,65 +1,67 @@
-name: Deploy Node.js and React App to AWS EC2
+name: Deploy to Server without Docker Registry and Compose
 
 on:
   push:
     branches:
-      - main
+      - main  # Trigger on main branch push
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout code
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      # Step 2: Build Docker image for React frontend
-      - name: Build Docker image for React frontend
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build Backend Docker image
         run: |
-          docker build --no-cache -t react-app:latest -f Frontend/Dockerfile Frontend
+          docker build -t roadstat-backend ./Backend
+          docker save roadstat-backend -o roadstat-backend.tar
 
-      # Step 3: Build Docker image for Node.js backend
-      - name: Build Docker image for Node.js backend
+      - name: Build Frontend Docker image
         run: |
-          docker build --no-cache -t node-backend:latest -f Backend/Dockerfile Backend
+          docker build -t roadstat-frontend ./Frontend
+          docker save roadstat-frontend -o roadstat-frontend.tar
 
-      # Step 4: Save React Docker image as .tar file
-      - name: Save React Docker image to file
-        run: docker save react-app:latest -o react-app.tar
-
-      # Step 5: Save Node.js Docker image as .tar file
-      - name: Save Node.js Docker image to file
-        run: docker save node-backend:latest -o node-backend.tar
-
-      # Step 6: Upload Docker images to EC2
-      - name: Transfer Docker images to EC2
+      - name: Transfer Backend image to server
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.AWS_HOST }}
           username: ${{ secrets.AWS_USERNAME }}
           key: ${{ secrets.AWS_SSH_KEY }}
-          source: |
-            react-app.tar
-            node-backend.tar
-          target: /home/ubuntu/
+          source: "roadstat-backend.tar"
+          target: "~/roadstat-backend.tar"
 
-      # Step 7: SSH to EC2 and load Docker images
-      - name: SSH to EC2 and deploy both containers
-        uses: appleboy/ssh-action@v0.1.7
+      - name: Transfer Frontend image to server
+        uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.AWS_HOST }}
           username: ${{ secrets.AWS_USERNAME }}
           key: ${{ secrets.AWS_SSH_KEY }}
-          script: |
-            # Load and run React container
-            docker load -i /home/ubuntu/react-app.tar
-            docker stop react-app || true
-            docker rm react-app || true
-            docker run -d -p 80:80 --name react-app react-app:latest
+          source: "roadstat-frontend.tar"
+          target: "~/roadstat-frontend.tar"
 
-            # Load and run Node.js container
-            docker load -i /home/ubuntu/node-backend.tar
-            docker stop node-backend || true
-            docker rm node-backend || true
-            docker run -d -p 5000:5000 --name node-backend node-backend:latest
+      - name: Deploy on Server
+        env:
+          HOST: ${{ secrets.AWS_HOST }}
+          USER: ${{ secrets.AWS_USERNAME }}
+          SSH_KEY: ${{ secrets.AWS_SSH_KEY }}
+        run: |
+          ssh -o StrictHostKeyChecking=no $USER@$HOST << 'EOF'
+            # Load Docker images
+            docker load -i ~/roadstat-backend.tar
+            docker load -i ~/roadstat-frontend.tar
+
+            # Stop any existing containers
+            docker rm -f roadstat-backend || true
+            docker rm -f roadstat-frontend || true
+
+            # Run Backend container
+            docker run -d --name roadstat-backend -p 5000:5000 roadstat-backend  # Adjust backend port as needed
+
+            # Run Frontend container
+            docker run -d --name roadstat-frontend -p 3000:3000 roadstat-frontend  # Adjust frontend port as needed
+          EOF
