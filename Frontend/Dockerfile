@@ -1,8 +1,23 @@
-# Frontend Dockerfile
+# Use an official Node.js runtime as the base image
 FROM node:18
+
+# Set the working directory inside the container
 WORKDIR /app
-COPY . .
-RUN npm install && npm run build
-# Expose port 80
-EXPOSE 80
+
+# Copy the package.json and package-lock.json for frontend dependencies
+COPY Frontend/package*.json ./
+
+# Install frontend dependencies
+RUN npm install
+
+# Copy the rest of the frontend source code
+COPY Frontend/ .
+
+# Build the frontend application for production
+RUN CI=false npm run build
+
+# Expose the port the frontend app will run on (adjust if needed)
+EXPOSE 3000
+
+# Command to run the frontend app
 CMD ["npx", "vite", "preview", "--host"]
