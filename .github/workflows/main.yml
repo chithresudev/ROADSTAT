@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the code
+      # Step 1: Checkout code
       - name: Checkout code
         uses: actions/checkout@v2
 
@@ -26,20 +26,15 @@ jobs:
           cd ../Backend
           docker build -t node-backend:latest .
 
-      # Step 4: Add permissions for tar operation (ensure the directory is writable)
-      - name: Ensure permissions for tar file
-        run: |
-          chmod -R 777 .  # Give write permission to all files in the current directory
-
-      # Step 5: Save React Docker image as .tar file
+      # Step 4: Save React Docker image as .tar file
       - name: Save React Docker image to file
         run: docker save react-app:latest -o react-app.tar
 
-      # Step 6: Save Node.js Docker image as .tar file
+      # Step 5: Save Node.js Docker image as .tar file
       - name: Save Node.js Docker image to file
         run: docker save node-backend:latest -o node-backend.tar
 
-      # Step 7: Upload Docker images to EC2
+      # Step 6: Upload Docker images to EC2
       - name: Transfer Docker images to EC2
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -51,10 +46,22 @@ jobs:
             node-backend.tar
           target: /home/ubuntu/
 
-      # Step 8: SSH to EC2 and deploy both containers
+      # Step 7: SSH to EC2 and load Docker images
       - name: SSH to EC2 and deploy both containers
         uses: appleboy/ssh-action@v0.1.7
         with:
           host: ${{ secrets.AWS_HOST }}
           username: ${{ secrets.AWS_USERNAME }}
           key: ${{ secrets.AWS_SSH_KEY }}
+          script: |
+            # Load and run React container
+            docker load -i /home/ubuntu/react-app.tar
+            docker stop react-app || true
+            docker rm react-app || true
+            docker run -d -p 80:80 --name react-app react-app:latest
+
+            # Load and run Node.js container
+            docker load -i /home/ubuntu/node-backend.tar
+            docker stop node-backend || true
+            docker rm node-backend || true
+            docker run -d -p 5000:5000 --name node-backend node-backend:latest
