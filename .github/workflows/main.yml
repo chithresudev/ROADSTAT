@@ -1,4 +1,4 @@
-name: Deploy to Server without Docker Registry and Compose
+name: Deploy to Server Docker
 
 on:
   push:
@@ -16,33 +16,19 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Build Backend Docker image
+      - name: Build Docker image
         run: |
-          docker build -t roadstat-backend ./Backend
-          docker save roadstat-backend -o roadstat-backend.tar
-
-      - name: Build Frontend Docker image
-        run: |
-          docker build -t roadstat-frontend ./Frontend
-          docker save roadstat-frontend -o roadstat-frontend.tar
-
-      - name: Transfer Backend image to server
+          docker build -t roadstat .
+          docker save roadstat -o roadstat.tar
+          
+      - name: Transfer image to server
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.AWS_HOST }}
           username: ${{ secrets.AWS_USERNAME }}
           key: ${{ secrets.AWS_SSH_KEY }}
-          source: "roadstat-backend.tar"
-          target: "~/roadstat-backend.tar"
-
-      - name: Transfer Frontend image to server
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.AWS_HOST }}
-          username: ${{ secrets.AWS_USERNAME }}
-          key: ${{ secrets.AWS_SSH_KEY }}
-          source: "roadstat-frontend.tar"
-          target: "~/roadstat-frontend.tar"
+          source: "roadstat.tar"
+          target: "~/roadstat.tar"
 
       - name: Deploy on Server
         env:
@@ -52,16 +38,11 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no $USER@$HOST << 'EOF'
             # Load Docker images
-            docker load -i ~/roadstat-backend.tar
-            docker load -i ~/roadstat-frontend.tar
-
+            docker load -i ~/roadstat.tar
             # Stop any existing containers
-            docker rm -f roadstat-backend || true
-            docker rm -f roadstat-frontend || true
+            docker rm -f roadstat || true
+            docker rm -f roadstat || true
 
-            # Run Backend container
-            docker run -d --name roadstat-backend -p 5000:5000 roadstat-backend  # Adjust backend port as needed
-
-            # Run Frontend container
-            docker run -d --name roadstat-frontend -p 3000:3000 roadstat-frontend  # Adjust frontend port as needed
+            # Run container
+            docker run -p 3000:3000 -p 5173:5173 roadstat
           EOF
