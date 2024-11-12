@@ -5,13 +5,13 @@ FROM node:18
 WORKDIR /app
 
 # Copy the package.json and package-lock.json for frontend dependencies
-COPY Frontend/package*.json ./
+COPY package*.json ./
 
 # Install frontend dependencies
 RUN npm install
 
 # Copy the rest of the frontend source code
-COPY Frontend/ .
+COPY / .
 
 # Build the frontend application for production
 RUN CI=false npm run build
