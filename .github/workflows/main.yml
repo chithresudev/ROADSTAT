@@ -45,4 +45,5 @@ jobs:
       # Step 6: Update ECS service with the new task definition
       - name: Update ECS service
         run: |
-          aws ecs update-service --cluster arn:aws:ecs:ap-south-1:519842164857:cluster/DevCluster --service arn:aws:ecs:ap-south-1:519842164857:service/DevCluster/devclusterservice --task-definition arn:aws:ecs:ap-south-1:519842164857:task/DevCluster/8cf13210d87b444d841d2e02410258aa 
+          aws ecs update-service --cluster DevCluster --service devclusterservice --task-definition arn:aws:ecs:ap-south-1:519842164857:task/DevCluster/8cf13210d87b444d841d2e02410258aa
+
