@@ -31,16 +31,16 @@ jobs:
       # Step 4: Build and push the frontend Docker image
       - name: Build and push frontend Docker image
         run: |
-          docker build -t roadlorry-frontend Frontend
+          docker build -t roadlorry-frontend .
           docker tag roadlorry-frontend:latest 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadlorry:frontend
           docker push 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadlorry:frontend
 
-      # Step 5: Build and push the backend Docker image
-      - name: Build and push backend Docker image
-        run: |
-          docker build -t roadlorry-backend Backend
-          docker tag roadlorry-backend:latest 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadlorry:backend
-          docker push 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadlorry:backend
+      # # Step 5: Build and push the backend Docker image
+      # - name: Build and push backend Docker image
+      #   run: |
+      #     docker build -t roadlorry-backend Backend
+      #     docker tag roadlorry-backend:latest 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadlorry:backend
+      #     docker push 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadlorry:backend
 
       # Step 6: Update ECS service with the new task definition
       - name: Update ECS service
