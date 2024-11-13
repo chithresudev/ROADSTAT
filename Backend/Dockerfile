@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install backend dependencies
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 # Copy the rest of the backend source code
 COPY / .
