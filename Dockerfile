@@ -5,9 +5,9 @@ FROM node:16 AS frontend-build
 WORKDIR /app/frontend
 
 # Install dependencies and build the React app
-COPY ./frontend/package.json ./frontend/package-lock.json ./
+COPY Frontend/package.json Frontend/package-lock.json ./
 RUN npm install
-COPY ./frontend ./
+COPY Frontend ./
 RUN npm run build
 
 # Stage 2: Build the Node.js backend
@@ -17,9 +17,9 @@ FROM node:16 AS backend-build
 WORKDIR /app/backend
 
 # Install backend dependencies
-COPY ./backend/package.json ./backend/package-lock.json ./
+COPY Backend/package.json Backend/package-lock.json ./
 RUN npm install
-COPY ./backend ./
+COPY Backend ./
 
 # Stage 3: Create the final image to run both frontend and backend
 FROM nginx:alpine AS final
