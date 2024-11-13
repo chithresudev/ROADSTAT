@@ -18,21 +18,14 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Build frontend (React)
+      - name: Build (React)
         run: |
           cd client
           npm install
           npm run build
         env:
           NODE_ENV: production
-
-      - name: Build backend (Node/Express)
-        run: |
-          cd server
-          npm install
-        env:
-          NODE_ENV: production
-
+          
       - name: Log in to Amazon ECR
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
