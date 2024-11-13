@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "server": "cd Backend && nodemon server.js",
-    "client": "cd Frontend && npx vite --host",
+    "client": "cd Frontend && vite --host",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cd Frontend && vite build"
   },
@@ -14,6 +14,7 @@
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^9.1.0",
-    "vite": "^5.4.11"
+    "nodemon": "^2.0.22",
+    "vite": "^4.4.9"
   }
 }
