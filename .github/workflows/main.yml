@@ -45,7 +45,4 @@ jobs:
       # Step 6: Update ECS service with the new task definition
       - name: Update ECS service
         run: |
-          aws ecs update-service \
-            --cluster arn:aws:ecs:ap-south-1:519842164857:cluster/DevCluster \
-            --service devclusterservice \
-            --task-definition roadlorry-task
+          aws ecs update-service --cluster arn:aws:ecs:ap-south-1:519842164857:cluster/DevCluster --service devclusterservice --task-definition devclustertask
