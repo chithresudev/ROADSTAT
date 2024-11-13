@@ -1,4 +1,4 @@
-  GNU nano 6.2                                                       Dockerfile                                                                 FROM node:20.9.0
+FROM node:20.9.0
 # RUN addgroup app && adduser -S -G app app
 # USER app
 
@@ -13,3 +13,4 @@ RUN npm install -g nodemon
 EXPOSE 3000
 EXPOSE 5173
 CMD ["npm","run","dev"]
+
