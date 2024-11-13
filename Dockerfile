@@ -15,7 +15,7 @@ RUN cd Frontend && npm install
 # Copy the rest of the application files to the container
 COPY . .
 
-# Install global dependencies (nodemon and concurrently)
+# Install global dependencies (concurrently and nodemon)
 RUN npm install -g nodemon concurrently
 
 # Expose ports for both backend and frontend
