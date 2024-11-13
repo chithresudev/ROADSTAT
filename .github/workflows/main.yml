@@ -22,8 +22,8 @@ jobs:
         run: |
           npm install
           npm run build
-        env:
-          NODE_ENV: production
+        # env:
+        #   NODE_ENV: production
           
       - name: Log in to Amazon ECR
         env:
