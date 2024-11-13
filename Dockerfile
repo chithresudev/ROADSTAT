@@ -8,6 +8,8 @@ WORKDIR /app/frontend
 COPY Frontend/package.json Frontend/package-lock.json ./
 RUN npm install
 
+RUN npm install -g vite
+
 # Copy the rest of the frontend source code
 COPY Frontend ./
 
