@@ -1,51 +1,46 @@
-name: Deploy to AWS ECS
+# Stage 1: Build the React frontend using Vite
+FROM node:16 AS frontend-build
 
-on:
-  push:
-    branches:
-      - main  # Trigger deployment on push to the main branch
+# Set the working directory for frontend build
+WORKDIR /app/frontend
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    environment: production
+# Install dependencies (including Vite)
+COPY Frontend/package.json Frontend/package-lock.json ./
+RUN npm install
 
-    steps:
-      # Step 1: Checkout the code from GitHub
-      - name: Checkout code
-        uses: actions/checkout@v2
+# Copy the rest of the frontend source code
+COPY Frontend ./
 
-      # Step 2: Set up AWS CLI
-      - name: Set up AWS CLI
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-south-1
+# Build the React app for production (Vite)
+RUN npm run build
 
-      # Step 3: Log in to Amazon ECR
-      - name: Log in to Amazon ECR
-        run: |
-          aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 519842164857.dkr.ecr.ap-south-1.amazonaws.com
+# Stage 2: Build the Node.js backend
+FROM node:16 AS backend-build
 
-      # Step 4: Build and push the frontend Docker image
-      - name: Build and push frontend Docker image
-        run: |
-          docker build -t roadlorry-frontend .
-          docker tag roadlorry-frontend:latest 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadlorry:frontend
-          docker push 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadlorry:frontend
+# Set the working directory for backend build
+WORKDIR /app/backend
 
-      # # Step 5: Build and push the backend Docker image
-      # - name: Build and push backend Docker image
-      #   run: |
-      #     docker build -t roadlorry-backend Backend
-      #     docker tag roadlorry-backend:latest 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadlorry:backend
-      #     docker push 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadlorry:backend
+# Install backend dependencies
+COPY Backend/package.json Backend/package-lock.json ./
+RUN npm install
 
-      # Step 6: Update ECS service with the new task definition
-      - name: Update ECS service
-        run: |
-          aws ecs update-service \
-            --cluster arn:aws:ecs:ap-south-1:519842164857:cluster/DevCluster \
-            --service devclusterservice \
-            --task-definition roadlorry-task
+# Copy the rest of the backend source code
+COPY Backend ./
+
+# Stage 3: Create the final image to run both frontend and backend
+FROM nginx:alpine AS final
+
+# Copy React build files to Nginx server
+COPY --from=frontend-build /app/frontend/dist /usr/share/nginx/html
+
+# Set the working directory for the backend
+WORKDIR /app
+
+# Copy backend app to the final image
+COPY --from=backend-build /app/backend /app/backend
+
+# Expose the ports for frontend (80 for Nginx) and backend (3000 for Node.js)
+EXPOSE 80 3000
+
+# Start both frontend (Nginx) and backend (Node.js) servers
+CMD ["sh", "-c", "nohup node /app/backend/server.js & nginx -g 'daemon off;'"]
