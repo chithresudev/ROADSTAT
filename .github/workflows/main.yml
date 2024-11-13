@@ -28,45 +28,21 @@ jobs:
         run: |
           aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 519842164857.dkr.ecr.ap-south-1.amazonaws.com
 
-      # Step 4: Build and push the Docker image
-      - name: Build and push Docker image
+      # Step 4: Build and push the frontend Docker image
+      - name: Build and push frontend Docker image
         run: |
           docker build -t roadlorry .
           docker tag roadlorry:latest 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadlorry:latest
           docker push 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadlorry:latest
 
-      # Step 5: Update ECS service with the new task definition
-      - name: Register new task definition and update service
-        env:
-          ECR_IMAGE: "519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadlorry:latest"
-          ECS_CLUSTER_ARN: "arn:aws:ecs:ap-south-1:519842164857:cluster/DevCluster"
-          ECS_SERVICE_NAME: "devclusterservice"
-          ECS_TASK_FAMILY: "roadlorry"
+      # # Step 5: Build and push the backend Docker image
+      # - name: Build and push backend Docker image
+      #   run: |
+      #     docker build -t roadlorry-backend Backend
+      #     docker tag roadlorry-backend:latest 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadlorry:backend
+      #     docker push 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadlorry:backend
+
+      # Step 6: Update ECS service with the new task definition
+      - name: Update ECS service
         run: |
-          # Describe the existing task definition and prepare a new revision with updated image
-          TASK_DEF=$(aws ecs describe-task-definition --task-definition $ECS_TASK_FAMILY)
-          
-          NEW_TASK_DEF=$(echo "$TASK_DEF" | jq --arg IMAGE "$ECR_IMAGE" '
-            .taskDefinition |
-            {
-              family: .family,
-              containerDefinitions: (.containerDefinitions | map(.image = $IMAGE)),
-              taskRoleArn: .taskRoleArn,
-              executionRoleArn: .executionRoleArn,
-              networkMode: .networkMode,
-              requiresCompatibilities: .requiresCompatibilities,
-              cpu: .cpu,
-              memory: .memory
-            }')
-
-          # Save the updated task definition to JSON
-          echo "$NEW_TASK_DEF" > new-task-definition.json
-
-          # Register the new task definition revision
-          aws ecs register-task-definition --cli-input-json file://new-task-definition.json
-
-          # Retrieve the latest task definition ARN
-          LATEST_TASK_DEF_ARN=$(aws ecs describe-task-definition --task-definition $ECS_TASK_FAMILY --query 'taskDefinition.taskDefinitionArn' --output text)
-
-          # Update ECS service to use the new task definition revision
-          aws ecs update-service --cluster $ECS_CLUSTER_ARN --service $ECS_SERVICE_NAME --task-definition "$LATEST_TASK_DEF_ARN"
+          aws ecs update-service --cluster arn:aws:ecs:ap-south-1:519842164857:cluster/DevCluster --service arn:aws:ecs:ap-south-1:519842164857:service/DevCluster/devclusterservice --task-definition arn:aws:ecs:ap-south-1:519842164857:task/DevCluster/8cf13210d87b444d841d2e02410258aa 
