@@ -4,22 +4,22 @@ FROM node:22.9.0
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy and install dependencies for the backend
+# Copy package.json files for backend and frontend
 COPY Backend/package*.json ./Backend/
-RUN cd Backend && npm install
-
-# Copy and install dependencies for the frontend
 COPY Frontend/package*.json ./Frontend/
+
+# Install dependencies for backend and frontend
+RUN cd Backend && npm install
 RUN cd Frontend && npm install
 
 # Copy the rest of the application files to the container
 COPY . .
 
-# Install nodemon globally (optional for development)
-RUN npm install -g nodemon
+# Install global dependencies (nodemon and concurrently)
+RUN npm install -g nodemon concurrently
 
-# Expose ports needed for both applications
+# Expose ports for both backend and frontend
 EXPOSE 3000 5173
 
-# Start the application in development mode
+# Start the application in development mode (concurrently runs both backend and frontend)
 CMD ["npm", "run", "dev"]
