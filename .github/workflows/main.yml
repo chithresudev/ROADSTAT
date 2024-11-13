@@ -1,54 +1,51 @@
-name: CI/CD Pipeline to AWS ECS
+name: Deploy to AWS ECS
 
 on:
   push:
     branches:
-      - main
+      - main  # Trigger deployment on push to the main branch
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
+    environment: production
 
     steps:
+      # Step 1: Checkout the code from GitHub
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      # Step 2: Set up AWS CLI
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          node-version: '22'
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-south-1
 
-      - name: Clear npm cache
-        run: |
-          npm cache clean --force
-
-      - name: Build (React)
-        run: |
-          cd Frontend
-          npm install --legacy-peer-deps
-          CI=false npm run build
-          
+      # Step 3: Log in to Amazon ECR
       - name: Log in to Amazon ECR
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ap-south-1
         run: |
-          aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$AWS_REGION.amazonaws.com
+          aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 519842164857.dkr.ecr.ap-south-1.amazonaws.com
 
-      - name: Build and tag Docker images
+      # Step 4: Build and push the frontend Docker image
+      - name: Build and push frontend Docker image
         run: |
-          docker build -t roadlorry .
-          docker tag roadlorry:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com/roadlorry:latest
+          docker build -t roadlorry-frontend ./frontend
+          docker tag roadlorry-frontend:latest 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadlorry:frontend
+          docker push 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadlorry:frontend
 
-      - name: Push Docker images to Amazon ECR
+      # Step 5: Build and push the backend Docker image
+      - name: Build and push backend Docker image
         run: |
-          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com/roadlorry:latest
+          docker build -t roadlorry-backend ./backend
+          docker tag roadlorry-backend:latest 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadlorry:backend
+          docker push 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadlorry:backend
 
-      - name: Deploy to Amazon ECS
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ap-south-1
+      # Step 6: Update ECS service with the new task definition
+      - name: Update ECS service
         run: |
-          aws ecs update-service --cluster DevCluster --service devclusterservice --force-new-deployment
+          aws ecs update-service \
+            --cluster arn:aws:ecs:ap-south-1:519842164857:cluster/DevCluster \
+            --service devclusterservice \
+            --task-definition roadlorry-task
