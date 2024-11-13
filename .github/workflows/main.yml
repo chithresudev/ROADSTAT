@@ -37,26 +37,23 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: us-west-2
+          AWS_REGION: ap-south-1
         run: |
           aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$AWS_REGION.amazonaws.com
 
       - name: Build and tag Docker images
         run: |
-          docker build -t my-app-client:latest -f client/Dockerfile .
-          docker build -t my-app-server:latest -f server/Dockerfile .
-          docker tag my-app-client:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$AWS_REGION.amazonaws.com/my-app-client:latest
-          docker tag my-app-server:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$AWS_REGION.amazonaws.com/my-app-server:latest
+          docker build -t roadlorry .
+          docker tag roadlorry:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com/roadlorry:latest
 
       - name: Push Docker images to Amazon ECR
         run: |
-          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$AWS_REGION.amazonaws.com/my-app-client:latest
-          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$AWS_REGION.amazonaws.com/my-app-server:latest
-
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com/roadlorry:latest
+          
       - name: Deploy to Amazon ECS
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: us-west-2
+          AWS_REGION: ap-south-1
         run: |
-          aws ecs update-service --cluster my-app-cluster --service my-app-service --force-new-deployment
+          aws ecs update-service --cluster DevCluster --service devclusterservice --force-new-deployment
