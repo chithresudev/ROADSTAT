@@ -31,9 +31,9 @@ jobs:
       # Step 4: Build and push the frontend Docker image
       - name: Build and push frontend Docker image
         run: |
-          docker build -t roadlorry .
-          docker tag roadlorry:latest 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadlorry:latest
-          docker push 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadlorry:latest
+          docker build -t reactapp .
+          docker tag reactapp:latest 519842164857.dkr.ecr.ap-south-1.amazonaws.com/reactapp:latest
+          docker push 519842164857.dkr.ecr.ap-south-1.amazonaws.com/reactapp:latest
 
       # # Step 5: Build and push the backend Docker image
       # - name: Build and push backend Docker image
@@ -45,5 +45,5 @@ jobs:
       # Step 6: Update ECS service with the new task definition
       - name: Update ECS service
         run: |
-            aws ecs update-service --cluster DevCluster --service devclusterservice --task-definition devclustertask
+            aws ecs update-service --cluster reactappcluster --service reactappservice --task-definition reactapp
 
