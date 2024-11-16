@@ -9,13 +9,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: production
-
     steps:
-      # Step 1: Checkout the code from GitHub
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Step 2: Set up AWS CLI
       - name: Set up AWS CLI
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -23,27 +20,28 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-south-1
 
-      # Step 3: Log in to Amazon ECR
       - name: Log in to Amazon ECR
         run: |
           aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 519842164857.dkr.ecr.ap-south-1.amazonaws.com
 
-      # Step 4: Build and push the frontend Docker image
       - name: Build and push frontend Docker image
         run: |
-          docker build -t reactapp .
-          docker tag reactapp:latest 519842164857.dkr.ecr.ap-south-1.amazonaws.com/reactapp:latest
-          docker push 519842164857.dkr.ecr.ap-south-1.amazonaws.com/reactapp:latest
+          docker build -t roadstat .
+          docker tag roadstat:latest 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadstat:latest
+          docker push 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadstat:latest
 
-      # # Step 5: Build and push the backend Docker image
-      # - name: Build and push backend Docker image
-      #   run: |
-      #     docker build -t roadlorry-backend Backend
-      #     docker tag roadlorry-backend:latest 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadlorry:backend
-      #     docker push 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadlorry:backend
-
-      # Step 6: Update ECS service with the new task definition
-      - name: Update ECS service
+      - name: Deploy to EC2
         run: |
-            aws ecs update-service --cluster reactappcluster --service reactappservice --task-definition reactapp
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_SSH_KEY }} ubuntu@43.205.99.110 << 'EOF'
+            # Pull the new image from ECR
+            aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 519842164857.dkr.ecr.ap-south-1.amazonaws.com
 
+            # Pull the latest image
+            docker pull 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadstat:latest
+
+            # Stop any running containers
+            docker ps -q -f ancestor=519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadstat:latest | xargs -r docker stop
+
+            # Run the new container
+            docker run -d -p 80:80 -p 3000:3000 -p 5173:5173 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadstat:latest
+          EOF
