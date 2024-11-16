@@ -27,6 +27,9 @@ RUN cd Frontend && npm install
 # Install nodemon globally
 RUN npm install -g nodemon
 
+# Install nodemon globally
+RUN npm install concurrently --save-dev
+
 # Expose application ports
 EXPOSE 3000
 EXPOSE 5173
