@@ -32,7 +32,7 @@ jobs:
 
       - name: Deploy to EC2
         run: |
-          ssh -o StrictHostKeyChecking=no -i ${{ secrets.AWS_NEW_SSH_KEY }} ubuntu@43.205.99.110 \
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.AWS_SSH_KEY }} ubuntu@43.205.99.110 \
             "export AWS_REGION=ap-south-1 && \
              aws ecr get-login-password --region \$AWS_REGION | docker login --username AWS --password-stdin 519842164857.dkr.ecr.ap-south-1.amazonaws.com && \
              docker pull 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadstat:latest && \
