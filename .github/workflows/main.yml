@@ -26,7 +26,7 @@ jobs:
 
       - name: Build and push frontend Docker image
         run: |
-          docker build -t roadstat ./Frontend
+          docker build -t roadstat .
           docker tag roadstat:latest 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadstat:latest
           docker push 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadstat:latest
 
