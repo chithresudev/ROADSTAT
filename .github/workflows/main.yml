@@ -32,7 +32,7 @@ jobs:
 
       - name: Deploy to EC2
         run: |
-          ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_SSH_KEY }} ubuntu@43.205.99.110 << 'EOF'
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.AWS_NEW_SSH_KEY }} ubuntu@43.205.99.110 << 'EOF'
             # Set AWS CLI environment variables (to ensure the region is correct)
             export AWS_REGION=ap-south-1
 
