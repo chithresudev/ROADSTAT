@@ -1,0 +1,50 @@
+name: Deploy to AWS ECS
+
+on:
+  push:
+    branches:
+      - main  # Trigger deployment on push to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-south-1
+
+      - name: Log in to Amazon ECR
+        run: |
+          aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 519842164857.dkr.ecr.ap-south-1.amazonaws.com
+
+      - name: Build and push frontend Docker image
+        run: |
+          docker build -t roadstat .
+          docker tag roadstat:latest 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadstat:latest
+          docker push 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadstat:latest
+
+      - name: Deploy to EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.AWS_NEW_SSH_KEY }} ubuntu@43.205.99.110 << 'EOF'
+            # Set AWS CLI environment variables (to ensure the region is correct)
+            export AWS_REGION=ap-south-1
+
+            # Log in to ECR
+            aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin 519842164857.dkr.ecr.ap-south-1.amazonaws.com
+
+            # Pull the latest image from ECR
+            docker pull 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadstat:latest
+
+            # Stop and remove any running containers using the old image
+            docker ps -q -f ancestor=519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadstat:latest | xargs -r docker stop | xargs -r docker rm
+
+            # Run the new container (ensure port mapping and other settings are correct)
+            docker run -d -p 80:80 -p 3000:3000 -p 5173:5173 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadstat:latest
+          EOF
