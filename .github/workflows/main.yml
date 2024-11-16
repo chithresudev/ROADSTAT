@@ -26,22 +26,25 @@ jobs:
 
       - name: Build and push frontend Docker image
         run: |
-          docker build -t roadstat .
+          docker build -t roadstat ./Frontend
           docker tag roadstat:latest 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadstat:latest
           docker push 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadstat:latest
 
       - name: Deploy to EC2
         run: |
           ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_SSH_KEY }} ubuntu@43.205.99.110 << 'EOF'
-            # Pull the new image from ECR
-            aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 519842164857.dkr.ecr.ap-south-1.amazonaws.com
+            # Set AWS CLI environment variables (to ensure the region is correct)
+            export AWS_REGION=ap-south-1
 
-            # Pull the latest image
+            # Log in to ECR
+            aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin 519842164857.dkr.ecr.ap-south-1.amazonaws.com
+
+            # Pull the latest image from ECR
             docker pull 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadstat:latest
 
-            # Stop any running containers
-            docker ps -q -f ancestor=519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadstat:latest | xargs -r docker stop
+            # Stop and remove any running containers using the old image
+            docker ps -q -f ancestor=519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadstat:latest | xargs -r docker stop | xargs -r docker rm
 
-            # Run the new container
+            # Run the new container (ensure port mapping and other settings are correct)
             docker run -d -p 80:80 -p 3000:3000 -p 5173:5173 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadstat:latest
           EOF
