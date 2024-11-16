@@ -37,7 +37,9 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i aws-ec2-key.pem ubuntu@43.205.99.110 << 'EOF'
             export AWS_REGION=ap-south-1 && \
             aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin 519842164857.dkr.ecr.ap-south-1.amazonaws.com && \
+            docker images | grep '519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadstat' | awk '{print $3}' | xargs -r docker rmi
             docker pull 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadstat:latest && \
+            docker ps | grep '5173' | awk '{print $1}' | xargs -r docker stop
             docker ps -q -f ancestor=519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadstat:latest | xargs -r docker stop | xargs -r docker rm && \
             docker run -d -p 80:80 -p 3000:3000 -p 5173:5173 519842164857.dkr.ecr.ap-south-1.amazonaws.com/roadstat:latest
           EOF
