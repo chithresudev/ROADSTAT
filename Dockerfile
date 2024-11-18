@@ -3,7 +3,7 @@ FROM node:20.9.0
 
 # Set environment variables
 ENV VITE_MONGO_URL="mongodb+srv://gokaddalUser:gokaddal_pass@gokaddal.qicnveb.mongodb.net/roadstat?retryWrites=true&w=majority&appName=Gokaddal"
-ENV JWT_SECRET="fake-jwt-token."
+ENV JWT_SECRET="fake-jwt-token"
 ENV VITE_API_URL="http://3.91.228.87:3000/api"
 ENV VITE_GOOGLE_MAP_API="AIzaSyBSZ3Eyv8164jlCMU5eChvG9ZQ7_E-52Fk"
 ENV VITE_OPEN_WEATHER_API="d2a641017dd53f2f6698656f593251ca"
