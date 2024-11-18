@@ -40,5 +40,5 @@ jobs:
             docker pull 264427725539.dkr.ecr.us-east-1.amazonaws.com/myecr-repo:latest && \
             docker ps | grep '5173' | awk '{print $1}' | xargs -r docker stop
             docker ps -q -f ancestor=264427725539.dkr.ecr.us-east-1.amazonaws.com/myecr-repo:latest | xargs -r docker stop | xargs -r docker rm && \
-            docker run -d -p 80:80 -p 3000:3000 -p 5173:5173 264427725539.dkr.ecr.us-east-1.amazonaws.com/myecr-repo:latest
+            docker run -d -p 80:5173 -p 3000:3000 -p 5173:5173 264427725539.dkr.ecr.us-east-1.amazonaws.com/myecr-repo:latest
           EOF
