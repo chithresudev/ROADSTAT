@@ -1,72 +1,44 @@
-name: Deploy to AWS
+name: Deploy to AWS ECS
 
 on:
   push:
-    branches: main
-  pull_request:
+    branches:
+      - main  # Trigger deployment on push to the main branch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '14'
-      - name: Create .env file
-        run: |
-          touch .env
-          echo VITE_MONGO_URL='mongodb+srv://${{ secrets.MONGODB_USER }}:${{ secrets.MONGODB_PASS }}@gokaddal.qicnveb.mongodb.net/${{ secrets.DB_NAME }}?retryWrites=true&w=majority&appName=${{ secrets.MONGODB_NAME }}' >> .env
-          echo VITE_API_URL=${{ secrets.BACKEND_API }} >> .env
-          echo VITE_GOOGLE_MAP_API=${{ secrets.GOOGLE_MAP_API_KEY }} >> .env
-          echo VITE_OPEN_WEATHER_API=${{ secrets.OPEN_WEATHER }} >> .env
-          echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
-          echo EMAIL_USER=${{ secrets.EMAIL_USER }} >> .env
-          echo EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }} >> .env
-          echo SMTP_HOST=${{ secrets.SMTP_HOST }} >> .env
-          echo SMTP_PORT=465 >> .env
-          echo SMTP_SECURE=true >> .env
-          cat .env
-          cp .env Backend/
-          cp .env Frontend/
-      - name: Build
-        run: |
-          npm install
-
-  deploy-to-aws:
-    needs: deploy
-    runs-on: ubuntu-latest
+    environment: production
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Install unzip
-        run: sudo apt-get install -y unzip
-      - name: Install AWS CLI
-        run: |
-          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-          unzip awscliv2.zip
-          sudo ./aws/install --update
-      - uses: aws-actions/configure-aws-credentials@v4
-        name: Configure AWS credentials
+        uses: actions/checkout@v2
+
+      - name: Set up AWS CL
+        uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_A }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_A }}
-          aws-region: 'us-east-1'
-      - name: Login to AWS ECR
+          aws-region: us-east-1
+
+      - name: Log in to Amazon ECR
         run: |
-          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.MY_ECR_REPO }}
-        env:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_A }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_A }}
-      - name: Build Docker Image
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 264427725539.dkr.ecr.us-east-1.amazonaws.com
+      - name: Build and push frontend Docker image
         run: |
-          docker build -t roadstat .
-      - name: Tag and Push Docker Image
-        if: github.ref == 'refs/heads/main'
+          docker build -t myecr-repo .
+          docker tag myecr-repo:latest 264427725539.dkr.ecr.us-east-1.amazonaws.com/myecr-repo:latest
+          docker push 264427725539.dkr.ecr.us-east-1.amazonaws.com/myecr-repo:latest
+
+      - name: Deploy to EC2
         run: |
-          docker tag roadstat:latest ${{ secrets.MY_ECR_REPO }}:latest
-          docker push ${{ secrets.MY_ECR_REPO }}:latest
-      - name: Deploy to AWS ECS
-        if: github.ref == 'refs/heads/main'
-        run: |
-          aws ecs update-service --cluster ${{ secrets.ROADSTAT_CLUSTER_NAME_A }} --service ${{ secrets.ROADSTAT_SERVICE_NAME_A }} --force-new-deployment
+          echo "${{ secrets.AWS_NEW_SSH_KEY }}" > aws-ec2-key.pem
+          chmod 600 aws-ec2-key.pem
+          ssh -o StrictHostKeyChecking=no -i aws-ec2-key.pem ubuntu@3.91.228.87 << 'EOF'
+            export AWS_REGION=us-east-1 && \
+            aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin 264427725539.dkr.ecr.us-east-1.amazonaws.com && \
+            docker images | grep '264427725539.dkr.ecr.us-east-1.amazonaws.com/myecr-repo' | awk '{print $3}' | xargs -r docker rmi
+            docker pull 264427725539.dkr.ecr.us-east-1.amazonaws.com/myecr-repo:latest && \
+            docker ps | grep '5173' | awk '{print $1}' | xargs -r docker stop
+            docker ps -q -f ancestor=264427725539.dkr.ecr.us-east-1.amazonaws.com/myecr-repo:latest | xargs -r docker stop | xargs -r docker rm && \
+            docker run -d -p 80:80 -p 3000:3000 -p 5173:5173 264427725539.dkr.ecr.us-east-1.amazonaws.com/myecr-repo:latest
+          EOF
