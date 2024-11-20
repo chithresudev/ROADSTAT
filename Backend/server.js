@@ -18,6 +18,7 @@ app.use(express.urlencoded({ extended: true}));
 import userRouter from './src/Routes/userRoute.js';
 import authRouter from './src/Routes/authRoute.js';
 import roleRouter from './src/Routes/roleRoute.js';
+import alertsRouter from './src/Routes/alertsRoute.js';
 import collisionHistoryRouter from './src/Routes/collisionHistoryRoute.js';
 import destinationRouter from './src/Routes/destinationRoute.js';
 import driverRouter from './src/Routes/driverRoute.js';
@@ -46,6 +47,7 @@ app.get('/api', (req, res) => {
 app.use('/api/auth', authRouter)
 app.use('/api/user', userRouter);
 app.use('/api/roles', roleRouter);
+app.use('/api/alerts', alertsRouter);
 app.use('/api/collision-history', collisionHistoryRouter);
 app.use('/api/destinations', destinationRouter); 
 app.use('/api/driver-health', driverHealthRouter); 
