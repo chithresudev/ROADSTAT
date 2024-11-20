@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 const { models, model, Schema } = mongoose;
 
 const BatteryStatusSchema = new Schema({
-    _id: { type: String },
     truckId: { type: String, ref: 'Truck' },
     truckName: {type:String},
     batteryVoltage: { type: Number },

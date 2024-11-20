@@ -36,7 +36,6 @@ export const getTransmissionById = async (req, res) => {
 export const addTransmission = async (req, res) => {
     try {
         const {
-            _id,
             truckId,
             COlevel,
             NOXlevel,
@@ -44,7 +43,6 @@ export const addTransmission = async (req, res) => {
             status
         } = req.body;
         const transmission = await Transmission.create({
-            _id,
             truckId,
             COlevel,
             NOXlevel,

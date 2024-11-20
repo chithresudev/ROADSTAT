@@ -36,7 +36,6 @@ export const getBatteryStatusById = async (req, res) => {
 export const addBatteryStatus = async (req, res) => {
     try {
         const {
-            _id,
             truckId,
             truckName,
             batteryVoltage,
@@ -45,7 +44,6 @@ export const addBatteryStatus = async (req, res) => {
             lastReplace
         } = req.body;
         const batteryStatus = await BatteryStatus.create({
-            _id,
             truckId,
             truckName,
             batteryVoltage,

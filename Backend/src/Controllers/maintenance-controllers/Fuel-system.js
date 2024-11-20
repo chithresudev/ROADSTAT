@@ -36,7 +36,6 @@ export const getFuelSystemById = async (req, res) => {
 export const addFuelSystem = async (req, res) => {
     try {
         const {
-            _id,
             truckId,
             truckName,
             fuelLevel,
@@ -44,7 +43,6 @@ export const addFuelSystem = async (req, res) => {
             fuelEfficiency
         } = req.body;
         const fuelSystem = await FuelSystem.create({
-            _id,
             truckId,
             truckName,
             fuelLevel,

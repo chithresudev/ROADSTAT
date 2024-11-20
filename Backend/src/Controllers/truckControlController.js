@@ -28,11 +28,11 @@ export const getTruckControlDetailsById = async (req, res) => {
 
 export const createTruckControlDetails = async (req, res) => {
   try {
-    const { _id, truckId, status, speed, fuelLevel, fuelPressure, engineTemp, COLevel, NOXLevel, HCLevel, tirePressure, brakeHealth, batteryHealth } = req.body;
-    const truckControlDetail = await TruckControl.create({ _id, truckId, status, speed, fuelLevel, fuelPressure, engineTemp, COLevel, NOXLevel, HCLevel, tirePressure, brakeHealth, batteryHealth });
+    const {truckId, status, speed, fuelLevel, fuelPressure, engineTemp, COLevel, NOXLevel, HCLevel, tirePressure, brakeHealth, batteryHealth } = req.body;
+    const truckControlDetail = await TruckControl.create({truckId, status, speed, fuelLevel, fuelPressure, engineTemp, COLevel, NOXLevel, HCLevel, tirePressure, brakeHealth, batteryHealth });
 
     // Now, call /metrics/:truckId endpoint
-    const metricsResponse = await fetch(`${apiUrl}/metrics/${truckId}`, {
+    const metricsResponse = await fetch(`${apiUrl}/truck-metrics/metrics/${truckId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -44,7 +44,8 @@ export const createTruckControlDetails = async (req, res) => {
     });
 
     if (!metricsResponse.ok) {
-      throw new Error('Failed to post to /metrics/:truckId');
+      const errorResponse = await metricsResponse.text(); // Capture error response body
+      throw new Error('Failed to post to /metrics/:truckId: ' + errorResponse);
     }
 
     const metricsData = await metricsResponse.json();

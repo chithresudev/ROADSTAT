@@ -26,8 +26,8 @@ export const getDriverById = async (req, res) => {
 
 export const addDriver = async (req, res) => {
     try {
-        const { _id, driverId, driverName, knownHealthIssues, experience, status } = req.body;
-        const driverDetail = await Driver.create({ _id, driverId, driverName, knownHealthIssues, experience, status });
+        const { driverId, driverName, knownHealthIssues, experience, status } = req.body;
+        const driverDetail = await Driver.create({ driverId, driverName, knownHealthIssues, experience, status });
         res.json(driverDetail);
     } catch (error) {
         console.error('Error adding driver:', error);

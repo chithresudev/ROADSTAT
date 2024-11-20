@@ -26,8 +26,8 @@ export const getDriverHealthDetailsById = async (req, res) => {
 
 export const addDriverHealthDetails = async (req, res) => {
     try {
-        const { _id, driverId, heartRate, fatigueLevel, bodyTemp, hydrationLevel, stressLevel, healthStatus } = req.body;
-        const driverHealthDetail = await DriverHealth.create({ _id, driverId, heartRate, fatigueLevel, bodyTemp, hydrationLevel, stressLevel, healthStatus });
+        const {driverId, heartRate, fatigueLevel, bodyTemp, hydrationLevel, stressLevel, healthStatus } = req.body;
+        const driverHealthDetail = await DriverHealth.create({driverId, heartRate, fatigueLevel, bodyTemp, hydrationLevel, stressLevel, healthStatus });
         res.json(driverHealthDetail);
     } catch (error) {
         console.error('Error adding driver health details:', error);

@@ -36,7 +36,6 @@ export const getEngineHealthById = async (req, res) => {
 export const addEngineHealth = async (req, res) => {
     try {
         const {
-            _id,
             truckId,
             RPM,
             engineTemperature,
@@ -45,7 +44,6 @@ export const addEngineHealth = async (req, res) => {
             status
         } = req.body;
         const engine = await EngineHealth.create({
-            _id,
             truckId,
             RPM,
             engineTemperature,

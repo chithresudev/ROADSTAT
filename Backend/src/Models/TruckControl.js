@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 const { models, model, Schema } = mongoose;
 
 const TruckControlSchema = new Schema({
-  _id: { type: String },
   truckId: { type: String, ref: 'Truck' },
   status: { type: String },
   speed: { type: Number },

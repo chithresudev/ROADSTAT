@@ -36,7 +36,6 @@ export const getBrakeSystemById = async (req, res) => {
 export const addBrakeSystem = async (req, res) => {
     try {
         const {
-            _id,
             truckId,
             truckName,
             padWear,
@@ -45,7 +44,6 @@ export const addBrakeSystem = async (req, res) => {
             absStatus
         } = req.body;
         const brake = await BrakeSystem.create({
-            _id,
             truckId,
             truckName,
             padWear,
