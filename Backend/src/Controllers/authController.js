@@ -4,7 +4,7 @@ import nodemailer from 'nodemailer'
 import {User} from '../Models/User.js'
 import dotenv from 'dotenv'
 dotenv.config()
-const { EMAIL_PASSWORD, EMAIL_USER, JWT_SECRET, SMTP_HOST, SMTP_SECURE, SMTP_PORT } = process.env
+const { EMAIL_PASSWORD, EMAIL_USER, JWT_SECRET, SMTP_HOST, SMTP_SECURE, SMTP_PORT, VITE_API_URL } = process.env
 
 const transporter = nodemailer.createTransport({
   host: SMTP_HOST,
@@ -33,22 +33,17 @@ const register = async (req, res) => {
       return res.status(409).json({message: "Some fields are empty"})
     }
 
-    // Convert email and username to lowercase
     const lowerCaseEmail = email.toLowerCase();
     const lowerCaseUsername = username.toLowerCase();
 
-    // Check if email/username already exists
     const existingUser = await User.findOne({ $or : [{email: lowerCaseEmail}, {username: username}] });
     if (existingUser) {
       return res.status(409).json({ message: 'Email or username already taken' });
     }
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Generate a random verification code
-    const verificationCode = Math.floor(100000 + Math.random() * 900000).toString(); // Generate a 6-digit code
-
+    const verificationToken = jwt.sign({ email: lowerCaseEmail }, JWT_SECRET, { expiresIn: '48h' });
 
     const user = new User({
       firstName,
@@ -58,13 +53,14 @@ const register = async (req, res) => {
       password: hashedPassword,
       phoneNumber,
       userType: userType,
-      verificationCode,
+      verificationToken,
     });
 
     // Save user to database
     await user.save();
     
-    // Send the verification code to the user's email
+    // Send the verification link to the user's email
+    const verificationUrl = `${VITE_API_URL}/auth/verify?token=${verificationToken}`;
     const mailOptions = {
       from: EMAIL_USER,
       to: user.email,
@@ -74,9 +70,9 @@ const register = async (req, res) => {
           <body style="font-family: Arial, sans-serif; color: #333; padding: 20px;">
             <h2>Welcome to ROADSTAT!</h2>
             <p>Hi ${user.firstName} ${user.lastName},</p>
-            <p>Thank you for registering with us. To complete your registration process, please verify your email address using the 6-digit code below:</p>
-            <h3>${verificationCode}</h3>
-            <p>Please enter this code on the verification page to activate your account. If you didn't request this email, please ignore it.</p>
+            <p>Thank you for registering with us. To complete your registration process, please verify your email by clicking the link below:</p>
+            <a href="${verificationUrl}" style="color: #007bff;">Verify Email</a>
+            <p>This link will expire in 24 hours. If you didn’t request this email, please ignore it.</p>
             <p>If you have any questions or need assistance, feel free to contact our support team.</p><br/>
             <p>Best regards,<br/>The Roadstat Team.</p><br/>
             <p style="font-size: 12px; color: #777;">&copy; 2024. ROADSTAT. All rights reserved.</p>
@@ -97,21 +93,24 @@ const register = async (req, res) => {
 
 const verifyEmail = async (req, res) => {
   try {
-    if(!(req.body.email && req.body.verificationCode)){ 
-      return res.status(409).json({message: "Some fields are empty"})
-    }
-    const user = await User.findOne({ email: req.body.email });
+    const {token} = req.query;
 
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
+    if (!token)
+      return res.status(400).json({ message: 'Invalid or missing verification token', success: false });
 
-    if (req.body.verificationCode !== user.verificationCode) {
-      return res.status(400).json({ message: 'Invalid verification code' });
-    }
+    const decoded = jwt.verify(token, JWT_SECRET);
+    if (!decoded) 
+      return res.status(400).json({ message: 'Invalid or expired verification token', success: false});
 
-    user.verificationCode = null; // Clear the verification code
+    const user = await User.findOne({ email: decoded.email });
+    if (!user)
+      return res.status(404).json({ message: 'User not found', success: false });
+
+    if(user.isVerified)
+      return res.status(400).json({ message: 'Email already verified', success: false });
+
     user.isVerified = true; // Mark the user as verified
+    user.verificationToken = null; // Clear the verification code
     await user.save();
 
     // Send a confirmation email using Nodemailer
@@ -138,9 +137,11 @@ const verifyEmail = async (req, res) => {
 
     res.status(200).json({ message: 'Email verified successfully', success: true });
   } catch (error) {
+    console.error('Error verifying email:', error);
     return res.status(500).json({ message: 'Internal server error' + error.message, success: false });
   }
 };
+
 
 const login = async (req, res) => {
   try {
@@ -152,7 +153,12 @@ const login = async (req, res) => {
     // Check if user exists
     const user = await User.findOne({ $or : [{email: email}, {username: username}] });
     if (!user) {
-      return res.status(401).json({ message: 'Email not registered. Please sign up.' });
+      return res.status(401).json({ message: 'User not found. Please sign up.' });
+    }
+
+    // Check if user is verified
+    if (!user.isVerified) {
+      return res.status(403).json({ message: 'Your account is not verified. Please check your email to verify your account or click the button below to resend the verification email.', resend: true })
     }
 
     // Check password
@@ -164,11 +170,51 @@ const login = async (req, res) => {
     // Generate JWT token
     const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '72h' });
 
-    const userId = user._id;
-    res.status(200).json({ message: 'Login successful.',  success: true, token, userId });
+    res.status(200).json({ message: 'Login successful.',  success: true, token, userId: user._id });
   } catch (error) {
     return res.status(500).json({ message: 'Internal server error: ' + error.message, success: false });
   }
 };
 
-export { register, login, verifyEmail };
+// Resend verification email
+const resendVerificationEmail = async (req, res) => {
+  try{
+      const { email } = req.body;
+
+      const user = await User.findOne({ email: email.toLowerCase() });
+
+      if (!user)
+        return res.status(404).json({ message: 'User not found' });
+
+      if (user.isVerified)
+        return res.status(400).json({ message: 'Email is already verified' });
+
+      const verificationToken = jwt.sign({ email: user.email }, JWT_SECRET, { expiresIn: '48h' });
+      user.verificationToken = verificationToken;
+      await user.save();
+
+      const verificationUrl = `${VITE_API_URL}/auth/verify?token=${verificationToken}`;
+      const mailOptions = {
+        from: EMAIL_USER,
+        to: user.email,
+        subject: 'Resend Email Verification',
+        html:  `
+          <html>
+            <body style="font-family: Arial, sans-serif; color: #333; padding: 20px;">
+              <h2>Email Verification</h2>
+              <p>Please verify your email by clicking the link below:</p>
+              <a href="${verificationUrl}" style="color: #007bff;">Verify Email</a>
+              <p>This link will expire in 24 hours.</p>
+              <p>Best regards,<br/>The Roadstat Team.</p>
+            </body>
+          </html>
+        `,
+    }
+    await transporter.sendMail(mailOptions);
+    res.status(200).json({ message: 'Verification email resent successfully', success: true });
+  } catch(error){
+    return res.status(500).json({ message: 'Internal server error: ' + error.message, success: false });
+  }
+}
+
+export { register, login, verifyEmail, resendVerificationEmail };
