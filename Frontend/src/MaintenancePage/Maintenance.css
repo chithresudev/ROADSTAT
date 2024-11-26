@@ -1,15 +1,179 @@
-.ma-main{
-    padding-top: 95px;
+.maintenance-main {
+  top: 20%;
+  height: 80%;
+  position: absolute;
+  width: 100%;
+  left: 0;
 }
-.m-topcards{
+.maintenance-topcards {
+  margin-top: 2%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-radius: 10px;
+  align-self: auto;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-left: 25%;
+  margin-right: 25%;
+  margin-bottom: 2%;
+}
+.maintenance-scard {
+  display: flex;
+  flex-direction: column;
+  background-color: #d9d9d9;
+  mix-blend-mode: hard-light;
+  border-radius: 0px;
+  text-align: center;
+  border: 0px solid rgba(44, 43, 43, 0.5);
+}
+
+.maintenance-scard.active {
+  background-color: black;
+}
+.maintenance-scard.active .m-scard-text {
+  color: white;
+}
+.maintenance-scard.active .m-scard-icon {
+  filter: none;
+}
+.table tr.selected {
+  background-color: #cfcfcf;
+}
+.maintenance-scard-button {
+  background: none;
+  padding: 10px;
+}
+
+.maintenance-scard-button:hover {
+  cursor: pointer;
+  filter: grayscale(100%) invert(0%);
+}
+
+.maintenance-scard-link {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+
+.maintenance-scard-icon {
+  width: 25px;
+  height: 20px;
+  margin-right: 10px;
+  filter: grayscale(100%) invert(100%);
+}
+
+.maintenance-scard.active .maintenance-scard-icon {
+  filter: none;
+}
+
+.maintenance-scard-text {
+  font-size: 16px;
+  font-weight: 500;
+  color: black;
+  font-family: "Judson";
+  font-style: normal;
+}
+
+.maintenance-card {
+  height: 60%;
+  padding: 0px;
+  background-color: #d9d9d9;
+  mix-blend-mode: hard-light;
+  border-radius: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(139, 139, 139, 0.5);
+  overflow: auto;
+  margin-left: 15%;
+  margin-right: 15%;
+}
+
+.maintenance-card::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+.table-container {
+  width: 80%;
+  margin: auto;
+  margin-top: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.table {
+  width: 100%;
+  /* border-collapse: unset; */
+}
+
+.table thead {
+  position: sticky;
+  background-color: #333;
+  color: #fff;
+  top: 0;
+  font-family: "Judson", serif;
+  font-weight: 700;
+}
+
+.table th,
+.table td {
+  padding: 15px;
+  border-bottom: 1px solid #8b8b8b;
+  text-align: center;
+  font-family: "Judson", serif;
+  font-size: 15px;
+}
+
+.table td {
+  font-weight: 100;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.table tbody tr:hover {
+  background-color: #e0e0e0;
+}
+.click {
+  color: #4d33ef;
+  text-decoration: underline;
+}
+.status-image {
+  width: 10px;
+  height: 10px;
+}
+.selected-row {
+  background-color: #cfcfcf;
+}
+
+.hoverrow tr:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+.maintenance-scard.active .maintenance-scard-text {
+  color: white;
+}
+
+/* Media Queries for Tablet */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .maintenance-main {
+    margin-top: 325px;
+  }
+
+  .maintenance-topcards {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    margin-bottom: 35px;
+    margin-bottom: 55px;
     border-radius: 10px;
     flex-wrap: wrap;
     justify-content: center;
-}
-.m-scard {
+  }
+
+  .maintenance-scard {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -18,233 +182,93 @@
     border-radius: 0px;
     text-align: center;
     border: 1px solid rgba(44, 43, 43, 0.5);
-}
+  }
 
-.m-scard.active {
-    background-color: #242F40;
-}
-.m-scard.active .m-scard-text {
+  .maintenance-scard.active {
+    background-color: #242f40;
+  }
+
+  .maintenance-scard.active .m-scard-text {
     color: white;
-}
-.m-scard.active .m-scard-icon {
+  }
+
+  .maintenance-scard.active .m-scard-icon {
     filter: none;
-}
-.table tr.selected {
-    background-color: #CFCFCF; 
-}
-.m-scard-button{
+  }
+
+  .table tr.selected {
+    background-color: #cfcfcf;
+  }
+
+  .maintenance-scard-button {
     background: none;
     padding: 10px;
-}
+  }
 
-.m-scard-button:hover{
+  .maintenance-scard-button:hover {
     background: none;
-}
-.m-scard-link{
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-}
+  }
 
-.m-scard-icon{
+  .maintenance-scard-icon {
     width: 25px;
     height: 20px;
     margin-right: 10px;
     filter: grayscale(100%) invert(100%);
-}
+  }
 
-.m-scard-text{
+  .maintenance-scard-text {
     font-size: 16px;
     font-weight: 500;
     color: black;
-}
+  }
 
-/* .card{
-    padding: 20px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-    border: 1px solid rgba(139, 139, 139, 0.5);
-    overflow: auto; 
-} */
-
-.ma-card {
-    height: 325px;
+  .card {
+    height: 240px;
     padding: 0px 20px 20px 20px;
     background-color: white;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(139, 139, 139, 0.5);
-    overflow: auto; 
-}
+    overflow: auto;
+  }
 
-.table {
+  .table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 5px;
-}
+  }
 
-.table thead {
+  .table thead {
     position: sticky;
     background-color: white;
-    z-index: 0; 
+    z-index: 0;
     top: 0;
-}
+  }
 
-
-.table th,
-.table td {
+  .table th,
+  .table td {
     padding: 18px;
-    border-bottom: 1px solid #8B8B8B;
+    border-bottom: 1px solid #8b8b8b;
     text-align: left;
-    text-align: center; 
-}
+    text-align: center;
+  }
 
-.table td{
+  .table td {
     font-size: 15px;
     font-weight: 100;
-}
+  }
 
-.table th {
-    font-weight:700;
-}
-.click{
-    color: #4D33EF;
-    text-decoration: underline; 
-}
-.status-image{
+  .table th {
+    font-weight: 700;
+  }
+
+  .click {
+    color: #4d33ef;
+    text-decoration: underline;
+  }
+
+  .status-image {
     width: 10px;
     height: 10px;
-}
-.selected-row{
-    background-color: #CFCFCF;
-}
-
-.hoverrow tr:hover{
-    background-color: #f1f1f1;
-}
-
-/* Media Queries for Tablet */
-@media only screen and (min-width: 768px) and (max-width: 1024px) {
-    .ma-main {
-        margin-top: 325px;
-    }
-
-    .m-topcards {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        margin-bottom: 55px;
-        border-radius: 10px;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .m-scard {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 0px;
-        background-color: white;
-        border-radius: 0px;
-        text-align: center;
-        border: 1px solid rgba(44, 43, 43, 0.5);
-    }
-
-    .m-scard.active {
-        background-color: #242F40;
-    }
-
-    .m-scard.active .m-scard-text {
-        color: white;
-    }
-
-    .m-scard.active .m-scard-icon {
-        filter: none;
-    }
-
-    .table tr.selected {
-        background-color: #CFCFCF; 
-    }
-
-    .m-scard-button {
-        background: none;
-        padding: 10px;
-    }
-
-    .m-scard-button:hover {
-        background: none;
-    }
-
-    .m-scard-link {
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-        text-align: center;
-        justify-content: center;
-    }
-
-    .m-scard-icon {
-        width: 25px;
-        height: 20px;
-        margin-right: 10px;
-        filter: grayscale(100%) invert(100%);
-    }
-
-    .m-scard-text {
-        font-size: 16px;
-        font-weight: 500;
-        color: black;
-    }
-
-    .card {
-        height: 240px;
-        padding: 0px 20px 20px 20px;
-        background-color: white;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-        border: 1px solid rgba(139, 139, 139, 0.5);
-        overflow: auto; 
-    }
-
-    .table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 5px;
-    }
-
-    .table thead {
-        position: sticky;
-        background-color: white;
-        z-index: 0; 
-        top: 0;
-    }
-
-    .table th,
-    .table td {
-        padding: 18px;
-        border-bottom: 1px solid #8B8B8B;
-        text-align: left;
-        text-align: center; 
-    }
-
-    .table td {
-        font-size: 15px;
-        font-weight: 100;
-    }
-
-    .table th {
-        font-weight:700;
-    }
-
-    .click {
-        color: #4D33EF;
-        text-decoration: underline; 
-    }
-
-    .status-image {
-        width: 10px;
-        height: 10px;
-    }
+  }
 }

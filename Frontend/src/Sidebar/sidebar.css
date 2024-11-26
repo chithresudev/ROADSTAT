@@ -1,4 +1,4 @@
-.navbar {
+/* .navbar {
     position:fixed;
     top: 0;
     left: 0;
@@ -28,14 +28,14 @@ button{
     color: white;
     text-decoration: none;
     border: 0;
-}
-#root {
+} */
+/* #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-}
-.logo{
+} */
+/* .logo{
     color: #FF8A00;
     padding: 0px 0px 0px 0px;
     font-size: 30px;
@@ -128,7 +128,7 @@ button:hover {
     height: 95px;
     margin-bottom: 100px;
   }
-}
+} */
 
 /* .logo {
   height: 6em;

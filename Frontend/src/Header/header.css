@@ -1,98 +1,139 @@
-.header {
-    position: fixed;
-    top: 0;
-    left: 250px;
-    background-color: white;
-    width: calc(100% - 250px);
-    z-index: 1000;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    height: 95px;
-    overflow: hidden;
-    display: flex;
-    padding: 0 20px;
-    align-items: center;
+.icons {
+  background-color: white;
+  width: 100%;
+  height: 20%;
 }
 
-.user-profile {
-    display: flex;
-    align-items: center;
+.road_logo {
+  width: 22%;
+  /* height: 70%; */
+  float: left;
+  padding-left: 2%;
+  /* margin-top: 1%; */
+}
+/* login profile */
+.user_icon {
+  width: 40px;
+  cursor: pointer;
+  float: right;
+  margin-top: 3%;
+  margin-right: 3%;
 }
 
-.user-profile span {
-    margin-left: 20px;
-    margin-right: 15px;
-    font-weight: 500; 
+.header_bg {
+  background: #ffffff;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
 }
 
-.header-content{
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    flex-grow: 1;
+.half_bg {
+  background-image: url(/images/background.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 0 0;
+  top: 0;
+  width: 100%;
+  height: 80%;
 }
 
-.searchb{
-    display: flex;
-    align-items: center;
+.nav_container {
+  margin-top: 3%;
+  display: flex;
+  position: absolute;
+  gap: 40px;
+  font-family: "Judson";
+  font-style: normal;
+  font-weight: 200;
+  font-size: x-large;
+  line-height: 40px;
+  color: #4b79a1;
+  white-space: nowrap;
+  cursor: pointer;
+  float: right;
+  left: 40%;
+}
+.nav_container div.active {
+  background: linear-gradient(
+    135deg,
+    #4b79a1,
+    #283e51
+  ); /* Gradient background */
+  color: #ffffff;
+  border-radius: 20px; /* Rounded corners */
+  padding: 5px 10px; /* Increased padding */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+  font-weight: bold;
+  transition: all 0.3s ease-in-out; /* Smooth transition for hover effect */
 }
 
-.search-bar {
-    border-radius: 8px;
-    padding: 12px; 
-    width: 200px;
-    border: 1px solid #242F40;
-    margin-right: 40px;
-    display: flex;
-    align-items: center;
+.nav_container div.active:hover {
+  background: linear-gradient(
+    135deg,
+    #283e51,
+    #4b79a1
+  ); /* Reverse gradient on hover */
+  transform: scale(1); /* Slight zoom on hover */
 }
 
-.search-icon img {
-    
-    margin-left: -125px;
-    width: 30px;
-    height: 30px;
+.nav_container div.active {
+  background-color: blue;
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 0px 20px;
 }
 
-.profile{
-    width: 35px;
-    height: 35px;
+.user_popup {
+  position: absolute;
+  top: 10%;
+  height: auto;
+  right: 10px;
+  background-color: white;
+  border-radius: 10px;
+  width: 7%;
+  padding: 10px 24px;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(139, 139, 139, 0.5);
 }
 
-.lbutton{
-   background: none;
-   padding: 70px;
-   width: 80px;
+.user_popup p {
+  display: flex;
+  text-decoration: none;
+  color: black;
+  font-family: "Judson";
+  font-style: normal;
+  font-weight: bold;
+  border-bottom: 1px solid #ccc;
+  font-size: large;
+  gap: 17px;
+  padding-bottom: 10%;
 }
 
-.lbutton:hover {
-    background: none;
-}
-.logout{
-    width: 25px;
-    height: 25px; 
+.user_popup a {
+  display: flex;
+  text-decoration: none;
+  color: black;
+  font-family: "Judson";
+  font-style: normal;
+  font-weight: bold;
+  font-size: large;
+  gap: 17px;
+  padding-top: 10%;
 }
 
-.content {
-    padding: 20px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(139, 139, 139, 0.5); 
+.user_popup a:hover {
+  color: #f87a53;
+  text-decoration: underline;
 }
-h1{
-    color: #B1B1B1;
-    font-size: 18px;
-    text-align: left;
-    font-weight: 400;
-}
-.access{
-    background-color: #F5F5F5;
-    border-radius: 10px;
-    padding: 20px;
-}
-@media only screen and (min-width: 768px) and (max-width: 1024px) {
-    .header{
-        margin-bottom: 0px;
-        padding-bottom: 0px;
-    }
+
+.user_popup img {
+  color: black;
+  width: 25px;
+  height: 25px;
+  filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(0%)
+    contrast(100%);
 }

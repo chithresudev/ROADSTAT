@@ -1,30 +1,34 @@
-import React from 'react';
-import { GoogleMap, useJsApiLoader, Marker, DirectionsService, DirectionsRenderer } from '@react-google-maps/api';
-import truckIcon from '/images/truck.png';
-import truckDest from '/images/truckloc.png';
+import React from "react";
+import {
+  GoogleMap,
+  useJsApiLoader,
+  Marker,
+  DirectionsService,
+  DirectionsRenderer,
+} from "@react-google-maps/api";
+import truckIcon from "/images/truck.png";
+import truckDest from "/images/truckloc.png";
 
 const containerStyle = {
-  width: '100%',
-  height: '175px'
+  width: "100%",
+  height: "175px",
 };
 
 const google_map_api = import.meta.env.VITE_GOOGLE_MAP_API;
 
 function DMapComponent({ truckLocations, truckDestinations }) {
-
-    console.log("truckLocations:", truckLocations);
-    console.log("truckDestinations:", truckDestinations);
-    
+  console.log("truckLocations:", truckLocations);
+  console.log("truckDestinations:", truckDestinations);
 
   const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: google_map_api
+    id: "google-map-script",
+    googleMapsApiKey: google_map_api,
   });
 
   const center = {
     lat: truckLocations.latitude,
-    lng: truckLocations.longitude
-};
+    lng: truckLocations.longitude,
+  };
 
   const [map, setMap] = React.useState(null);
   const [directions, setDirections] = React.useState(null);
@@ -58,14 +62,20 @@ function DMapComponent({ truckLocations, truckDestinations }) {
       {map && (
         <>
           <Marker
-            position={{ lat: truckLocations.latitude, lng: truckLocations.longitude }}
+            position={{
+              lat: truckLocations.latitude,
+              lng: truckLocations.longitude,
+            }}
             icon={{
               url: truckIcon,
               scaledSize: new window.google.maps.Size(30, 30),
             }}
           />
           <Marker
-            position={{ lat: truckDestinations.latitude, lng: truckDestinations.longitude }}
+            position={{
+              lat: truckDestinations.latitude,
+              lng: truckDestinations.longitude,
+            }}
             icon={{
               url: truckDest,
               scaledSize: new window.google.maps.Size(30, 30),
@@ -74,16 +84,24 @@ function DMapComponent({ truckLocations, truckDestinations }) {
           {directions && <DirectionsRenderer directions={directions} />}
           <DirectionsService
             options={{
-              origin: { lat: truckLocations.latitude, lng: truckLocations.longitude },
-              destination: { lat: truckDestinations.latitude, lng: truckDestinations.longitude },
-              travelMode: 'DRIVING',
+              origin: {
+                lat: truckLocations.latitude,
+                lng: truckLocations.longitude,
+              },
+              destination: {
+                lat: truckDestinations.latitude,
+                lng: truckDestinations.longitude,
+              },
+              travelMode: "DRIVING",
             }}
             callback={directionsCallback}
           />
         </>
       )}
     </GoogleMap>
-  ) : <></>;
+  ) : (
+    <></>
+  );
 }
 
 export default React.memo(DMapComponent);

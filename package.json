@@ -12,7 +12,11 @@
   },
   "author": "",
   "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  },
   "dependencies": {
-    "concurrently": "^8.2.2"
+    "nodemailer": "^6.9.16",
+    "vite": "^5.4.11"
   }
 }

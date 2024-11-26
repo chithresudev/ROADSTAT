@@ -1,21 +1,21 @@
-.mainprofile{
-    width: calc(100% - 250px);
+.mainprofile {
+  width: calc(100% - 250px);
 }
 .content {
-    padding: 20px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-    border: 1px solid rgba(139, 139, 139, 0.5);
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(139, 139, 139, 0.5);
 }
-h1{
-    color: #B1B1B1;
-    font-size: 18px;
-    text-align: left;
-    font-weight: 400;
+h1 {
+  color: #b1b1b1;
+  font-size: 18px;
+  text-align: left;
+  font-weight: 400;
 }
-.access{
-    background-color: #F5F5F5;
-    border-radius: 10px;
-    padding: 20px;
+.access {
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  padding: 20px;
 }
