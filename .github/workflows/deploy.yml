@@ -34,11 +34,31 @@ jobs:
           echo "${{ secrets.AWS_NEW_SSH_KEY }}" > aws-ec2-key.pem
           chmod 600 aws-ec2-key.pem
           ssh -o StrictHostKeyChecking=no -i aws-ec2-key.pem ubuntu@3.91.228.87 << 'EOF'
-            export AWS_REGION=us-east-1 && \
-            aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin 264427725539.dkr.ecr.us-east-1.amazonaws.com && \
-            docker images | grep '264427725539.dkr.ecr.us-east-1.amazonaws.com/myecr-repo' | awk '{print $3}' | xargs -r docker rmi
-            docker pull 264427725539.dkr.ecr.us-east-1.amazonaws.com/myecr-repo:latest && \
-            docker ps | grep '5173' | awk '{print $1}' | xargs -r docker stop
-            docker ps -q -f ancestor=264427725539.dkr.ecr.us-east-1.amazonaws.com/myecr-repo:latest | xargs -r docker stop | xargs -r docker rm && \
-            docker run -d -p 80:5173 -p 3000:3000 -p 5173:5173 264427725539.dkr.ecr.us-east-1.amazonaws.com/myecr-repo:latest
+            set -e
+            export AWS_REGION=us-east-1
+            REPOSITORY_NAME=myecr-repo
+            ECR_URL=264427725539.dkr.ecr.us-east-1.amazonaws.com
+            
+            # Authenticate Docker with ECR
+            aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_URL
+      
+            # Pull the latest image
+            docker pull $ECR_URL/$REPOSITORY_NAME:latest
+      
+            # Stop and remove running containers using the previous image
+            docker stop $(docker ps -q --filter ancestor=$ECR_URL/$REPOSITORY_NAME) || true
+            docker rm $(docker ps -aq --filter ancestor=$ECR_URL/$REPOSITORY_NAME) || true
+      
+            # Remove unused local images to save space
+            docker images $ECR_URL/$REPOSITORY_NAME | awk 'NR>1 {print $3}' | xargs -r docker rmi
+      
+            # Delete untagged images from ECR
+            UNTAGGED_IMAGES=$(aws ecr list-images --repository-name $REPOSITORY_NAME --filter "tagStatus=UNTAGGED" --query 'imageIds[*]' --output json)
+            if [ "$UNTAGGED_IMAGES" != "[]" ]; then
+              echo "$UNTAGGED_IMAGES" | aws ecr batch-delete-image --repository-name $REPOSITORY_NAME --image-ids file://<(echo "$UNTAGGED_IMAGES")
+            fi
+      
+            # Run the new container
+            docker run -d -p 80:5173 -p 3000:3000 -p 5173:5173 --name my-app $ECR_URL/$REPOSITORY_NAME:latest
           EOF
+
